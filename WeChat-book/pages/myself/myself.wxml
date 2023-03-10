@@ -1,0 +1,27 @@
+<!--pages/myself/myself.wxml-->
+<view class="container">
+  <image src="images/my@bg.png" class="bg"></image>
+  <!-- 没有登陆 -->
+  <v-button wx:if="{{!userInfo}}" bindtap="login" class="avatar-position">
+    <image slot="img" class="avatar" src="images/my.png" />
+  </v-button>
+  <!-- 登陆成功 -->
+  <view wx:else class="avatar-position">
+    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+    <text class="nicheng">{{userInfo.nickName}}</text>
+    <button bindtap="loginOut" class="tuichu" style="position: absolute; left: 294rpx; top: -226rpx; width: 64rpx; height: 82rpx; display: block; box-sizing: border-box">
+      <image src="images/about.png" class="setting" style="width: 92rpx; height: 78rpx; display: inline-block; box-sizing: border-box; left: -44rpx; top: -16rpx; position: relative">退出登录</image>
+    </button>
+  </view>
+  <view class="about-container">
+        <view bind:tap="onJumpToAbout" class="about-us">
+            <image src="images/about.png" />
+            <text class="description">关于我们</text>
+        </view>
+        <view class="about-us">
+            <text class="book-num">{{bookCount}}</text>
+            <text class="description">喜欢的书</text>
+        </view>
+    </view>
+</view>
+

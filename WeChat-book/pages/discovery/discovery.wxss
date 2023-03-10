@@ -1,0 +1,138 @@
+/* pages/discovery/discovery.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top_img {
+  border-radius: 30rpx;
+  overflow: hidden;
+  width: 700rpx;
+  height: 200rpx;
+}
+/* 一张卡片 */
+.containers {
+  width: 700rpx;
+  /* height: 500rpx; */
+  display: flex;
+  /* flex-direction: column; */
+  /* align-items: center; */
+  border-radius: 30rpx;
+  background-color: #5baef3;
+  margin: 30rpx;
+  padding: 30rpx 0;
+  box-shadow: 0 15rpx 10rpx -15rpx #efefef;
+}
+
+.messages {
+  display: flex;
+  width: 100%;
+  background-color: #0e416b;
+  /* flex-direction: column; */
+  /* 横向对齐方式 */
+  /* align-items: flex-start; */
+  /* justify-content: center; */
+  flex-flow: column wrap;
+  align-content: space-between;
+}
+
+.view_user {
+  display: flex;
+  background-color: #1e81d3;
+  /* flex-direction: row; */
+  /* width: 130rpx; */
+  /* margin: 30rpx 30rpx; */
+  /* align-items: center; */
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+}
+.people_img {
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  float: left;
+}
+.view_user_text {
+  display: flex;
+  float: right;
+  /* background-color: #12456e; */
+  flex-direction: column;
+  /* margin: 30rpx 0 0rpx 30rpx; */
+}
+.text_name {
+  font-size: 40rpx;
+  position: relative;
+  left: 32rpx;
+  top: 14rpx
+}
+.text_time {
+  font-size: 20rpx;
+  width: 118rpx;
+  height: 29rpx;
+  display: block;
+  box-sizing: border-box;
+  left: 32rpx;
+  top: 14rpx;
+  position: relative;
+}
+
+.view_content {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: flex-start;
+  /* background-color: #1e81d3; */
+  margin: 10rpx;
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+}
+.text_word {
+  font-size: 50rpx;
+}
+.user_book_img {
+  width: 300rpx;
+  height: 200px;
+}
+
+.view_function {
+  display: flex;
+  /* width: 80%; */
+  width: 100%;
+  justify-content: space-between;
+  background-color: #1e81d3;
+  margin: 20rpx;
+  /* flex-direction: row; */
+  /* align-items: center; */
+}
+.function_img {
+  display: flex;
+  /* background-color: #abd0ee; */
+  width: 50rpx;
+  height: 50rpx;
+}
+
+/* 热门话题 */
+.container_3 {
+  width: 700rpx;
+  display: flex;
+  border-radius: 30rpx;
+  background-color: #63e074;
+  margin: 0 30rpx;
+  box-shadow: 0 15rpx 10rpx -15rpx #efefef;
+}
+
+.middle-item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text_2 {
+  /* margin: 0rxp 200rpx 0rpx 200rpx; */
+  font-size: 40rpx;
+  color: #505050;
+  line-height: 28rpx;
+  font-weight: bold;
+  padding-left: 20rpx;
+}
