@@ -18,6 +18,11 @@ spring:
 server:
   # \u5E94\u7528\u670D\u52A1 WEB \u8BBF\u95EE\u7AEF\u53E3
   port: 80
+
+wx:
+  app-id: wx69a13f399bc66d0d
+  app-secret: db161b8bbe2a57cc8ce2eb372e7e86b1
+
 ## Format to use when serializing Date objects.
 #spring.gson.date-format=
 #
