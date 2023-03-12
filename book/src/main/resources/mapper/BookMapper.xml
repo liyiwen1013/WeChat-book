@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.liyiwen.book.mapper.BookMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="top.liyiwen.book.model.Book">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="author" property="author" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result column="binding" property="binding" />
+        <result column="categoryId" property="categoryId" />
+        <result column="image" property="image" />
+        <result column="isbn" property="isbn" />
+        <result column="pages" property="pages" />
+        <result column="price" property="price" />
+        <result column="publisher" property="publisher" />
+        <result column="pubdate" property="pubdate" />
+        <result column="subtitle" property="subtitle" />
+        <result column="summary" property="summary" />
+        <result column="translator" property="translator" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, author, binding, categoryId, image, isbn, pages, price, publisher, pubdate, subtitle, summary, translator, status, create_time, update_time, deleted
+    </sql>
+
+</mapper>
