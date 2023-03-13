@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import top.liyiwen.book.auth.detail.UserDetail;
 import top.liyiwen.book.auth.service.MyUserDetailsService;
+import top.liyiwen.book.mapper.UserMapper;
 import top.liyiwen.book.model.User;
-import top.liyiwen.book.service.UserService;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -22,7 +22,7 @@ import java.util.Set;
 public class MyUserDetailDetailsServiceImpl implements MyUserDetailsService {
 
     @Autowired
-    private UserService userService;
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,7 +33,7 @@ public class MyUserDetailDetailsServiceImpl implements MyUserDetailsService {
                         User::getUsername,
                         User::getPassword)
                 .eq(User::getUsername, username);
-        User user = userService.getOne(userLambdaQueryWrapper);
+        User user = userMapper.selectOne(userLambdaQueryWrapper);
         if (Objects.isNull(user)) {
             // 没查到用户抛出异常
             throw new UsernameNotFoundException("用户不存在");
@@ -54,7 +54,7 @@ public class MyUserDetailDetailsServiceImpl implements MyUserDetailsService {
                         User::getId,
                         User::getUsername)
                 .eq(User::getOpenid, openid);
-        User user = userService.getOne(userLambdaQueryWrapper);
+        User user = userMapper.selectOne(userLambdaQueryWrapper);
         if (Objects.isNull(user)) {
             // 没查到用户抛出异常
             throw new UsernameNotFoundException("用户不存在");
@@ -63,7 +63,7 @@ public class MyUserDetailDetailsServiceImpl implements MyUserDetailsService {
         // 获取用户权限
         Set<SimpleGrantedAuthority> grantedAuthorities = this.getGrantedAuthority(user.getId());
 
-        return new UserDetail(user.getId(), grantedAuthorities);
+        return new UserDetail(user.getId(), user.getUsername(), grantedAuthorities);
     }
 
     /**

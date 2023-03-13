@@ -31,8 +31,9 @@ public class UserDetail implements UserDetails {
         this.authorities = authorities;
     }
 
-    public UserDetail(Integer id, Set<SimpleGrantedAuthority> authorities) {
+    public UserDetail(Integer id, String username, Set<SimpleGrantedAuthority> authorities) {
         this.id = id;
+        this.username = username;
         this.authorities = authorities;
     }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.liyiwen.book.mapper.LikeMapper">
+<mapper namespace="top.liyiwen.book.mapper.LikeRecordMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="top.liyiwen.book.model.Like">
+    <resultMap id="BaseResultMap" type="top.liyiwen.book.model.LikeRecord">
         <id column="id" property="id" />
         <result column="user_id" property="userId" />
         <result column="target_id" property="targetId" />

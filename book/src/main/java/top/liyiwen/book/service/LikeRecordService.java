@@ -1,6 +1,6 @@
 package top.liyiwen.book.service;
 
-import top.liyiwen.book.model.Like;
+import top.liyiwen.book.model.LikeRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author liyiwen
- * @since 2023-03-12
+ * @since 2023-03-13
  */
-public interface LikeService extends IService<Like> {
+public interface LikeRecordService extends IService<LikeRecord> {
 
 }

@@ -1,7 +1,11 @@
 package top.liyiwen.book.service;
 
+import top.liyiwen.book.form.login.UserLoginForm;
 import top.liyiwen.book.model.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.liyiwen.book.response.Response;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -12,5 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-03-12
  */
 public interface UserService extends IService<User> {
+
+    Response login(HttpServletRequest request, UserLoginForm loginForm);
 
 }

@@ -41,7 +41,7 @@ public class CodeAutoGenerator {
             "book",
             "book_comment",
             "journal",
-            "like",
+            "like_record",
             "user"
     };
 

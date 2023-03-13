@@ -35,7 +35,7 @@ public interface SecurityConstant {
     /**
      * 签发主体
      */
-    String TOKEN_ISSUER = "liyiwen";
+    String TOKEN_ISSUER = "LiYiWen";
 
     /**
      * 接受对象

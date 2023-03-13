@@ -1,6 +1,6 @@
 package top.liyiwen.book.mapper;
 
-import top.liyiwen.book.model.Like;
+import top.liyiwen.book.model.LikeRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author liyiwen
- * @since 2023-03-12
+ * @since 2023-03-13
  */
-public interface LikeMapper extends BaseMapper<Like> {
+public interface LikeRecordMapper extends BaseMapper<LikeRecord> {
 
 }

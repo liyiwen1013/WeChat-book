@@ -2,6 +2,7 @@ package top.liyiwen.book.service;
 
 import top.liyiwen.book.model.Journal;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.liyiwen.book.response.Response;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface JournalService extends IService<Journal> {
 
+    Response latest(Integer userId);
 }

@@ -74,10 +74,10 @@ CREATE TABLE `journal` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET=utf8mb4 COMMENT '期刊表';
 
 -- ----------------------------
--- Table structure for like
+-- Table structure for like_record
 -- ----------------------------
-DROP TABLE IF EXISTS `like`;
-CREATE TABLE `like` (
+DROP TABLE IF EXISTS `like_record`;
+CREATE TABLE `like_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户ID',
   `target_id` int(11) NOT NULL COMMENT '目标ID',
@@ -107,8 +107,6 @@ CREATE TABLE `user` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新记录时间',
   `deleted` bit(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除 0:正常 1:删除',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `username`(`username`),
-  UNIQUE INDEX `mobile`(`mobile`),
   UNIQUE INDEX `openid`(`openid`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET=utf8mb4 COMMENT '用户表';
 

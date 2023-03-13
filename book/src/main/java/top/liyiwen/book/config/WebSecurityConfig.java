@@ -4,10 +4,12 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -101,20 +103,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-//    /**
-//     * 此方法配置的资源路径不会进入 Spring Security 机制进行验证
-//     */
-//    @Override
-//    public void configure(WebSecurity web) {
-//        web.ignoring()
-//                .antMatchers(HttpMethod.OPTIONS, "/**")
-//                .antMatchers("/app/**/*.{js,html}")
-//                .antMatchers("/v2/api-docs/**")
-//                .antMatchers("/i18n/**")
-//                .antMatchers("/test/**")
-//                .antMatchers("/content/**")
-//                .antMatchers("/webjars/springfox-swagger-ui/**")
-//                .antMatchers("/swagger-resources/**")
-//                .antMatchers("/swagger-ui.html");
-//    }
+    /**
+     * 此方法配置的资源路径不会进入 Spring Security 机制进行验证
+     */
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers("/i18n/**")
+                .antMatchers("/webjars/springfox-swagger-ui/**")
+                .antMatchers("/swagger-resources/**")
+                .antMatchers("/swagger-ui.html");
+    }
 }

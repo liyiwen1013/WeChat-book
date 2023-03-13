@@ -8,7 +8,10 @@ spring:
     password: Admin123
   mvc:
     converters:
-      preferred-json-mapper: gson
+      preferred-json-mapper: jackson
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 server:
   port: 80
 

@@ -6,8 +6,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import top.liyiwen.book.auth.exception.WxOpenidNotFoundException;
 import top.liyiwen.book.auth.service.MyUserDetailsService;
+import top.liyiwen.book.exception.BookException;
+import top.liyiwen.book.response.ResponseCode;
 
 import java.util.Objects;
 
@@ -24,9 +25,10 @@ public class WxAuthenticationProvider implements AuthenticationProvider {
         // 根据openid读取用户
         UserDetails userDetails = ((MyUserDetailsService) userDetailsService).loadUserByOpenId(openid);
         if (Objects.isNull(userDetails)) {
-            throw new WxOpenidNotFoundException("微信登录异常");
+            throw new BookException(ResponseCode.USER_LOGIN_ERROR, "微信登录异常");
         }
 
+        // 登录验证通过
         WxAuthenticationToken authenticationResult = new WxAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         authenticationResult.setDetails(authentication.getDetails());
         return authenticationResult;
