@@ -5,13 +5,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import top.liyiwen.book.constants.SecurityConstant;
 
 import javax.xml.bind.DatatypeConverter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * JWT工具类，用于 生成、解析与验证 token
@@ -62,5 +60,14 @@ public class JwtUtil {
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public static Integer getUserId() {
+        Object principal1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String principal = principal1.toString();
+        if (Objects.isNull(principal) || principal.equals("anonymousUser")) {
+            return null;
+        }
+        return Integer.parseInt(principal.toString());
     }
 }

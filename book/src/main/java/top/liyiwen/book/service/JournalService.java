@@ -1,8 +1,11 @@
 package top.liyiwen.book.service;
 
-import top.liyiwen.book.model.Journal;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.liyiwen.book.dto.JournalDTO;
+import top.liyiwen.book.model.Journal;
 import top.liyiwen.book.response.Response;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,8 @@ import top.liyiwen.book.response.Response;
  */
 public interface JournalService extends IService<Journal> {
 
-    Response latest(Integer userId);
+    Response getOneJournal(Integer userId, Integer id, Integer type);
+
+    Response<List<JournalDTO>> listMyFavor(Integer userId);
+
 }

@@ -66,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 配置授权地址，除了登录接口，其他接口需要进行认证后才能访问
                 .authorizeRequests()
                 .antMatchers("/auth/login").anonymous()
+                .antMatchers("/book/hot_list", "/book/hot_keyword", "/book/search", "/book/favor/count", "/book/*/short_comment", "/book/*/favor", "/book/*/detail", "/book/*/favor", "/classic/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // 禁用 CSRF
