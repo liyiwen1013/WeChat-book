@@ -5,32 +5,12 @@
   align-items: center;
   width: 100%;
 }
-
-.sub-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f5f5f5;
-  margin-top: 100rpx;
-}
-
-.box {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50px;
-  background-color: #f5f5f5;
-  height: 68rpx;
-  width: 700rpx;
-  color: #999999;
-}
-
+/* 头部-搜索栏 */
 .header {
+  width: 100%;
+  height: 100rpx;
   position: fixed;
   background-color: #ffffff;
-  height: 100rpx;
-  width: 100%;
   border-top: 1px solid #f5f5f5;
   border-bottom: 1px solid #f5f5f5;
   display: flex;
@@ -41,28 +21,67 @@
   z-index: 99;
 }
 
-.head-img {
-  width: 106rpx;
-  height: 34rpx;
-  margin-top: 40rpx;
+/* 搜索框 */
+.search {
+  width: 700rpx;
+  height: 68rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #f5f5f5;
+  color: #999999;
 }
-
-.box image {
+.search image {
   margin-right: 10px;
   width: 14px;
   height: 14px;
   margin-bottom: -2px;
 }
 
+/* 图书馆藏书 */
+.head {
+  width: 90%;
+  height: 150rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* background-color: aqua; */
+  border-radius: 25rpx;
+  margin: 140rpx 0 45rpx 0;
+  background-image: url('https://cdn.pixabay.com/photo/2023/03/12/20/54/ai-generated-7847841_960_720.jpg');
+}
+/* 图书部分 */
+.sub-container {
+  width: 80%;
+  display: flex;
+  padding: 10rpx 30rpx;
+  flex-direction: column;
+  align-items: center;
+  background-color: #a4edf5;
+  border-radius: 25rpx;
+  /* background-image: url('https://cdn.pixabay.com/photo/2023/03/12/20/54/ai-generated-7847841_960_720.jpg'); */
+}
+
+.head-txt {
+  align-items: center;
+  margin: 10rpx;
+  color: rgb(45, 136, 163); 
+  line-height: 60rpx;
+  font-size: 38rpx;
+}
+
+/* 书籍部份 */
 .books-container {
-  margin-top: 10rpx;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 90rpx;
+  padding: 0 20rpx;
+  border-radius: 25rpx;
 }
 
 .books-container v-book{
-  margin-bottom: 10rpx;
+  margin-bottom: 15rpx;
 }

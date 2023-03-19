@@ -25,7 +25,4 @@ const promisic = function(func) {
   }
 }
 
-export {
-  random,
-  promisic
-}
+export { random, promisic }

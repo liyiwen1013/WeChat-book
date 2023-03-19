@@ -47,6 +47,12 @@ public class JournalController {
         return journalService.getOneJournal(userId, id, 3);
     }
 
+    @GetMapping("/{id}/favor")
+    public Response favorCount(@PathVariable("id") Integer id) {
+        Integer userId = JwtUtil.getUserId();
+        return journalService.favorCount(userId, id);
+    }
+
     @GetMapping("/favor")
     public Response<List<JournalDTO>> favor() {
         Integer userId = JwtUtil.getUserId();

@@ -1,4 +1,7 @@
 {
+  "navigationBarBackgroundColor": "#74c7f2",
+  "navigationBarTitleText": "书库",
+  "navigationBarTextStyle": "white",
   "usingComponents": {
       "v-book": "/components/book/index",
       "v-search": "/components/search/index"

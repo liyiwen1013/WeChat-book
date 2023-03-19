@@ -42,9 +42,10 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                         Journal::getType,
                         Journal::getUrl,
                         Journal::getCreateTime)
-                .orderByDesc(Journal::getId)
                 .last("limit 1");
         if (type == 0) {
+            journalLambdaQueryWrapper
+                    .orderByDesc(Journal::getId);
             // 获取最新一期
         } else if (type == 1) {
             // 获取指定一期
@@ -53,11 +54,13 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
         } else if (type == 2) {
             // 获取当前一期的下一期
             journalLambdaQueryWrapper
-                    .lt(Journal::getId, id);
+                    .gt(Journal::getId, id)
+                    .orderByAsc(Journal::getId);
         } else if (type == 3) {
             // 获取当前一期的上一期
             journalLambdaQueryWrapper
-                    .gt(Journal::getId, id);
+                    .orderByDesc(Journal::getId)
+                    .lt(Journal::getId, id);
         }
         Journal journal = this.getOne(journalLambdaQueryWrapper);
         if (Objects.isNull(journal)) {
@@ -154,5 +157,20 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
 
         // 返回
         return Response.success(journalDTOList);
+    }
+
+    @Override
+    public Response favorCount(Integer userId, Integer id) {
+        LambdaQueryWrapper<LikeRecord> likeRecordLambdaQueryWrapper = Wrappers.lambdaQuery(LikeRecord.class)
+                .select(LikeRecord::getUserId)
+                .eq(LikeRecord::getTargetId, id)
+                .eq(LikeRecord::getUpdateTime, LikeRecordTypeEnum.JOURNAL.getType());
+        Set<Integer> userIdSet = likeRecordMapper.selectList(likeRecordLambdaQueryWrapper).stream()
+                .map(LikeRecord::getUserId)
+                .collect(Collectors.toSet());
+        Map<String, Object> res = new HashMap<>();
+        res.put("favNums", userIdSet.size());
+        res.put("likeStatus", !Objects.isNull(userId) && userIdSet.contains(userId));
+        return Response.success(res);
     }
 }

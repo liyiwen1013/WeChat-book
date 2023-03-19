@@ -24,6 +24,7 @@
 
 .like {
   margin-top: 6rpx;
+  /* margin-right: -150rpx; */
 }
 
 .navi {

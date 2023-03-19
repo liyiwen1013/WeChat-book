@@ -191,11 +191,13 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
         // 构建参数
         String q = queryForm.getQ();
         Integer summary = queryForm.getSummary();
-        Integer current = queryForm.getCurrent();
-        Integer size = queryForm.getSize();
+        Integer start = queryForm.getStart();
+        Integer count = queryForm.getCount();
 
-        Page<Book> bookPage = new Page<>(current, size);
-        Page<BookDTO> res = new Page<>(current, size);
+        int current = start / count;
+
+        Page<Book> bookPage = new Page<>(current, count);
+        Page<BookDTO> res = new Page<>(start, count);
         if (summary == 0) {
             LambdaQueryWrapper<Book> bookLambdaQueryWrapper = Wrappers.lambdaQuery(Book.class)
                     .select(

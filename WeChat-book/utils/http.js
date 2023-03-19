@@ -1,5 +1,3 @@
-import { config } from '../config.js'
-
 const tips = {
     1: '抱歉，出现了一个错误',
     1005:'appkey无效，请前往www.7yue.pro申请',
@@ -13,12 +11,11 @@ class HTTP{
             params.method="GET"
         }
         wx.request({
-            url:config.api_base_url + params.url,
-            method:params.method,
-            data:params.data,
+            url: 'http://127.0.0.1:8080/' + params.url,
+            method: params.method,
+            data: params.data,
             header:{
                 'content-type':'application/json',
-                'appkey':config.appkey
             },
             success:(res)=>{
                 let code = res.statusCode.toString()
@@ -34,7 +31,6 @@ class HTTP{
                 this._show_error(1)
             }
         })
-
     }
 
     _show_error(error_code){
@@ -48,8 +44,6 @@ class HTTP{
             duration:2000
         }) 
     }
-
-
 }
 
 export {HTTP}

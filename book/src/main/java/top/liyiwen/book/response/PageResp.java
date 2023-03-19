@@ -26,8 +26,8 @@ public class PageResp <T> implements Serializable {
         Data<T> data = new Data<>();
         data.setList(page.getRecords());
         data.setTotal(page.getTotal());
-        data.setCurrent(page.getCurrent());
-        data.setSize(page.getSize());
+        data.setStart(page.getCurrent());
+        data.setCount(page.getSize());
         data.setPages(page.getPages());
 
         result.setData(data);
@@ -56,9 +56,9 @@ public class PageResp <T> implements Serializable {
 
         private long total;
 
-        private long current;
+        private long start;
 
-        private long size;
+        private long count;
 
         private long pages;
     }

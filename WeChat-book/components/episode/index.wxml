@@ -1,11 +1,12 @@
+<!-- 首页上方导航日期 -->
 <view class="container">
   <view class="index-container">
-    <text class="plain">No.</text>
-    <text class="index">{{day}}</text>
+    <text class="plain">Day.</text>
+    <text class="index">{{ day }}</text>
     <view class="line"></view>
   </view>
   <view class="date-container">
-    <text class="month">{{month}}</text>
-    <text class="year">{{year}}</text>
+    <text class="month">{{ month }}</text>
+    <text class="year">{{ year }}</text>
   </view>
 </view>

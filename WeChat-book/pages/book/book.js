@@ -1,15 +1,22 @@
-// pages/book/book.js
 import { BookModel } from '../../models/book.js'
 import { random } from '../../utils/common.js'
 const bookModel = new BookModel()
+
 Page({
+
   /**
    * 页面的初始数据
    */
   data: {
     books: [],
-    searching:false,
-    more:''
+    searching: false,
+    more: ''
+  },
+
+  toLibrary: function(e) {
+    wx.navigateTo({
+      url: '/pages/book/library/library',
+    })
   },
 
   /**
@@ -36,13 +43,13 @@ Page({
 
   onCancel(event){
     this.setData({
-      searching:false
+      searching: false
     }) 
   },
 
   onReachBottom(){
     this.setData({
-      more:random(16)
+      more: random(16)
     })
   }
 })

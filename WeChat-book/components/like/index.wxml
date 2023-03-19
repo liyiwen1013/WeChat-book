@@ -1,5 +1,6 @@
 <!-- components/like/index.wxml -->
+<!-- 点赞按钮 -->
 <view bind:tap="onLike" class="container">
-    <image src="{{like?yesSrc:noSrc}}" />
-    <text>{{count}}</text>
+    <image src="{{ like?yesSrc:noSrc }}" />
+    <text>{{ count }}</text>
 </view>

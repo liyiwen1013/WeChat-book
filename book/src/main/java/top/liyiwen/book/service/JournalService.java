@@ -21,4 +21,5 @@ public interface JournalService extends IService<Journal> {
 
     Response<List<JournalDTO>> listMyFavor(Integer userId);
 
+    Response favorCount(Integer userId, Integer id);
 }

@@ -1,0 +1,9 @@
+{
+  "navigationBarBackgroundColor": "#74c7f2",
+  "navigationBarTitleText": "畅所欲言",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "light",
+  "backgroundColor": "#74c7f2",
+  "onReachBottomDistance": 20
+}

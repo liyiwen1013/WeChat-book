@@ -1,5 +1,6 @@
 {
-  "component": true,
+  "navigationBarBackgroundColor": "#74c7f2",
+  "navigationBarTextStyle": "white",
   "usingComponents":{
       "v-like":"/components/like/index",
       "v-movie":"/components/classic/movie/index",

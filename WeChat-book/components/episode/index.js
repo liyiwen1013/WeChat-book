@@ -5,18 +5,17 @@ Component({
    */
   properties: {
     index:{
-      type:String,
-      observer:function(day, oldVal, changedPath){
-        console.log("day",day)
+      type: String,
+      observer(day, oldVal, changedPath){
+        console.log("day", day)
         let val = day < 10 ? '0'+day : day
-        console.log("设置后的日期",val)
+        console.log("设置后的日期", val)
         this.setData({
-          day:val
+          day: val
         })
       }
     }
   },
-  // wxs
 
   /**
    * 组件的初始数据
@@ -28,10 +27,10 @@ Component({
     ],
     year: 0,
     month: '',
-    day:''
+    day:'',
   },
 
-  attached:function(){
+  attached(){
     let date = new Date()
     let year = date.getFullYear()
     let month = date.getMonth()
@@ -40,9 +39,9 @@ Component({
     console.log(this.data.months[month])
 
     this.setData({
-      year:year,
-      month:this.data.months[month],
-      day:day,
+      year: year,
+      month: this.data.months[month],
+      day: day,
     })
   },
 
@@ -50,6 +49,5 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
   }
 })

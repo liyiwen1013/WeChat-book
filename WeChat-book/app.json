@@ -1,11 +1,25 @@
 {
   "pages":[
     "pages/square/square",
-    "pages/square-detail/square-detail",
+    "pages/square/square-detail/square-detail",
     "pages/book/book",
-    "pages/book-detail/book-detail",
-    "pages/discovery/discovery",
-    "pages/myself/myself"
+    "pages/book/library/library",
+    "pages/book/book-detail/book-detail",
+    "pages/login/login",
+    "pages/login/forgetpwd/forgetpwd",
+    "pages/login/register/register",
+    "pages/my/my",
+    "pages/my/about/about",
+    "pages/my/history/history",
+    "pages/my/instruc/instruc",
+    "pages/my/msg/msg",
+    "pages/my/mycollect/mycollect",
+    "pages/my/mycomment/mycomment",
+    "pages/my/notify/notify",
+    "pages/my/mypost/mypost",
+    "pages/bbs/bbs",
+    "pages/bbs/new/new",
+    "pages/bbs/passage/passage"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -15,36 +29,40 @@
   },
   "tabBar":{
     "color": "#a9b7b7",
-    "selectedColor": "#11cd6e",
+    "selectedColor": "#74c7f2",
     "borderStyle": "black",
     "list": [
     {
       "pagePath": "pages/square/square",
-      "selectedIconPath": "images/发现.png",
-      "iconPath": "images/发现.png",
+      "selectedIconPath": "images/home.png",
+      "iconPath": "images/home_.png",
       "text": "广场"
     },
     {
       "pagePath": "pages/book/book",
       "selectedIconPath": "images/book.png",
-      "iconPath": "images/book.png",
+      "iconPath": "images/book_.png",
       "text": "书城"
     },
     {
-      "pagePath": "pages/discovery/discovery",
+      "pagePath": "pages/bbs/bbs",
       "selectedIconPath": "images/find.png",
-      "iconPath": "images/find.png",
+      "iconPath": "images/find_.png",
       "text": "发现"
     },
     {
-      "pagePath": "pages/myself/myself",
-      "selectedIconPath": "images/my_close.png",
-      "iconPath": "images/my_close.png",
+      "pagePath": "pages/my/my",
+      "selectedIconPath": "images/my.png",
+      "iconPath": "images/my_.png",
       "text": "我的"
     }
   ],
-  "position": "bottom"
-  },
+  "sitemapLocation": "sitemap.json",
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "lazyCodeLoading": "requiredComponents",
+  "networkTimeout": {
+    "request": 10000
+  },
+  "position": "bottom"
+  }
 }

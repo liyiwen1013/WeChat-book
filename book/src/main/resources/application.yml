@@ -5,7 +5,7 @@ spring:
     url: jdbc:mysql://localhost:3306/book?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Admin123
+    password: root
   mvc:
     converters:
       preferred-json-mapper: jackson
@@ -13,7 +13,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 server:
-  port: 80
+  port: 8080
 
 wx:
   app-id: wx69a13f399bc66d0d

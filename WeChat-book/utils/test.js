@@ -1,10 +1,5 @@
-import {
-    BookModel
-} from '../models/book.js'
-
-import {
-    promisic
-} from 'http-p.js'
+import { BookModel } from '../models/book.js'
+import { promisic } from 'http-p.js'
 
 const bookModel = new BookModel()
 

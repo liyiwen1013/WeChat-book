@@ -13,7 +13,7 @@ class KeywordModel extends HTTP{
 
     getHot(){
        return this.request({
-           url:'book/hot_keyword'
+           url: 'book/hot_keyword'
        }) 
     }
 
@@ -34,4 +34,4 @@ class KeywordModel extends HTTP{
 
 }
 
-export {KeywordModel}
+export { KeywordModel }
