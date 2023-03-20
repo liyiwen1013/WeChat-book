@@ -10,11 +10,11 @@ class KeywordModel extends HTTP{
         }
         return words
     }
-
+    // 获取热搜关键字
     getHot(){
-       return this.request({
-           url: 'book/hot_keyword'
-       }) 
+      return this.request({
+        url: 'book/hot_keyword'
+      }) 
     }
 
     addToHistory(keyword){

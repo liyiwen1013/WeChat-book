@@ -10,8 +10,8 @@ export const test = function () {
         .then((res) => {
             console.log(res)
             return promisic(wx.setStorage)({
-                key:'promise',
-                data:'123'
+                key: 'promise',
+                data: '123'
             })
         })
         .then((res) => {

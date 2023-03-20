@@ -57,12 +57,12 @@
       "text": "我的"
     }
   ],
-  "sitemapLocation": "sitemap.json",
-  "style": "v2",
+  "position": "bottom"
+  },
   "lazyCodeLoading": "requiredComponents",
   "networkTimeout": {
     "request": 10000
   },
-  "position": "bottom"
-  }
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
 }

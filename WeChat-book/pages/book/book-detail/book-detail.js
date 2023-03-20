@@ -21,44 +21,24 @@ Page({
   onLoad(options) {
     wx.showLoading()
     const bid = options.bid
-    const detail = bookModel.getDetail(bid)
-    const comments = bookModel.getComments(bid)
-    const likeStatus = bookModel.getLikeStatus(bid)
+    const detail = bookModel.getDetail(bid) //获取书籍详细信息
+    const comments = bookModel.getComments(bid) //获取书籍短评
+    const likeStatus = bookModel.getLikeStatus(bid) //获取书籍点赞情况
+    console.log(bid)
+    console.log(detail)
+    console.log(comments)
+    console.log(likeStatus)
     
     Promise.all([detail, comments, likeStatus])
       .then(res => {
         this.setData({
           book: res[0].data,
           comments: res[1].data,
-          likeStatus: res[2].likeStatus,
-          likeCount: res[2].favNums
+          likeStatus: res[2].likeStatus, //likeStatus: 是否点赞
+          likeCount: res[2].favNums //favNums：点赞数
         })
         wx.hideLoading()
       })
-
-    // detail.then(res => {
-    //   console.log(res)
-    //   this.setData({
-    //     book: res
-    //   })
-    //   wx.hideLoading()
-    // })
-
-    // comments.then(res => {
-    //   console.log(res)
-    //   this.setData({
-    //     comments: res.comments
-    //   })
-    // })
-
-    // likeStatus.then(res => {
-    //   console.log(res)
-    //   this.setData({
-    //     likeStatus: res.like_status,
-    //     likeCount: res.fav_nums
-    //   })
-    // })
-    // wx.hideLoading()
   },
 
   onLike(event) {
@@ -77,10 +57,15 @@ Page({
       posting: false
     })
   },
+
   // 提交短评
   onPost(event) {
     const comment = event.detail.text || event.detail.value
     if (!comment) {
+      wx.showToast({
+        title: '请输入短评',
+        icon: 'none'
+      })
       return
     }
     if (comment.length > 12) {

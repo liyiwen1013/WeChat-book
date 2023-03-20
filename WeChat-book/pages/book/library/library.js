@@ -1,111 +1,107 @@
 // pages/book/library/library.js
 const app = getApp();
-Component({
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    books: [],
-    searching: false,
-    more: '',
-    cateName: ['精选','小说','文学','传记','历史','军事','文化','计算机'],
-    cateItems: [
-      {
-        cate_id: 0,
-        cate_name: "精选",
-        ishaveChild: true,
-        children: []
-      },
-      {
-        cate_id: 2,
-        cate_name: "彩妆",
-        ishaveChild: true,
-        children:
-        []
-      },
-      {
-        cate_id: 3,
-        cate_name: "香水",
-        ishaveChild: true,
-        children:
-        [
-          {
-            child_id: 1,
-            name: '淡香水EDT',
-            image: "https://tse3-mm.cn.bing.net/th/id/OIP-C.L22gqjdMg1THBTMcvnv8TAHaHa?w=198&h=197&c=7&r=0&o=5&dpr=1.25&pid=1.7"
-          },
-          {
-            child_id: 2,
-            name: '浓香水EDP',
-            image: "https://tse3-mm.cn.bing.net/th/id/OIP-C.mawe6N3JwRaNlkkHdzxIewHaHa?w=211&h=211&c=7&r=0&o=5&dpr=1.25&pid=1.7"
-          }
-        ]
-      },
-      {
-        cate_id: 4,
-        cate_name: "女装",
-        ishaveChild: false,
-        children: []
-      },
-      {
-          cate_id: 5,
-          cate_name: "男装",
-          ishaveChild: false,
-          children: []
-        },
-        {
-          cate_id: 6,
-          cate_name: "女鞋",
-          ishaveChild: false,
-          children: []
-        },
-        {
-          cate_id: 7,
-          cate_name: "男鞋",
-          ishaveChild: false,
-          children: []
-        },
-        {
-          cate_id: 8,
-          cate_name: "母婴",
-          ishaveChild: false,
-          children: []
-        }
-    ],
-    curNav: 1,
-    curIndex: 0
+    categoryList: [{
+      "name": "文学",
+      "id": 0
+    },
+    {
+      "name": "历史",
+      "id": 1
+    },
+    {
+      "name": "科技",
+      "id": 2
+    }], // 分类栏数据
+    booksList: [{
+      "name": "了不起的盖茨比",
+      "author": "刘慈欣",
+      "imgUrl": "https://img3.doubanio.com/view/subject/l/public/s2768378.jpg",
+      "category": 0
+    },
+    {
+      "name": "追风筝的人",
+      "author": "张嘉佳",
+      "imgUrl": "https://img1.doubanio.com/view/subject/l/public/s27264181.jpg",
+      "category": 2
+    },
+    {
+      "name": "梨子",
+      "author": "张嘉佳",
+      "imgUrl": "https://img1.doubanio.com/view/subject/l/public/s27264181.jpg",
+      "category": 0
+    },
+    {
+      "name": "土豆",
+      "price": 2.2,
+      "author": "张嘉佳",
+      "imgUrl": "https://img1.doubanio.com/view/subject/l/public/s27264181.jpg",
+      "category": 1
+    },
+    {
+      "name": "白菜",
+      "price": 1.5,
+      "imgUrl": "https://img1.doubanio.com/view/subject/l/public/s27264181.jpg",
+      "category": 1
+    },
+    {
+      "name": "西红柿",
+      "price": 3.0,
+      "imgUrl": "https://img1.doubanio.com/view/subject/l/public/s27264181.jpg",
+      "category": 1
+    }], // 图书数据
+    current: 0 // 当前选中的分类索引
   },
-  onLoad: function () {
-    var that = this;
+  onLoad: function (options) {
+    // 发起 post 请求获取分类列表数据
     wx.request({
-      url: app.globalData.baseUrl, 
-      data: {
-        id: '1',
-        position: '2',
-        class_id: '3'
-      },
+      url: app.globalData.baseUrl,
       method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      success(res) {
-        that.setData({
-          cateItems: res.data.data
+      success: (res) => {
+        this.setData({
+          categoryList: res.data.categoryList, // 解析返回的分类数据
+          booksList: res.data.booksList // 解析返回的书籍列表数据
         })
-        console.log(res.data.data);
-        console.log(res.data.data['0'].list);
+      },
+      fail: (error) => {
+        console.log('请求数据失败', error)
       }
     })
   },
-  //事件处理函数  
-  switchRightTab: function (e) {
-    // 获取item项的id，和数组的下标值  
-    let id = e.target.dataset.id,
-    index = parseInt(e.target.dataset.index);
-    // 把点击到的某一项，设为当前index  
+  // 点击每个分类触发的事件
+  onCategoryTap: function (event) {
+    const { index } = event.currentTarget.dataset
+    console.log("index",index)
     this.setData({
-      curNav: id,
-      curIndex: index
+      current: index // 将当前选中的分类索引存储到 data 中
+    })
+    this.getBooksList(index) // 根据选中的分类索引获取对应的书籍列表
+  },
+  // 根据分类索引获取商品列表
+  getBooksList: function (index) {
+    wx.request({
+      url: app.globalData.baseUrl, 
+      method: 'POST',
+      data: {
+        categoryIndex: index
+      },
+      success: (res) => {
+        this.setData({
+          booksList: res.data.booksList
+        })
+      },
+      fail: () => {
+        console.log('请求数据失败')
+      }
+    })
+  },
+  onNextBook: function() {
+    wx.navigateTo({
+      url: '/pages/book/book-detail/book-detail',
     })
   }
 })

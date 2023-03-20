@@ -31,14 +31,6 @@ Page({
       showLoading: true,
       loadingTxt: "玩命加载中"
     })
-    // wx.setNavigationBarTitle({
-    //   title: 'test'
-    // })
-    // this.setData({
-    //   postid: '16688778108971668932042672',
-    //   showLoading: true,
-    //   loadingTxt: "玩命加载中"
-    // })
     this.getCertainPost()
   },
 

@@ -26,7 +26,7 @@ Component({
     historyWords: [],
     hotWords: [],
     searching: false,
-    q: '',
+    q: '', //搜索内容,比如你想搜索python相关书籍,则输入python
     loading: false,
     loadingCenter: false
   },

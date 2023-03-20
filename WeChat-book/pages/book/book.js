@@ -1,9 +1,9 @@
+// pages/book/book.js
 import { BookModel } from '../../models/book.js'
 import { random } from '../../utils/common.js'
 const bookModel = new BookModel()
 
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -20,24 +20,19 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面加
+   * 生命周期函数--监听页面加载
    */
   async onLoad(optins) {
+    // 获取热门书籍(概要)
     const books = await bookModel.getHotList()
     this.setData({
       books
     })
-      // .then(res => {
-      //   this.setData({
-      //     books:res
-      //   })
-      // })
-    // id
   },
 
   onSearching(event){
     this.setData({
-      searching:true
+      searching: true
     })
   },
 

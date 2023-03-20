@@ -12,7 +12,7 @@ class LikeModel extends HTTP {
       }
     })
   }
-
+  // 获取点赞信息
   getClassicLikeStatus(id, sCallback){
     this.request({
       url: 'classic/' + id + '/favor',

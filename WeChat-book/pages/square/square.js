@@ -9,8 +9,8 @@ Component({
    * 页面的初始数据
    */
   properties: {
-    cid: Number,
-    type: Number
+    cid: Number, //点赞数
+    type: Number //期刊类型
   },
 
   data: {
@@ -24,7 +24,7 @@ Component({
   /**
    * 生命周期函数--监听页面加载
    */
-  attached(options) {
+  attached: function (options) {
     const cid = this.properties.cid
     const type = this.properties.type
     if (!cid) {
@@ -51,20 +51,22 @@ Component({
   methods: {
     onLike: function (event) {
       const behavior = event.detail.behavior
-      likeModel.like(behavior, this.data.classic.id,
-        this.data.classic.type)
+      likeModel.like(behavior, this.data.classic.id, this.data.classic.type)
     },
 
-    onNext(event) {
+    // 获取当前一期的下一期
+    onNext: function (event) {
       this._updateClassic('next')
     },
-
+    
+    // 获取当前一期的上一期
     onPrevious: function (event) {
       this._updateClassic('previous')
     },
 
     _updateClassic(nextOrPrevious) {
       const index = this.data.classic.id
+      console.log("index", index)
       classicModel.getClassic(index, nextOrPrevious, (res) => {
         this._getLikeStatus(res.data.id)
         this.setData({
@@ -76,11 +78,12 @@ Component({
     },
 
     _getLikeStatus(id) {
+      // 获取点赞信息
       likeModel.getClassicLikeStatus(id,
         (res) => {
           this.setData({
-            likeCount: res.favNums,
-            likeStatus: res.likeStatus
+            likeCount: res.favNums, //点赞次数
+            likeStatus: res.likeStatus, //是否点赞
           })
         })
     },

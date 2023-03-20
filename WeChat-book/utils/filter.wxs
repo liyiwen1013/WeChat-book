@@ -11,6 +11,6 @@ var limit = function(array, length){
 }
 
 module.exports = {
-    format:format,
-    limit:limit
+    format: format,
+    limit: limit
 }

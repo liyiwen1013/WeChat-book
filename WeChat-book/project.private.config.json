@@ -10,8 +10,8 @@
       "list": [
         {
           "name": "",
-          "pathName": "pages/book-detail/book-detail",
-          "query": "bid=1120",
+          "pathName": "pages/book/library/library",
+          "query": "",
           "launchMode": "default",
           "scene": null
         },
@@ -38,5 +38,6 @@
         }
       ]
     }
-  }
+  },
+  "libVersion": "2.30.2"
 }

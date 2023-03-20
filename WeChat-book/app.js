@@ -46,6 +46,6 @@ App({
     imgUrl: "http://127.0.0.1:8080//srcs/",
     name: wx.getStorageSync('name'),
     password: wx.getStorageSync('password'),
-    isLogin: true
+    isLogin: false
   }
 })
