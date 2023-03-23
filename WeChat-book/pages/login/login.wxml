@@ -2,12 +2,8 @@
 <view class="logo">
   <image src="../../pics/logotxt.png" mode="heightFix"></image>
 </view>
-<!-- <view class="logotxt">
-  <view class="txt">On the origin of topic</view>
-</view> -->
-
-<view class="avatar">
-  
+<view class="logotxt">
+  <view class="txt">一场心灵沉淀之旅</view>
 </view>
 
 <view class="login-form">
@@ -26,6 +22,10 @@
 </view>
 <view class="forgetpwd" bindtap="forgetpwd" wx:if="{{isNormal==true}}">忘记密码?</view>
 
+<view class="login-wx">
+  <button class="userInfo-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo" type="primary">一键授权登录</button>
+</view>
+
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{showNotify?'show-notify-model':''}}">
 	<view class="notify-model-inner">
@@ -37,7 +37,7 @@
 <!-- 加载动画 -->
 <view class="loadingbox {{isLoading?'show-model':''}}">
   <view class="innerloadingbox">
-    <view class="loadingimg"><image class="loading" src="../../pics/loading.gif"></image></view>
+    <view class="loadingimg"><image class="loading" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="clue">正在登录</view>
   </view>
 </view>

@@ -10,7 +10,7 @@ App({
     wx.getSystemInfo({
       success: e => {
         this.globalData.statusBar = e.statusBarHeight; //状态栏高度
-        let custom = wx.getMenuButtonBoundingClientRect();//菜单按钮
+        let custom = wx.getMenuButtonBoundingClientRect(); //菜单按钮
         this.globalData.custom = custom;
         this.globalData.customBar = custom.bottom + custom.top - e.statusBarHeight;
         this.globalData.navigateBar = this.globalData.customBar - this.globalData.statusBar;
@@ -46,6 +46,6 @@ App({
     imgUrl: "http://127.0.0.1:8080//srcs/",
     name: wx.getStorageSync('name'),
     password: wx.getStorageSync('password'),
-    isLogin: false
+    isLogin: true
   }
 })

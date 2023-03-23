@@ -2,10 +2,12 @@
   "pages":[
     "pages/square/square",
     "pages/square/square-detail/square-detail",
+    "pages/hotc/hotc",
     "pages/book/book",
     "pages/book/library/library",
     "pages/book/book-detail/book-detail",
     "pages/login/login",
+    "pages/login/wxlogin/wxlogin",
     "pages/login/forgetpwd/forgetpwd",
     "pages/login/register/register",
     "pages/my/my",
@@ -34,6 +36,12 @@
     "list": [
     {
       "pagePath": "pages/square/square",
+      "selectedIconPath": "images/home.png",
+      "iconPath": "images/home_.png",
+      "text": "广场"
+    },
+    {
+      "pagePath": "pages/hotc/hotc",
       "selectedIconPath": "images/home.png",
       "iconPath": "images/home_.png",
       "text": "广场"

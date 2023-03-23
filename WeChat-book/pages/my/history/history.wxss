@@ -9,7 +9,7 @@ page {
   box-sizing: border-box;
   position: relative;
   background-color: #cce6ff;
-  border-left: 10rpx solid #0081ff;
+  border-left: 10rpx solid #70b2f5;
   box-sizing: border-box;
   margin: 30rpx 0;
 }
@@ -27,7 +27,7 @@ page {
 }
 .date {
   padding: 0 10rpx;
-  border: 1rpx solid #0081ff;
+  border: 1rpx solid #2791fa;
   box-sizing: border-box;
   color: #0081ff;
 }

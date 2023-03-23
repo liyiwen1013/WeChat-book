@@ -4,6 +4,6 @@
   "navigationBarTextStyle": "white",
   "usingComponents": {
       "v-book": "/components/book/index",
-      "v-search": "/components/search/index"
+      "v-search": "search/search"
   }
 }

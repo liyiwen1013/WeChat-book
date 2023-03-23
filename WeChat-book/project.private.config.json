@@ -10,13 +10,6 @@
       "list": [
         {
           "name": "",
-          "pathName": "pages/book/library/library",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
           "pathName": "pages/square/square",
           "query": "",
           "launchMode": "default",
@@ -32,6 +25,13 @@
         {
           "name": "",
           "pathName": "pages/my/about/about",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/hotc/hotc",
           "query": "",
           "launchMode": "default",
           "scene": null

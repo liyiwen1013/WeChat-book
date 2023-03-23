@@ -220,6 +220,7 @@ Page({
     })
   },
 
+  // 修改头像
   toChangeAvatar(e) {
     let that = this
     let newavatar = e
@@ -257,6 +258,7 @@ Page({
     })
   },
 
+  // 修改用户名
   goModifyName() {
     let that = this
     wx.request({

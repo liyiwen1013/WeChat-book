@@ -3,11 +3,11 @@
   <!-- 标题区 -->
   <view class="p-title">
     <textarea maxlength="30" placeholder="标题" bindinput="getInput" data-inputid="title"></textarea>
-    <view class="title-restNum" style="color:{{title.length>40?'#E9573F':'#333'}}">{{title.length}}/40</view>
+    <view class="title-restNum" style="color:{{title.length>40?'#E9573F':'#333'}}">{{title.length}}/30</view>
   </view>
 
   <!-- 文字区 -->
-  <view class="selectPic" style="background-color:\#{{pickedCustomBg=='0081ff'?'0081ff':pickedCustomBg}}">
+  <view class="selectPic" style="background-color:\#{{pickedCustomBg=='79d0fc'?'79d0fc':pickedCustomBg}}">
     <view wx:for="{{picUrls}}" wx:key="index">
       <image src="{{picUrls[index]}}" mode="aspectFill"></image>
     </view>
@@ -29,7 +29,7 @@
   </scroll-view>
 
   <view class="postbtn" hover-class="click-postbtn" bindtap="toPost">发布
-    <!-- <image src="/pics/cardBg.png" class="mbg"></image> -->
+    <image src="/pics/cardBg.png" class="mbg"></image>
   </view>
 
   <!-- <view class="anonymous">
@@ -64,7 +64,7 @@
 <!-- 加载动画 -->
 <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="../../../pics/loading.gif"></image></view>
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">片刻后完成...</view>
   </view>
 </view>

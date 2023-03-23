@@ -227,9 +227,9 @@ page {
   text-align: center;
   line-height: 80rpx;
   color: white;
-  background-color: #2d9069;
+  background-color: #74c7f2;
   border-radius: 10rpx;
-  box-shadow: 0 0 10rpx #2d9069;
+  box-shadow: 0 0 10rpx #74c7f2;
   position: relative;
 }
 .mbg {
@@ -240,7 +240,7 @@ page {
   height: 100%;
 }
 .click-postbtn {
-  background-color: #2d9069;
+  background-color: #4ebff7;
 }
 
 .anonymous {
@@ -323,7 +323,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
-  background-color: #0081ff;
+  background-color: #74c7f2;
   color: white;
 }
 .notify-model-inner-detail {

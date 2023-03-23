@@ -1,5 +1,5 @@
-
-<image class="mebg" src="../../pics/bgbg.jpg" mode="widthFix" bindtap="previewImg"> 123123</image>
+<!-- my/my.wxml -->
+<image class="mebg" src="../../pics/bgbg.jpg" mode="widthFix" bindtap="previewImg"></image>
 <view class="user-info">
   <image class="user-info-portrait" src="{{isLogin?(imgUrl+basicInfo.user.avatarurl):'/pics/defaultavatar.png'}}" bindtap="previewImg" data-avatarurl="{{isLogin?imgUrl+basicInfo.user.avatarurl:'/pics/defaultavatar.png'}}" bindlongpress="changeAvatar"></image>
   <view class="user-info-mark" wx:if="{{isLogin&&basicInfo.user.mark!='NONE'}}">"{{basicInfo.user.mark}}"</view>

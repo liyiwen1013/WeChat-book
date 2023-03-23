@@ -8,7 +8,7 @@ Page({
     isMoreInfo: false,
     picUrls: [],
     customBg: ['DA4453','E9573F','8CC152','39b54a','48CFAD','37BCC9','4FC1E9','3BAFDA','4A89DC','0081ff','967ADC','6739b6','D770AD','9c26b0','a5673f','8799a3','656D78','434A54'],
-    pickedCustomBg: "0081ff",
+    pickedCustomBg: "79d0fc",
     title: "",
     content: "",
     placeHolders: ["真知灼见", "今日趣事", "优质资源"],

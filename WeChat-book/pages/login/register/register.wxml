@@ -3,9 +3,9 @@
   <view class="logo">
     <image src="../../pics/logotxt.png" mode="heightFix"></image>
   </view>
-  <!-- <view class="logotxt">
+  <view class="logotxt">
     <view class="txt">On the origin of topic</view>
-  </view> -->
+  </view>
 
   <view class="registerform">
     <!-- <view class="avatar" bindtap="selectAvatar">

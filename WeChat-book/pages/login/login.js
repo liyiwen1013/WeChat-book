@@ -7,15 +7,16 @@ Page({
     password: "",
     showNotify: false,
     isLoading: false,
-    isNormal: false
+    isNormal: false,
+    userInfo: ''
   },
   onShow: function() {
     this.setData({
       isNormal: wx.getStorageSync('isNormal')
     })
   },
-  // show a notify window without close button and will disapear automatically
-  // an array should be given while using, array includs notifyTitle and notifyDetail
+  // 显示一个没有关闭按钮并会自动消失的通知窗口
+  // 在使用时应提供一个数组，该数组包括通知标题和通知详情
   showNotify: function(e) {
     this.setData({
       showNotify: true,
@@ -34,14 +35,16 @@ Page({
     // 如果之前登陆过，自动登录
     if (app.globalData.name) {
       this.autoLogin()
+      // this.wxLogin()
     }
     if (app.globalData.isLogin) {
       wx.switchTab({
-        url: '/pages/bbs/bbs',
+        url: '/pages/square/square',
       })
     }
   },
 
+  // 用户名密码
   getInput: function(e) {
     var inputid = e.currentTarget.dataset.inputid
     this.setData({
@@ -80,7 +83,7 @@ Page({
           app.globalData.SESSIONID = res.data.data.SESSIONID
           app.globalData.isLogin = true
           wx.switchTab({
-            url: '../bbs/bbs',
+            url: '../square/square',
           })
         } else {
           wx.removeStorageSync('name');
@@ -145,7 +148,7 @@ Page({
           app.globalData.SESSIONID = res.data.data.SESSIONID
           app.globalData.isLogin = true
           wx.switchTab({
-            url: '../bbs/bbs',
+            url: '../square/square',
           })
         } else {
           var e = ["登陆失败", res.data.message]
@@ -180,4 +183,40 @@ Page({
       url: 'forgetpwd/forgetpwd',
     })
   },
+  // 获取用户信息按钮的回调函数
+  getUserInfo: function(e) {
+    var that = this;
+    // 如果用户拒绝授权，则给出提示
+    if (!e.detail.userInfo) {
+      console.log("用户拒绝授权");
+      return;
+    }
+    // 用户授权，发送请求到后端
+    wx.login({
+      success: function(res) {
+        // 发送 res.code 到后端换取Openid、Session Key、Unionid等
+        console.log(e)
+        wx.request({
+          url: "http://127.0.0.1:8080/auth/login",
+          method: "POST",
+          data: {
+            code: res.code,
+            nickname: e.detail.userInfo.nickName,
+            avatar: e.detail.userInfo.avatarUrl,
+          },
+          success: function(res) {
+            console.log(res.data);
+            if(res.code === "00000") {
+              // 将获取到的用户信息保存到全局变量中，方便其他页面使用
+              getApp().globalData.userInfo = res.data.userInfo;
+              // 跳转到首页
+              wx.switchTab({
+                url: "/pages/square/"
+              })
+            }
+          }
+        })
+      }
+    })
+  }
 })

@@ -1,7 +1,7 @@
 // components/search/index.js
-import { KeywordModel } from '../../models/keyword.js'
-import { BookModel } from '../../models/book.js'
-import { paginationBev } from '../behaviors/pagination.js'
+import { KeywordModel } from '../../../models/keyword.js'
+import { BookModel } from '../../../models/book.js'
+import { paginationBev } from '../../../components/behaviors/pagination.js'
 
 const keywordModel = new KeywordModel()
 const bookModel = new BookModel()
