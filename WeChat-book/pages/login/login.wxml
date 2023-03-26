@@ -22,8 +22,12 @@
 </view>
 <view class="forgetpwd" bindtap="forgetpwd" wx:if="{{isNormal==true}}">忘记密码?</view>
 
-<view class="login-wx">
-  <button class="userInfo-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo" type="primary">一键授权登录</button>
+<!-- 微信登录 -->
+<view class="wx-login">
+  <button class="userInfo-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+    <image src="https://img.asia-home.com.cn/uploadimg/image/20220402/16488762236247dabfac9487.08601339.jpeg" mode="widthFix"/>
+  </button>
+  <view style="margin: auto; font-size: 1rem; color: #74c7f2;">微信登录</view>
 </view>
 
 <!-- 信息提示层，一定时间后自动关闭 -->

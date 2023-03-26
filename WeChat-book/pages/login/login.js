@@ -2,7 +2,6 @@
 const app = getApp()
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     name: "",
     password: "",
     showNotify: false,
@@ -66,7 +65,7 @@ Page({
     /* 发起请求验证密码 */
     let that = this
     wx.request({
-      url: app.globalData.baseUrl + "checkLogin",
+      url: app.globalData.baseUrl + "/auth/account/login",
       data: {
         type: type,
         name: name,
@@ -88,7 +87,7 @@ Page({
         } else {
           wx.removeStorageSync('name');
           wx.removeStorageSync('password');
-          var e = ["登陆失败", res.data.message]
+          var e = ["登陆失败", res.data.msg]
           that.showNotify(e)
         }
       },
@@ -108,7 +107,7 @@ Page({
       }
     })
   },
-
+  // 登录
   checkLogin: function () {
     var that = this
     var name = this.data.name;
@@ -130,28 +129,28 @@ Page({
     }
     /* 发起请求验证密码 */
     wx.request({
-      url: app.globalData.baseUrl + "checkLogin",
-      // url: 'http://localhost:8080/checkLogin',
+      url: app.globalData.baseUrl + "auth/account/login",
+      // url: 'http://192.168.3.2:8080/auth/account/login',
       data: {
         type: type,
-        name: name,
+        username: name,
         password: password
       },
       method: "POST",
       header: {
-        'content-type': 'application/x-www-form-urlencoded'
+        'content-type': 'application/json'
       },
       success: function(res) {
-        if (res.data.code===0) {
-          wx.setStorageSync('name', name)
-          wx.setStorageSync('password', password)
-          app.globalData.SESSIONID = res.data.data.SESSIONID
+        if (res.data.code==="0000") {
+          wx.setStorageSync('username', res.data.data.username)
+          wx.setStorageSync('avatar', res.data.data.avatar)
+          app.globalData.token = res.data.data.accessToken
           app.globalData.isLogin = true
           wx.switchTab({
             url: '../square/square',
           })
         } else {
-          var e = ["登陆失败", res.data.message]
+          var e = ["登陆失败", res.data.msg]
           that.showNotify(e)
         }
       },
@@ -171,13 +170,13 @@ Page({
       }
     })
   },
-
+  // 注册
   register: function() {
     wx.navigateTo({
       url: 'register/register',
     })
   },
-
+  // 找回密码
   forgetpwd: function () {
     wx.navigateTo({
       url: 'forgetpwd/forgetpwd',
@@ -186,6 +185,10 @@ Page({
   // 获取用户信息按钮的回调函数
   getUserInfo: function(e) {
     var that = this;
+    /* 展示加载动画 */
+    this.setData({
+      isLoading: true
+    })
     // 如果用户拒绝授权，则给出提示
     if (!e.detail.userInfo) {
       console.log("用户拒绝授权");
@@ -195,25 +198,45 @@ Page({
     wx.login({
       success: function(res) {
         // 发送 res.code 到后端换取Openid、Session Key、Unionid等
-        console.log(e)
         wx.request({
-          url: "http://127.0.0.1:8080/auth/login",
+          url: app.globalData.baseUrl + "auth/wx/login",
           method: "POST",
+          header: {
+            'content-type': 'application/json'
+          },
           data: {
             code: res.code,
             nickname: e.detail.userInfo.nickName,
             avatar: e.detail.userInfo.avatarUrl,
           },
           success: function(res) {
-            console.log(res.data);
-            if(res.code === "00000") {
+            if(res.data.code === "0000") {
               // 将获取到的用户信息保存到全局变量中，方便其他页面使用
-              getApp().globalData.userInfo = res.data.userInfo;
-              // 跳转到首页
+              wx.setStorageSync('username', res.data.data.username)
+              wx.setStorageSync('avatar', res.data.data.avatar)
+              app.globalData.token = res.data.data.accessToken
+              app.globalData.isLogin = true
               wx.switchTab({
-                url: "/pages/square/"
+                url: '../square/square',
               })
+            } else {
+              var e = ["登陆失败", res.data.msg]
+              that.showNotify(e)
             }
+          },
+          error: function() {
+            var e = ["提示", "出了点儿错，稍后再试吧"]
+            that.showNotify(e)
+          },
+          complete: function() {
+            that.setData({
+              isLoading: false
+            })
+          },
+          fail: () => {
+            that.setData({
+              isLoading: false
+            })
           }
         })
       }

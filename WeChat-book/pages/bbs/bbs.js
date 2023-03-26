@@ -2,9 +2,7 @@ const app = getApp()
 const util = require('../../utils/util')
 Page({
   data: {
-    imgUrl: app.globalData.imgUrl,
     curItem: 0,
-    // navs: ["热度", "吐槽", "趣闻", "分享"],
     navs: ["热点", "趣闻", "分享"],
     distance: 5,
     picHeight: 0.27*wx.getSystemInfoSync().windowWidth,
@@ -18,7 +16,9 @@ Page({
     isLoading: false,
     isSearch: false,
     postLists: [],
-    isNormal: false
+    isNormal: false,
+    pageSize: 10,
+    pageNum: 1
   },
 
   onShow: function() {
@@ -46,73 +46,75 @@ Page({
     if (app.globalData.name && !app.globalData.isLogin) {
       this.goLogin()
     }
-    // get all posts, 0 represents update action instead of loading
     this.setData({
       showLoading: true
     })
+   // 获取所有的帖子，0 代表更新操作而不是加载。
     this.getPosts(0);
   },
 
+  // 监听用户下拉刷新事件
   onPullDownRefresh() {
     this.setData({
       isSearch: false
     })
     this.getPosts(0);
   },
-
+  // 页面滚动到底部加载更多帖子
   onReachBottom() {
-    // show the loading gif
     this.setData({
       isLoading: true
     })
-    // load more posts, 1 represents load action instead of updating
-    this.data.isSearch?this.getSearchPosts(1):this.getPosts(1)
+    // 加载更多帖子，1 代表加载操作而不是更新
+    this.data.isSearch ? this.getSearchPosts(1) : this.getPosts(1)
   },
 
-  //main function, e is an array which contains action
+  //下面是一个包含操作的数组 e 的主要函数
   getPosts: function(e) {
     var that = this
     var postlen = this.data.postLists.length
     var resPosts = this.data.postLists
-    var currentDate = util.formatTime(new Date)
-    var action = e
+    var currentDate = util.formatTime(new Date)  // 获取当前时间，并赋值给currentDate变量
+    var action = e // 0
     wx.request({
-      url: app.globalData.baseUrl + "getPosts",
-      method: "POST",
+      url: app.globalData.baseUrl + "posts",
+      method: "GET",
       data: {
         type: that.data.curItem,
-        // lastdate is mainlly used when load posts and avoid repeat posts while doing paged query
-        lastdate: action===0?currentDate:that.data.postLists[postlen-1].date
+        pageNum: this.data.pageNum,
+        pageSize: this.data.pageSize
       },
       header: {
-        // because the query is public, so cookie is not needed
-        'content-type': 'application/x-www-form-urlencoded',
-        // 'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
       },
       success: function(res) {
-        if (res.data.code===0) {
-          // while updating, directlly replace the original posts array
+        console.log(".....",res.data.data.list)
+        console.log(".....,,,",res.data)
+        console.log(".....,,,...",action)
+        if (res.data.code==="0000") {
+          // 当更新时，直接替换原始帖子数组
           if (action===0) {
             that.setData({
-              postLists: res.data.data,
+              postLists: res.data.data.list,
             })
           } else {
-            // while loading more
+            // 当加载更多时
             if (!res.data===null) {
-              resPosts.push(res.data.data)
+              resPosts.push(res.data.data.list)
+              console.list(resPosts)
               that.setData({
                 postLists: resPosts
               })
             }
           }
         } else {
-          // show notify window
-          var e = ["刷新失败", res.data.message]
+          // 显示通知窗口
+          var e = ["刷新失败", res.data.msg]
           this.showNotify(e)
         }
       },
       error: function() {
-        // hide the refresh animation
+        // 隐藏刷新动画
         wx.stopPullDownRefresh()
         var e = ["提示", "出了点儿错，稍后再试吧"]
         this.showNotify(e)
@@ -122,14 +124,17 @@ Page({
           showLoading: false,
           isLoading: false
         })
-        // hide the refresh animation
+        // 隐藏刷新动画
         wx.stopPullDownRefresh()
       }
     })
   },
 
+  // 导航栏点击反应
   changeNav: function(e) {
     var pickItem = e.currentTarget.dataset.id
+    console.log(".....,,")
+    console.log(e.currentTarget.dataset.id)
     this.setData({
       curItem: pickItem,
       distance: (30*pickItem + 5),
@@ -138,6 +143,7 @@ Page({
     this.getPosts(0)
   },
 
+  // 点击新建
   toPassage: function(e) {
     if (!app.globalData.isLogin) {
       this.setData({
@@ -146,7 +152,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: 'passage/passage?title='+e.currentTarget.dataset.title+'&postid='+e.currentTarget.dataset.postid,
+      url: 'passage/passage?title='+e.currentTarget.dataset.title+'&postid='+e.currentTarget.dataset.id,
     })
   },
 
@@ -156,6 +162,7 @@ Page({
     })
   },
 
+  // 趣闻、分享
   toNew: function(e) {
     this.setData({
       isSelect: false
@@ -171,7 +178,7 @@ Page({
     })
   },
 
-  // close the window according to response window type
+  // 根据响应窗口类型关闭窗口
   closeWindow: function(e) {
     var modelid = e.currentTarget.dataset.modelid
     this.setData({
@@ -234,7 +241,7 @@ Page({
             })
           }
         } else {
-          var e = ["刷新失败", res.data.message]
+          var e = ["刷新失败", res.data.msg]
           that.showNotify(e)
         }
       },

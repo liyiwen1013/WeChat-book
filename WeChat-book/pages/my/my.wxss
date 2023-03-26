@@ -29,6 +29,7 @@ page {
   /* box-shadow: 0 0 10rpx lightgray; */
 }
 .user-info-nickname, .user-info-mark {
+  /* overflow: hidden; */
   margin: 0 auto;
   height: 50rpx;
   line-height: 50rpx;

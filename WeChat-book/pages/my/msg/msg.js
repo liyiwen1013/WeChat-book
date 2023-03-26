@@ -1,7 +1,6 @@
 const app = getApp()
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     message: [],
     isLogin: false,
     showNotify: false,
@@ -27,7 +26,7 @@ Page({
             message: res.data.data,
           })
         } else {
-          let e = ['提示', res.data.message]
+          let e = ['提示', res.data.msg]
           that.showNotify(e)
         }
       },

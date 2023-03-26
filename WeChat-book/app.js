@@ -23,7 +23,7 @@ App({
         wx.request({
           url: that.globalData.baseUrl + "refreshSession",
           header: {
-            'cookie': 'JSESSIONID=' + that.globalData.SESSIONID
+            'Authorization': 'Bearer ' + app.globalData.token
           }
         })
       }
@@ -41,11 +41,10 @@ App({
   //   })
   // },
   globalData: {
-    SESSIONID: "",
-    baseUrl: "http://127.0.0.1:8080/",
-    imgUrl: "http://127.0.0.1:8080//srcs/",
+    token: "",
+    baseUrl: "http://192.168.3.2:8080/",
     name: wx.getStorageSync('name'),
     password: wx.getStorageSync('password'),
-    isLogin: true
+    isLogin: false
   }
 })

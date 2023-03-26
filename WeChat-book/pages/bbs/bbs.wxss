@@ -127,19 +127,20 @@ page {
 }
 
 .item {
-  width: 92%;
+  width: 90%;
+  height: 430rpx;
   margin: 0 auto;
   position: relative;
   box-sizing: border-box;
-  margin-top: 20rpx;
-  border-radius: 10rpx;
+  margin-top: 30rpx;
+  border-radius: 20rpx;
   overflow: hidden;
 }
 .item-pic {
   position: absolute;
   width: 100%;
   border-radius: 10rpx;
-  max-height: 300rpx;
+  max-height: 450rpx;
   top: 0;
   left: 0;
 }
@@ -152,20 +153,22 @@ page {
 }
 .item-title {
   position: relative;
-  line-height: 40rpx;
+  line-height: 80rpx;
   margin-top: 10rpx;
   padding: 0 10rpx 0 24rpx;
   margin-top: 10rpx;
+  font-size: 26rpx;
 }
 .item-title::before {
   content: "";
   position: absolute;
-  width: 8rpx;
+  width: 100rpx;
   height: 100%;
   top: 0;
-  left: 10rpx;
-  background-color: white;
-  border-radius: 4rpx;
+  left: 0;
+  background-image: url("https://pic.616pic.com/ys_img/00/80/82/MxVk0ytZFY.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .item-content-box {
   position: relative;
@@ -180,13 +183,14 @@ page {
   text-overflow: ellipsis;
   word-break: break-all;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  padding: 0 20rpx;
+  -webkit-line-clamp: 3;
+  padding: 0 25rpx;
   box-sizing: border-box;
+  font-size: 33rpx;
 }
 .item-data {
   position: relative;
-  font-size: 24rpx;
+  font-size: 26rpx;
   text-align: right;
   padding-right: 20rpx;
   margin: 10rpx 0 10rpx 0;

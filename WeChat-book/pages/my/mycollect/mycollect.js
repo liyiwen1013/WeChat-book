@@ -40,7 +40,7 @@ Page({
             mycollect: res.data.data
           })
         } else {
-          let e = ['获取失败', res.data.message]
+          let e = ['获取失败', res.data.msg]
           that.showNotify(e)
         }
       },

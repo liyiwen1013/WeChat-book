@@ -1,26 +1,26 @@
 <!-- my/my.wxml -->
 <image class="mebg" src="../../pics/bgbg.jpg" mode="widthFix" bindtap="previewImg"></image>
 <view class="user-info">
-  <image class="user-info-portrait" src="{{isLogin?(imgUrl+basicInfo.user.avatarurl):'/pics/defaultavatar.png'}}" bindtap="previewImg" data-avatarurl="{{isLogin?imgUrl+basicInfo.user.avatarurl:'/pics/defaultavatar.png'}}" bindlongpress="changeAvatar"></image>
-  <view class="user-info-mark" wx:if="{{isLogin&&basicInfo.user.mark!='NONE'}}">"{{basicInfo.user.mark}}"</view>
+  <image class="user-info-portrait" src="{{isLogin?(basicInfo.avatar):'../../pics/defaultavatar.png'}}" bindtap="previewImg" data-avatarurl="{{isLogin?(basicInfo.avatar):'../../pics/defaultavatar.png'}}" bindlongpress="changeAvatar"></image>
+  <!-- <view class="user-info-mark" wx:if="{{isLogin&&basicInfo.user.mark!='NONE'}}">"{{basicInfo.user.mark}}"</view> -->
   <!-- <view class="user-info-getmark" wx:if="{{isLogin&&basicInfo.user.mark=='NONE'}}" bindtap="showAuthentication">前往认证</view> -->
   <view class="loginbtn" wx:if="{{!isLogin}}" bindtap="toLogin">立即登录</view>
-  <view class="user-info-nickname" wx:if="{{isLogin}}" bindtap="changeName">『 {{basicInfo.user.name}} 』</view>
+  <view class="user-info-nickname" wx:if="{{isLogin}}" bindtap="changeName">{{basicInfo.username}}</view>
 </view>
 <view class="lightme">
   <view bindtap="toNext" data-id="notify" wx:if="{{isNormal==true}}">
     <image src="../../pics/notify.png"></image>
     <view class="txt">通知</view>
-    <text class="num" wx:if="{{isLogin}}">未读 {{basicInfo.unreadnotify}}</text>
+    <text class="num" wx:if="{{isLogin}}">未读 {{basicInfo.unreadNotifyCount}}</text>
   </view>
   <view bindtap="toNext" data-id="msg" wx:if="{{isNormal==true}}">
     <image src="../../pics/unreadmsg.png"></image>
     <view class="txt">消息</view>
-    <text class="num" wx:if="{{isLogin}}">未读 {{basicInfo.unreadmessage}}</text>
+    <text class="num" wx:if="{{isLogin}}">未读 {{basicInfo.unreadMessageCount}}</text>
   </view>
   <view bindtap="toNext" data-id="mypost" wx:if="{{isNormal==true}}">
     <image src="../../pics/mypost.png"></image>
-    <view class="txt">发布  </view>
+    <view class="txt">发布</view>
     <text class="more"></text>
   </view>
   <view bindtap="toNext" data-id="mycomment" wx:if="{{isNormal==true}}">
@@ -28,11 +28,11 @@
     <view class="txt">评论</view>
     <text class="more"></text>
   </view>
-  <!-- <view bindtap="toNext" data-id="mycollect" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="mycollect" wx:if="{{isNormal==true}}">
     <image src="../../pics/mycollect.png"></image>
     <view class="txt">收藏</view>
     <text class="more"></text>
-  </view> -->
+  </view>
 </view>
 
 <view class="conf" style="margin-bottom:0">
@@ -64,11 +64,11 @@
     <view class="txt">更新日志</view>
     <text class="more"></text>
   </view>
-  <!-- <view bindtap="toFeedBack">
+  <view bindtap="toFeedBack">
     <image src="../../pics/feedback.png"></image>
     <view class="txt">反馈</view>
     <text class="more"></text>
-  </view> -->
+  </view>
   <view class="clearcache" bindtap="clearCache">
     <image src="../../pics/cache.png"></image>
     <view class="txt">清除缓存</view>
@@ -76,9 +76,9 @@
   </view>
 </view>
 
-<view style="margin-top:30rpx;text-align:center;font-size:24rpx;color:#ccc;font-style:italic;">👏 developed by @quarkape</view>
-<view style="text-align:center;font-size:24rpx;color:#ccc;font-style:italic;">📬 qq2446247905</view>
-<view style="padding-bottom:30rpx;text-align:center;font-size:24rpx;color:#ccc;font-style:italic;">🎉 https://github.com/lightme.git</view>
+<view style="margin-top:30rpx;text-align:center;font-size:24rpx;color:#ccc;font-style:italic;">📬 qq 1063371105</view>
+<!-- <view style="text-align:center;font-size:24rpx;color:#ccc;font-style:italic;">📬 qq2446247905</view> -->
+<view style="padding-bottom:30rpx;text-align:center;font-size:24rpx;color:#ccc;font-style:italic;">👏 developed by momo</view>
 
 
 <!-- 修改用户名的弹窗 -->
@@ -86,7 +86,7 @@
 	<view class="innerModel">
 		<view class="closebtn" bindtap="closeWindow" data-windowid="showModifyName"></view>
 		<view class="title">修改昵称</view>
-    <input placeholder="数字、字母和中文(10字以内)" maxlength="10" bindinput="getInput" data-inputid="newname" value="{{newname}}"></input>
+    <input placeholder="数字、字母和中文(10字以内)" maxlength="10" bindinput="getInput" data-inputid="newname" value="{{username}}"></input>
     <view class="go-feedback" bindtap="goModifyName">立即修改</view>
 	</view>
 </view>
@@ -131,7 +131,7 @@
 <!-- 加载动画 -->
 <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="../../pics/loading3.gif"></image></view>
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>
   </view>
 </view>

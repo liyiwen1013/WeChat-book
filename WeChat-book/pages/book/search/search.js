@@ -15,7 +15,6 @@ Component({
     more: {
       type: String,
       observer: 'loadMore'
-      // true, true, true,
     }
   },
 
@@ -63,7 +62,6 @@ Component({
           }, () => {
             this.unLocked()
           })
-        // 死锁
       }
     },
 

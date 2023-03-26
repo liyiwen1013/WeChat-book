@@ -10,13 +10,6 @@
       "list": [
         {
           "name": "",
-          "pathName": "pages/square/square",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
           "pathName": "pages/myself/myself",
           "query": "",
           "launchMode": "default",
@@ -32,6 +25,13 @@
         {
           "name": "",
           "pathName": "pages/hotc/hotc",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/my/my",
           "query": "",
           "launchMode": "default",
           "scene": null

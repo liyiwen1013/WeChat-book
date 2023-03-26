@@ -1,7 +1,6 @@
 const app = getApp();
 Page({
   data: {
-    // imgUrl: app.globalData.imgUrl,
     isMark: "",
     isLogin: false,
     showNotify: false,
@@ -73,22 +72,22 @@ Page({
   getBasicInfo: function() {
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "getBasicInfo",
-      // url: "http://localhost:8080/getBasicInfo",
+      url: app.globalData.baseUrl + "user/info",
+      // url: "http://192.168.3.2:8080/user/info",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID='+ app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
-      method: "POST",
+      method: "GET",
       success(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
             basicInfo: res.data.data,
             showLoading: false,
             loadingTxt: ""
           })
         } else {
-          var e = ['个人资料获取失败', res.data.message]
+          var e = ['个人资料获取失败', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -105,6 +104,7 @@ Page({
     })
   },
 
+  // 点击头像
   previewImg: function(e) {
     let avatarurl = e.currentTarget.dataset.avatarurl
     wx.previewImage({
@@ -169,7 +169,7 @@ Page({
             showFeedback: false
           })
         } else {
-          var e = ['反馈失败', res.data.message]
+          var e = ['反馈失败', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -186,6 +186,7 @@ Page({
     })
   },
 
+  // 头像
   changeAvatar() {
     if (!app.globalData.isLogin) {
       let e = ['提示', '请先登录']
@@ -193,7 +194,7 @@ Page({
       return
     }
     let that = this
-    wx.chooseImage({
+    wx.chooseMedia ({
       count: 1,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
@@ -241,7 +242,7 @@ Page({
           let e = ['提示', '头像更换成功，如果没有刷新请重启小程序']
           that.showNotify(e)
         } else {
-          let e = ['提示', resp.message]
+          let e = ['提示', resp.msg]
           that.showNotify(e)
         }
       },
@@ -252,35 +253,35 @@ Page({
     })
   },
 
+  // 点击用户名
   changeName() {
     this.setData({
       showModifyName: true
     })
   },
-
   // 修改用户名
   goModifyName() {
     let that = this
     wx.request({
-      url: app.globalData.baseUrl + "changeName",
-      // url: "http://localhost:8080/changeName",
+      url: app.globalData.baseUrl + "user/username",
+      method: "PUT",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        newname: that.data.newname
+        username: that.data.newname
       },
       success(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
-            'basicInfo.user.name': that.data.newname,
+            'basicInfo.username': that.data.username,
             'showModifyName': false
           })
           let e = ['提示', '用户名修改成功']
           that.showNotify(e)
         } else {
-          let e = ['提示', res.data.message]
+          let e = ['提示', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -291,6 +292,7 @@ Page({
     })
   },
 
+  // 清除缓存
   clearCache() {
     this.setData({
       showClear: true

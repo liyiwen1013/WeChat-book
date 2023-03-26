@@ -28,19 +28,18 @@ Page({
   getAllNotify: function() {
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "getAllNotify",
-      method: "POST",
+      url: app.globalData.baseUrl + "notify",
+      method: "GET",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
             notify: res.data.data,
           })
         } else {
-          var e = ['提示', res.data.message]
+          var e = ['提示', res.data.msg]
           that.showNotify(e)
         }
       },

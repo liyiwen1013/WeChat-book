@@ -2,9 +2,9 @@
 <view class="logo">
   <image src="../../pics/logotxt.png" mode="heightFix"></image>
 </view>
-<!-- <view class="logotxt">
-  <view class="txt">On the origin of topic</view>
-</view> -->
+<view class="logotxt">
+  <view class="txt">换个密码，换种心情吧</view>
+</view>
 
 <view class="inputform" wx:if="{{isNormal==true}}">
   <view class="newpwd">

@@ -85,7 +85,7 @@ Page({
             postComment: res.data.data.postComment
           })
         } else {
-          var e = ['提示', res.data.message]
+          var e = ['提示', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -183,7 +183,7 @@ Page({
             comment: ""
           })
         } else {
-          var e = ["提示", res.data.message]
+          var e = ["提示", res.data.msg]
           that.showNotify(e)
         }
       },
@@ -213,7 +213,7 @@ Page({
             'postInfo.agree': res.data.data
           })
         } else {
-          var e = ['点赞失败', res.data.message]
+          var e = ['点赞失败', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -243,7 +243,7 @@ Page({
             'postInfo.collect': res.data.data
           })
         } else {
-          var e = ['收藏失败', res.data.message]
+          var e = ['收藏失败', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -296,7 +296,7 @@ Page({
           var e = ['提示', '举报信息已收到，我们将尽快核实并通知与您。感谢您为健康网络环境做出的贡献']
           that.showNotify(e)
         } else {
-          var e = ['提示', res.data.message]
+          var e = ['提示', res.data.msg]
           that.showNotify(e)
         }
       },

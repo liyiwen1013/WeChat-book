@@ -4,12 +4,12 @@
     <image src="../../pics/logotxt.png" mode="heightFix"></image>
   </view>
   <view class="logotxt">
-    <view class="txt">On the origin of topic</view>
+    <view class="txt">准备好，您的心灵之旅即将出发</view>
   </view>
 
   <view class="registerform">
     <!-- <view class="avatar" bindtap="selectAvatar">
-      <image class="avatar-img" src="{{avatarUrl==''?'/pics/anonymous.jpg':avatarUrl}}"></image>
+      <image class="avatar-img" src="{{avatarUrl==''?'../../../pics/anonymous.jpg':avatarUrl}}"></image>
       <view class="pickimg"></view>
     </view> -->
     <view class="username">
@@ -46,9 +46,9 @@
       <view class="closebtn" bindtap="closeSla" data-modelid="isSla"></view>
       <view class="title">服务协议</view>
       <view class="content">
-        <view>1、您必须为自己论坛账号下的一切行为负责，包括您所发表的任何内容以及由此产生的任何后果。</view>
-        <view>2、您在使用过程中不得利用本论坛从事违法违规行为，包括但不限于以下行为：违反宪法确定的基本原则的；危害国家统一、主权和领土完整的；泄露国家秘密、危害国家安全和损害国家荣耀和利益的；煽动民族仇恨和歧视的；宣扬邪教迷信的；散布谣言的；宣扬淫秽、色情、赌博、暴力的；侮辱、诽谤他人的、违背社会公德的。</view>
-        <view>3、小程序开发者是微信小程序'话题起源说'的知识产权权利人。</view>
+        <view>1、您必须为自己在此账号下的一切行为负责，包括您所发表的任何内容以及由此产生的任何后果。</view>
+        <view>2、您在使用过程中不得利用此小程序从事违法违规行为，包括但不限于以下行为：违反宪法确定的基本原则的；危害国家统一、主权和领土完整的；泄露国家秘密、危害国家安全和损害国家荣耀和利益的；煽动民族仇恨和歧视的；宣扬邪教迷信的；散布谣言的；宣扬淫秽、色情、赌博、暴力的；侮辱、诽谤他人的、违背社会公德的。</view>
+        <view>3、小程序开发者是微信小程序'此间有书'的知识产权权利人。</view>
         <view style="text-align:right;">此间有书</view>
       </view>
     </view> 
@@ -68,7 +68,7 @@
 <!-- 加载动画 -->
 <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="../../pics/loading.gif"></image></view>
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">{{loadingTxt}}</view>
   </view>
 </view>

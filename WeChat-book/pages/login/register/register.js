@@ -111,18 +111,13 @@ Page({
     // 发送请求，验证并获取验证码
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "getAuthCodeAtRegister",
-      // url: 'http://localhost:8080/getAuthCodeAtRegister',
-      data: {
-        name: name,
-        email: email
-      },
-      method: "POST",
+      url: app.globalData.baseUrl + "auth/code/register/send/" + email,
+      // url: 'http://192.168.3.2:8080//auth/code/register/send/{email}',
+      method: "GET",
       header: {
-        'content-type': 'application/x-www-form-urlencoded'
       },
       success: function(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
             hasAuthcode: true,
           })
@@ -151,7 +146,7 @@ Page({
           that.setData({
             isInfoConfirmed: false,
           })
-          var e = ['提示', res.data.message]
+          var e = ['提示', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -177,8 +172,7 @@ Page({
       }
     })    
   },
-
-  // click register button and has select an avatar
+  // 点击注册按钮并选择了一个头像
   toRegister: function() {
     var name = this.data.name;
     var password = this.data.password;
@@ -206,21 +200,20 @@ Page({
     })
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "register",
-      // url: 'http://localhost:8080/register',
+      url: app.globalData.baseUrl + "auth/account/register",
+      // url: 'http://192.168.3.2:8080/auth/account/register',
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json'
       },
       method: "POST",
       data: {
-        'name': name,
+        'username': name,
         'password': password,
         'email': email,
-        'authcode': authcode
+        'emailVerifyCode': authcode
       },
       success (res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           var e = ['提示', '注册成功!即将跳转到登录页面']
           that.showNotify(e)
           setTimeout(function() {
@@ -229,7 +222,7 @@ Page({
             })
           }, 2000)
         } else {
-          var e = ['提示', res.data.message]
+          var e = ['提示', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -276,7 +269,7 @@ Page({
     //         })
     //       }, 3000)
     //     } else {
-    //       var e = ['提示', resp.message]
+    //       var e = ['提示', resp.msg]
     //       that.showNotify(e)
     //     }
     //   },

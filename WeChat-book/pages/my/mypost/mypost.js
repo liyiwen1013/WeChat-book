@@ -50,7 +50,7 @@ Page({
             myposts: res.data.data
           })
         } else {
-          let e = ['获取发表失败', res.data.message]
+          let e = ['获取发表失败', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -106,7 +106,7 @@ Page({
           let e = ['提示', '话题已成功删除啦']
           that.showNotify(e)
         } else {
-          let e = ['提示', res.data.message]
+          let e = ['提示', res.data.msg]
           that.showNotify(e)
         }
       },

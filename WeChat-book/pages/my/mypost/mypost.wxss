@@ -145,7 +145,7 @@ page {
   align-items: center;
 }
 .null-data image {
-  width: 40%;
+  width: 100%;
   margin-bottom: 20rpx;
 }
 

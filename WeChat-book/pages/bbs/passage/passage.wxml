@@ -82,11 +82,10 @@
       
     <!-- 如果没有评论，显示一张图片 -->
     <view class="no-comment" wx:if="{{postComment.length==0}}">
-      <image src="{{imgUrl}}/wxbg/nulldata.png" mode="widthFix"></image>
+      <image src="https://pic4.zhimg.com/v2-405fe33df25b3d6a1c8617054f8ace5b_b.gif" mode="widthFix"></image>
       <view>快来发表第一个评论吧</view>
       <view style="height: 80rpx"></view>
     </view>
-
     <view class="bottomline" wx:if="{{postComment.length!=0}}"><text>我的底线</text></view>
   </view>
 </view>
@@ -105,7 +104,7 @@
 <!-- 加载动画 -->
 <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="../../../pics/loading.gif"></image></view>
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>
   </view>
 </view>

@@ -21,8 +21,7 @@ Page({
     })
   },
 
-  // show a notify window without close button and will disapear automatically
-  // an array should be given while using, array includs notifyTitle and notifyDetail
+  // 显示一个没有关闭按钮的通知窗口，并会自动消失
   showNotify: function(e) {
     this.setData({
       showNotify: true,
@@ -76,22 +75,17 @@ Page({
     })
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "getAuthcodeAtFindBackPassword",
-      method: "POST",
-      data: {
-        email: email
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
+      url: app.globalData.baseUrl + "auth/code/forget/send/" + email,
+      method: "GET",
       success: function(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
             isInfoConfirmed: true,
             hasGetCode: true,
           })
           var e = ['提示','验证码已发送到邮箱中，请前往查看']
           that.showNotify(e)
+          // 保存当前session，用于验证码的验证
           app.globalData.SESSIONID = res.data.data.SESSIONID;
           that.data.setInter = setInterval(function() {
             if (that.data.restTime>0) {
@@ -113,7 +107,7 @@ Page({
           that.setData({
             isInfoConfirmed: false,
           })
-          var e = ['提示',res.data.message]
+          var e = ['提示',res.data.msg]
           that.showNotify(e)
         }
       },
@@ -140,6 +134,7 @@ Page({
     
   },
 
+  // 找回密码
   toFindPwdBack: function() {
     if (!this.data.hasGetCode) {
       var e = ['提示','请先获取验证码']
@@ -160,19 +155,18 @@ Page({
     })
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "findBackPassword",
-      method: "POST",
+      url: app.globalData.baseUrl + "auth/password",
+      method: "PUT",
       data: {
         password: password,
         email: email,
-        authcode: authcode,
+        emailVerifyCode: authcode,
       },
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
       },
       success: function(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           var e = ['提示','密码修改成功，3s后跳转到登陆页面']
           that.showNotify(e)
           setTimeout(function() {
@@ -181,7 +175,7 @@ Page({
             })
           }, 3000)
         } else {
-          var e = ['提示',res.data.message]
+          var e = ['提示',res.data.msg]
           that.showNotify(e)
         }
       },

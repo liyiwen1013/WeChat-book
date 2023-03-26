@@ -12,7 +12,7 @@
 
   <!-- 当用户当前没有任何消息的时候，显示空的信息 -->
   <view class="null-data" wx:if="{{mycomment.length==0}}">
-    <image src="{{imgUrl}}/wxbg/nulldata.png" mode="widthFix"></image>
+    <image src="https://pic4.zhimg.com/v2-405fe33df25b3d6a1c8617054f8ace5b_b.gif" mode="widthFix"></image>
     <view>看来你还没进行过评论</view>
   </view>
 </view>

@@ -1,22 +1,22 @@
 const app = getApp();
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     isNormal: false,
-    postType: 0,
+    postType: 1,
     isAnonymous: false,
     isMoreInfo: false,
-    picUrls: [],
     customBg: ['DA4453','E9573F','8CC152','39b54a','48CFAD','37BCC9','4FC1E9','3BAFDA','4A89DC','0081ff','967ADC','6739b6','D770AD','9c26b0','a5673f','8799a3','656D78','434A54'],
     pickedCustomBg: "79d0fc",
     title: "",
     content: "",
-    placeHolders: ["真知灼见", "今日趣事", "优质资源"],
+    placeHolders: ["今日趣事", "优质资源"],
     showNotify: false,
     notifyTitle: "",
     notifyDetail: "",
     showLoading: false,
-    defaultbg: ['nbga.jpg', 'nbgb.jpg', 'nbgc.jpg', 'nbgd.jpg', 'nbge.jpg']
+    defaultbg: ['https://p.qqan.com/up/2016-7/2016071115340721509.gif', 'https://www.gif.cn/Upload/newsucai/2021-06-02/162262263362400.gif', 'https://cdn.pixabay.com/photo/2023/03/20/12/30/tulips-7864592__340.jpg'],
+    bgType: 3,
+    bgContent: "79d0fc"
   },
   onShow: function() {
     this.setData({
@@ -39,6 +39,7 @@ Page({
     }, 2000)
   },
 
+  // 匿名了解更多
   showAnonymousInfo: function() {
     this.setData({
       isMoreInfo: true
@@ -51,25 +52,28 @@ Page({
     })
   },
 
+  // 关闭了解更多
   closeSelect: function() {
     this.setData({
       isMoreInfo: false
     })
   },
 
+  // 匿名发布
   changeCheckboxStatus: function(e) {
     this.setData({
       isAnonymous: this.data.isAnonymous?false:true
     })
   },
 
+  // 选择上传图片
   selectPic: function() {
-    var picUrl = []
     var self = this
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
+      camera: ['front', 'back'],
       success: function (res) {
         let picsize = res.tempFiles[0].size;
         let path = res.tempFiles[0].path
@@ -84,9 +88,10 @@ Page({
           self.showNotify(e)
           return
         }
-        picUrl.push(res.tempFilePaths[0])
+        console.log(res)
         self.setData({
-          picUrls: picUrl,
+          bgContent: res.tempFilePaths[0],
+          bgType: 1,
           pickedCustomBg: "0081ff"
         })
       }
@@ -94,18 +99,20 @@ Page({
   },
 
   previewPic: function() {
+    var tmp = []
+    tmp.push(this.data.bgContent)
     wx.previewImage({
-      urls: this.data.picUrls,
+      urls: tmp,
     })
   },
 
   deletePic: function() {
-    var picUrl = []
     this.setData({
-      picUrls: picUrl
+      bgContent: []
     })
   },
 
+  // 标题输入
   getInput: function(e) {
     var inputid = e.currentTarget.dataset.inputid
     this.setData({
@@ -113,93 +120,49 @@ Page({
     })
   },
   
+  // 选择默认图片
   pickDefaultBg(e) {
     // this.deletePic()
     let bgindex = e.currentTarget.dataset.bgindex
     this.setData({
-      'picUrls[0]': this.data.imgUrl + '/wxbg/' + this.data.defaultbg[bgindex]
+      bgType: 2,
+      bgContent: this.data.defaultbg[bgindex]
     })
   },
 
+  // 纯色
   pickCurrentColor: function(e) {
     this.deletePic()
     this.setData({
+      bgType: 3,
+      bgContent: e.currentTarget.dataset.custombg,
       pickedCustomBg: e.currentTarget.dataset.custombg
     })
   },
 
-  addPicturePost: function() {
-    this.setData({
-      showLoading: true
-    })
-    var that = this
-    wx.uploadFile({
-      filePath: that.data.picUrls[0],
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
-      },
-      method: "POST",
-      name: 'postpicture',
-      formData: {
-        'type': that.data.postType,
-        'title': that.data.title,
-        'content': that.data.content,
-        'imgtype': 0,
-        'imgurl': "",
-        'anonymous': that.data.isAnonymous?1:0
-      },
-      url: app.globalData.baseUrl + 'addPicturePost',
-      success: function(res) {
-        let resp = JSON.parse(res.data)
-        if (resp.code===0) {
-          var e = ["发布成功", "发布成功，即将跳转到首页"]
-          that.showNotify(e)
-          setTimeout(function() {
-            wx.switchTab({
-              url: '/pages/bbs/bbs',
-            })
-          }, 2000)
-        } else {
-          var e = ["发布失败",resp.message]
-          that.showNotify(e)
-        }
-      },
-      error: function() {
-        var e = ["提示", "出了点儿错，稍后再试吧"]
-        that.showNotify(e)
-      },
-      complete: function() {
-        that.setData({
-          showLoading: false
-        })
-      }
-    })
-  },
-
-  addSimplePost: function(e) {
-    let action = e
+  // 新建帖子
+  addPost: function() {
     this.setData({
       showLoading: true
     })
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + 'addSimplePost',
+      url: app.globalData.baseUrl + 'posts',
       data: {
         type: that.data.postType,
         title: that.data.title,
         content: that.data.content,
-        anonymous: that.data.isAnonymous?1:0,
-        imgtype: action[0],
-        imgurl: action[1]
+        isAnonymous: that.data.isAnonymous,
+        bgType: that.data.bgType,
+        bgContent: that.data.bgContent
       },
       method: "POST",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           var e = ["发布成功", "发布成功，即将跳转到首页"]
           that.showNotify(e)
           setTimeout(function() {
@@ -208,7 +171,7 @@ Page({
             })
           }, 2000)
         } else {
-          var e = ["提示", res.data.message]
+          var e = ["提示", res.data.msg]
           that.showNotify(e)
         }
       },
@@ -229,41 +192,47 @@ Page({
     })
   },
 
+  // 发布
   toPost: function() {
     let title = this.data.title
     let content = this.data.content
-    let picUrlsObj = this.data.picUrls
+    let bgType = this.data.bgType
     if (title.trim().length===0 || content.trim().length===0) {
-      var e = ["提示","标题不能为空~"]
+      var e = ["提示","标题或正文不能为空~"]
       this.showNotify(e)
       return
     }
-    // if (title.replace(/\s+/g, '').length===0 || content.replace(/\s+/g, '').length===0) {
-    //   var e = ["提示","标题或内容不能全为空"]
-    //   this.showNotify(e)
-    //   return
-    // }
-    if (title.length > 40 || content.length > 1000) {
+    if (title.length > 30 || content.length > 500) {
       var e = ["提示","标题或正文字数超过限制"]
       this.showNotify(e)
       return
     }
-    // 此方法中，simplepost是指使用预设图片以及纯色背景两种情况
-    // picturepost是指上传了自定义的图片的情况
-    // 后端可通过imgurl是否包含wxbg字符串来判断是预设图片还是纯色背景
-    // 代码0表示添加了图片（包括预设图片），代码1表示只有纯色背景
-    // 后端会进行处理，最终0表示自定义图片，1表示预设图片，2表示纯色背景
-    if (picUrlsObj.length!==0) {
-      if (picUrlsObj[0].indexOf(this.data.imgUrl) !== -1) {
-        var e = [0, this.data.picUrls]
-        this.addSimplePost(e)
-      } else {
-        this.addPicturePost()
-      }
-    } else {
-      var e = [1, this.data.pickedCustomBg]
-      this.addSimplePost(e)
+    if (bgType == 1) {
+      // 用户自定义的图片，需要上传到服务器
+      wx.uploadFile({
+        filePath: this.data.bgContent,
+        url: app.globalData.baseUrl + 'file/upload',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + app.globalData.token
+        },
+        method: "POST",
+        name: 'file',
+        formData: {},
+        success: function(res) {
+          this.data.bgContent = res.data.data
+          console.log(res)
+        },
+        fail: function (res) {
+          // 上传失败后返回的数据
+          console.log(res.errMsg);
+          var e = ["提示","图片上传失败~"]
+          this.showNotify(e)
+          return
+        }
+      })
     }
+    this.addPost()
   },
 
   closeResultMsg: function() {

@@ -17,18 +17,18 @@
   <view class="addOne" bindtap="toSelect" hover-class="click-addOne" wx:if="{{isNormal==true}}"></view>
 
   <!-- 项目列表 -->
-  <view class="item" bindtap="toPassage" wx:for="{{postLists}}" wx:key="index" style="background:{{item.imgtype==2?'#'+item.imgurl:'#aaa'}}" data-title="{{item.title}}" data-postid="{{item.postid}}">
-    <!-- 0表示自定义图片，1表示预设图片，2表示纯色图片 -->
-    <image wx:if="{{item.imgtype==0||item.imgtype==1}}" class="item-pic" src="{{imgUrl + item.imgurl}}" mode="aspectFill"></image>
+  <view class="item" bindtap="toPassage" wx:for="{{postLists}}" wx:key="index" style="background:{{item.bgType==3?'#'+item.bgContent:'#fff'}}" data-title="{{item.title}}" data-postid="{{item.id}}">
+    <!-- 1表示自定义图片，2表示预设图片，3表示纯色图片 -->
+    <image wx:if="{{item.bgType==1||item.bgType==2}}" class="item-pic" src="{{item.bgContent}}" mode="aspectFill"></image>
     <view class="item-title">{{item.title}}</view>
     <view class="item-content-box">
       <view class="item-content">{{item.content}}</view>
     </view>
-    <view class="item-data" wx:if="{{isNormal==true}}">{{item.view}}浏览 | {{item.comment}}评论</view>
+    <view class="item-data" wx:if="{{isNormal==true}}">{{item.browseCount}}浏览 | {{item.commentCount}}评论</view>
   </view>
 </view>
 
-<view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../pics/space.jpg" /></view>
+<!-- <view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../pics/space.jpg" /></view> -->
 
 <view class="logotxt" wx:if="{{isLoading}}">
   <view class="txt">玩命加载中</view>
@@ -42,15 +42,11 @@
     <view class="closebtn" bindtap="closeWindow" data-modelid="isSelect"></view>
     <view class="title">新建</view>
     <view class="options">
-      <!-- <view hover-class="click-select" bindtap="toNew" data-id="0">
-        <image src="../../pics/opinion.png"></image>
-        <view>吐槽</view>
-      </view> -->
-      <view hover-class="click-select"  bindtap="toNew" data-id="0">
+      <view hover-class="click-select"  bindtap="toNew" data-id="1">
         <image src="../../pics/memory.png"></image>
         <view>趣闻</view>
       </view>
-      <view hover-class="click-select"  bindtap="toNew" data-id="1">
+      <view hover-class="click-select"  bindtap="toNew" data-id="2">
         <image src="../../pics/share.png"></image>
         <view>分享</view>
       </view>
@@ -79,7 +75,7 @@
 <!-- 加载动画 -->
 <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="../../pics/"></image></view>
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>
   </view>
 </view>
