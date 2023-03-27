@@ -1,7 +1,5 @@
 {
   "pages":[
-    "pages/square/square",
-    "pages/square/square-detail/square-detail",
     "pages/hotc/hotc",
     "pages/book/book",
     "pages/book/library/library",
@@ -34,12 +32,6 @@
     "selectedColor": "#74c7f2",
     "borderStyle": "black",
     "list": [
-    {
-      "pagePath": "pages/square/square",
-      "selectedIconPath": "images/home.png",
-      "iconPath": "images/home_.png",
-      "text": "广场"
-    },
     {
       "pagePath": "pages/hotc/hotc",
       "selectedIconPath": "images/home.png",

@@ -1,7 +1,7 @@
 <!-- 导航栏组件，包括导航栏、选项卡和动画条 -->
 <view class="nav-holder">
 	<view class="nav" id="test">
-		<view class="nav-item nav-item0" wx:for="{{navs}}" wx:key="index" bindtap='changeNav' data-id="{{index}}">
+		<view class="nav-item" wx:for="{{navs}}" wx:key="index" bindtap='changeNav' data-id="{{index}}">
 			{{navs[index]}}
 		</view>
 		<view class="ani-bar" style="left:{{distance}}\%"></view>
@@ -9,19 +9,18 @@
 </view>
 <view style="height:60rpx"></view>
 
-<!-- 正能量背景 -->
+<!-- 书籍背景 -->
 <view class="bgshapea" wx:if="{{curItem==0}}">
 	<view class="squarea"></view>
 	<view class="trianglea" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
 </view>
 
 <!-- 正能量背景 -->
-<view class="bgshapea" wx:if="{{curItem==1}}">
-	<view class="squarea"></view>
-	<view class="trianglea" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
+<view class="bgshapec" wx:if="{{curItem==1}}">
+	<view class="squarec"></view>
 </view>
 
-<!-- 负能量背景 -->
+<!-- 电影背景 -->
 <view class="bgshapeb" wx:if="{{curItem==2}}">
 	<view class="squareb"></view>
 	<view class="triangleb" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
@@ -30,7 +29,7 @@
 <!-- 日期 -->
 <view class="date" wx:if="{{curItem!=1}}"><text>{{cdate[curIndex][1]}}</text> / {{cdate[curIndex][2]}} / {{cdate[curIndex][0]}}</view>
 
-<!-- 正能量正文内容 -->
+<!-- 书籍正文内容 -->
 <view wx:if="{{curItem==0}}">
   <!-- 图片轮播，不自动播放 -->
 	<swiper class="outerZ" autoplay="{{false}}" duration="500" bindchange="changeSentence" style="height:{{picH}}px" indicator-dots="{{true}}">
@@ -38,7 +37,7 @@
 			<image src="{{item.picture2}}" mode="widthFix" bindtap="picPreview" data-url="{{item.picture2}}"></image>
     </swiper-item>
 	</swiper>
-  <view bindlongpress="createZPost" data-posttype="0" data-word="{{sitem[curIndex].note}}">
+  <view data-posttype="0" data-word="{{sitem[curIndex].note}}">
     <view class="en-sentence" bindtap="copySentence" data-type="0">{{sitem[curIndex].content}}</view>
     <view class="ch-sentence" bindtap="copySentence" data-type="1">{{sitem[curIndex].note}}</view>
   </view>
@@ -48,59 +47,42 @@
 	</view>
 </view>
 
-<!-- 负能量正文内容 -->
+<!-- 音乐正文内容 -->
 <view wx:if="{{curItem==1}}">
-	<swiper class="outerZd" autoplay="{{false}}" duration="500" bindchange="changeDSentence" indicator-dots="{{true}}">
+	<swiper class="outerZd" autoplay="{{false}}" duration="500" bindchange="changeSentence" indicator-dots="{{true}}">
 		<swiper-item class="ddate" wx:for="{{cdate}}" wx:key="index">
-			<view class="dmonth">{{cdate[curDIndex][0]}}</view>
-			<view class="dday">{{scdate[curDIndex][1]}}</view>
-			<view class="dweekday">{{cdate[curDIndex][2]}}</view>
+			<view class="dmonth">{{cdate[curMIndex][0]}}</view>
+			<view class="dday">{{scdate[curMIndex][1]}}</view>
+			<view class="dweekday">{{cdate[curMIndex][2]}}</view>
 		</swiper-item>
 	</swiper>
-	<view class="dsentence" bindlongpress="createZPost" data-posttype="1" bindtap="copydSentence" data-dindex="0" data-word="{{ditem[curDIndex][0]}}" wx:if="{{ditem[curDIndex][0]}}" style="margin-top:20rpx" >{{ditem[curDIndex][0]}}</view>
-	<view class="dsentence" bindlongpress="createZPost" data-posttype="1" bindtap="copydSentence" data-dindex="1" data-word="{{ditem[curDIndex][1]}}" wx:if="{{ditem[curDIndex][1]}}">{{ditem[curDIndex][1]}}</view>
-	<view class="dsentence" bindlongpress="createZPost" data-posttype="1" bindtap="copydSentence" data-dindex="2" data-word="{{ditem[curDIndex][2]}}" wx:if="{{ditem[curDIndex][2]}}">{{ditem[curDIndex][2]}}</view>
+  <view class="container" data-posttype="1" data-word="{{sitem[curMIndex].musicName}}">
+    <image class="classic-img {{playing?'rotation':''}}" src="{{img}}" />
+    <image class="player-img" bind:tap="onPlay" src="{{!playing?'../../components/classic/music/images/player@play.png':'../../components/classic/music/images/player@pause.png'}}" />
+    <text class="content">{{content}}</text>
+    <view class="ch-sentence" bindtap="copySentence" data-type="1">{{sitem[curMIndex].note}}</view>
+  </view>
+	<!-- <view class="dsentence" data-posttype="1" bindtap="copydSentence" data-dindex="0" data-word="{{ditem[curDIndex][0]}}" wx:if="{{ditem[curDIndex][0]}}" style="margin-top:20rpx" >{{ditem[curDIndex][0]}}</view> -->
 	<view class="vote-defaultt" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{voteDetail.voteCount}}</text>人觉得很赞</view>
 		<view class="votebtn" style="background-color:{{voteDetail.voteState==1?'#0081ff':'transparent'}};color:{{voteDetail.voteState==1?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">很赞+1</view>
 	</view>
 </view>
-
+<!-- 电影正文内容 -->
 <view wx:if="{{curItem==2}}">
 	<swiper class="outerZ" autoplay="{{false}}" duration="500" bindchange="changeSentence" style="height:{{picH}}px" indicator-dots="{{true}}">
-		<swiper-item wx:for="{{sitem}}" wx:key="index">
+		<swiper-item wx:for="{{mitem}}" wx:key="index">
 			<image src="{{item.picture2}}" mode="widthFix" bindtap="picPreview" data-url="{{item.picture2}}"></image>
     </swiper-item>
 	</swiper>
-  <view bindlongpress="createZPost" data-posttype="0" data-word="{{sitem[curIndex].note}}">
-    <view class="en-sentence" bindtap="copySentence" data-type="0">{{sitem[curIndex].content}}</view>
-    <view class="ch-sentence" bindtap="copySentence" data-type="1">{{sitem[curIndex].note}}</view>
-  </view>
+  <view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="0" data-word="{{mitem[curDIndex].note[0]}}" wx:if="{{mitem[curDIndex].note[0]}}" style="margin-top:20rpx" >{{mitem[curDIndex].note[0]}}</view>
+	<view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="1" data-word="{{mitem[curDIndex].note[1]}}" wx:if="{{mitem[curDIndex].note[1]}}">{{mitem[curDIndex].note[1]}}</view>
+	<view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="2" data-word="{{mitem[curDIndex].note[2]}}" wx:if="{{mitem[curDIndex].note[2]}}">{{mitem[curDIndex].note[2]}}</view>
+  <view class="moN-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="3" data-word="{{mitem[curDIndex].movieName}}" wx:if="{{mitem[curDIndex].movieName}}">----{{mitem[curDIndex].movieName}}</view>
 	<view class="vote-default" wx:if="{{isNormal==true}}">
-		<view class="vote-num"><text>{{voteDetail.voteCount}}</text>人❤喜欢❤</view>
-		<view class="votebtn" style="background-color:{{voteDetail.voteState==1?'#0081ff':'transparent'}};color:{{voteDetail.voteState==1?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">喜欢+1</view>
+		<view class="vote-num"><text>{{voteDetail.voteCount}}</text>人看过并觉得好看</view>
+		<view class="votebtn" style="background-color:{{voteDetail.voteState==1?'#0081ff':'transparent'}};color:{{voteDetail.voteState==1?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">看过并觉得好看+1</view>
 	</view>
-</view>
-
-<!-- 生成的画布 -->
-<view class="postbg" style="visibility:{{isCreatePost?'visible':'hidden'}}">
-	<canvas type="2d" class="canvass" id="canvas" style="width:{{0.9*pw}}px;height:{{0.9*pw}}px;margin-top:{{0.03*ph}}px"></canvas>
-	<!-- 滑动区域，用来选择海报样式 -->
-	<scroll-view class="post-scroll" scroll-x style="width:100%;height:{{0.2*ph}}px;bottom:{{0.02*ph}}px">
-		<view class="post-item" style="height:{{0.2*ph}}px;width:{{0.2*ph}}px" wx:for="{{isZ?zpostarray:dpostarray}}" wx:key="index" bindtap="pickPostStyle" data-postid="{{index}}">
-			<image src="{{imgUrl}}/wxbg/{{isZ?'zpost':'dpost'}}/p{{index}}.png"></image>
-		</view>
-	</scroll-view>
-
-	<!-- 功能区 -->
-	<cover-view class="post-funcs" style="display:{{isShowFunc?'block':'none'}}">
-		<cover-view class="save" bindtap="saveImageToAlbum">
-			<cover-image src="../../pics/csave.png" mode="aspectFill"></cover-image>
-		</cover-view>
-		<cover-view class="back" bindtap="closePost">
-			<cover-image src="../../pics/cclose.png" mode="aspectFill"></cover-image>
-		</cover-view>
-	</cover-view>
 </view>
 
 <!-- 信息提示层，一定时间后自动关闭 -->
@@ -112,7 +94,8 @@
 </view>
 
 <!-- 加载动画 -->
-<view class="loading-model {{showLoading?'show-loading-model':''}}">
+<!-- <view class="loading-model {{showLoading?'show-loading-model':''}}"> -->
+<view class="loading-model {{showLoading?'':''}}">
   <view class="loading-model-inner">
     <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>

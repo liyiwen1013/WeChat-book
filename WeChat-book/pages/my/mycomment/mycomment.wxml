@@ -7,7 +7,6 @@
       <view class="detail"><text>{{item.type==0?"评论":"引用"}}</text> {{item.detail}}</view>
     </view>
   </view>
-
   <view style="height: 60rpx"></view>
 
   <!-- 当用户当前没有任何消息的时候，显示空的信息 -->
@@ -17,7 +16,7 @@
   </view>
 </view>
 
-<view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../../pics/space.jpg" /></view>
+<!-- <view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../../pics/space.jpg" /></view> -->
 
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{showNotify?'show-notify-model':''}}">

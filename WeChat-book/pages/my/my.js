@@ -186,7 +186,7 @@ Page({
     })
   },
 
-  // 头像
+  // 更新用户头像
   changeAvatar() {
     if (!app.globalData.isLogin) {
       let e = ['提示', '请先登录']
@@ -228,16 +228,15 @@ Page({
     wx.uploadFile({
       filePath: newavatar,
       header: {
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       name: 'newavatar',
-      url: app.globalData.baseUrl + "changeAvatar",
-      // url: 'http://localhost:8080/changeAvatar',
+      url: app.globalData.baseUrl + "user/avatar",
       success(res) {
         let resp = JSON.parse(res.data)
-        if (resp.code===0) {
+        if (resp.code==="0000") {
           that.setData({
-            'basicInfo.user.avatarurl': resp.data
+            'basicInfo.user.avatar': resp.data
           })
           let e = ['提示', '头像更换成功，如果没有刷新请重启小程序']
           that.showNotify(e)

@@ -42,7 +42,7 @@ App({
   // },
   globalData: {
     token: "",
-    baseUrl: "http://192.168.3.2:8080/",
+    baseUrl: "http://8.142.189.153:8080/",
     name: wx.getStorageSync('name'),
     password: wx.getStorageSync('password'),
     isLogin: false

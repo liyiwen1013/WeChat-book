@@ -38,7 +38,7 @@ Page({
     }
     if (app.globalData.isLogin) {
       wx.switchTab({
-        url: '/pages/square/square',
+        url: '/pages/hotc/hotc',
       })
     }
   },
@@ -82,7 +82,7 @@ Page({
           app.globalData.SESSIONID = res.data.data.SESSIONID
           app.globalData.isLogin = true
           wx.switchTab({
-            url: '../square/square',
+            url: '../hotc/hotc',
           })
         } else {
           wx.removeStorageSync('name');
@@ -147,7 +147,7 @@ Page({
           app.globalData.token = res.data.data.accessToken
           app.globalData.isLogin = true
           wx.switchTab({
-            url: '../square/square',
+            url: '../hotc/hotc',
           })
         } else {
           var e = ["登陆失败", res.data.msg]
@@ -217,7 +217,7 @@ Page({
               app.globalData.token = res.data.data.accessToken
               app.globalData.isLogin = true
               wx.switchTab({
-                url: '../square/square',
+                url: '../hotc/hotc',
               })
             } else {
               var e = ["登陆失败", res.data.msg]

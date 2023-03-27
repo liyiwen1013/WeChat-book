@@ -14,14 +14,14 @@ Page({
   getAllMessage() {
     let that = this
     wx.request({
-      url: app.globalData.baseUrl + "getAllMessage",
+      url: app.globalData.baseUrl + "message",
       method: "POST",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
             message: res.data.data,
           })

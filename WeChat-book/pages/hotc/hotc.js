@@ -1,19 +1,59 @@
 const app = getApp()
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     isNormal: false,
     navs: ["书籍", "音乐", "电影"],
-    curItem: 0,
+    curItem: 0, 
     curIndex: 0,
-    curDIndex: 0,
+    curMIndex: 0, // 音乐时间
     aniBar: "",
     ww: wx.getSystemInfoSync().windowWidth, // 获取当前设备屏幕的宽度
-    distance: 15,
+    distance: 7,
     isSelect: false,
-    sitem: [], // 图片
-    ditem: [], // 句子
-    picH: 0.558 * wx.getSystemInfoSync().windowWidth,
+    sitem: [
+      {
+        "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+        "content": "这里填写今天的句子内容",
+        "note": "这里填写今天句子的来源",
+      },
+      {
+        "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+        "content": "这里填写昨天的句子内容",
+        "note": "这里填写昨天句子的来源"
+      },
+      {
+        "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+        "content": "这里填写前天的句子内容",
+        "note": "这里填写前天句子的来源"
+      },
+      {
+        "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+        "content": "这里填写前三天的句子内容",
+        "note": "这里填写前三天句子的来源"
+      }
+    ], // 书籍
+    ditem: [['啊啊啊啊啊','啦啦啦啦啦','哒哒哒哒哒'],['钱钱钱钱钱钱钱','嗡嗡嗡嗡嗡嗡','呃呃呃呃呃呃'],['啵啵啵啵啵啵宝宝','你你你你你你','咩咩咩咩咩咩'],['谢谢谢谢谢谢','踩踩踩踩踩踩从','嘎嘎嘎嘎嘎嘎嘎']], // 音乐
+    mitem: [{
+      "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+      "movieName": "深海",
+      "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
+    },{
+      "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+      "movieName": "深海哈",
+      "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
+    },
+    {
+      "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+      "movieName": "深海案件",
+      "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
+    },
+    {
+      "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+      "movieName": "深海hai",
+      "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
+    }], // 电影
+    playing: false,
+    picH: 0.4555 * wx.getSystemInfoSync().windowWidth,
     cdate: [],
     scdate: [],
     showNotify: false,
@@ -24,12 +64,9 @@ Page({
     _context: null,
     zpostarray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
     dpostarray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-    isCreatePost: false,
     pw: wx.getSystemInfoSync().windowWidth,
     ph: wx.getSystemInfoSync().windowHeight,
-    isZ: true,
     postword: '',
-    isShowFunc: false,
     voteDetail: [],
     isLogin: false
   },
@@ -55,16 +92,8 @@ Page({
     this.getSentence() // 获取当日格言
     this.getEnDateStr(0) // 获取当前日期
     this.getVoteDetail() // 获取当日投票详情
-    // 获取了canvas元素节点，并在该元素节点上执行了init()函数，用于初始化并渲染页面上的画布
-    wx.createSelectorQuery()
-      .select('#canvas')
-      .node()
-      .exec((res) => {
-          this.init(res[0].node);
-      });
-      this.gePicCount() // 获取当日图片数量
   },
-  
+
   // 把监听用户登陆的函数放到onshow里面来，保证能够实时更新用户的登录态
   onShow() {
     this.setData({
@@ -73,60 +102,23 @@ Page({
     })
   },
 
-  // 获取表情包模板个数
-  gePicCount() {
-    let that = this
-    wx.request({
-      url: app.globalData.baseUrl + '/getPicCount',
-      header: {
-        'content-type': 'application/www-x-form-urlencoded'
-      },
-      success: (res) => {
-        if (res.data.code == 0) {
-          let ztemp = [], dtemp = [];
-          for (let i=0;i<res.data.data[0];i++) {
-            ztemp.push(i);
-          }
-          for (let i=0;i<res.data.data[1];i++) {
-            dtemp.push(i);
-          }
-          that.setData({
-            zpostarray: ztemp,
-            dpostarray: dtemp
-          })
-        } else {
-          return;
-        }
-      }
-    })
-  },
-
-  // 初始化函数
-  init(canvas) {
-    this.setData({
-      canvas: canvas
-    })
-    canvas.width =  canvas._width
-    canvas.height =  canvas._height
-    this.setData({
-      _context: canvas.getContext('2d')
-    })
-  },
-
   // 图片切换时触发
   changeSentence(e) {
     this.setData({
-      curIndex: e.detail.current
+      curIndex: e.detail.current, 
+      curMIndex: e.detail.current
     })
     this.getVoteDetail()
   },
 
-  changeDSentence(e) {
-    this.setData({
-      curDIndex: e.detail.current
-    })
-    this.getVoteDetail()
-  },
+  // 改变句子
+  // changeDSentence(e) {
+  //   this.setData({
+  //     curMIndex: e.detail.current,
+  //     curIndex: e.detail.current
+  //   })
+  //   this.getVoteDetail()
+  // },
 
   //图片方法预览
   picPreview: function(e) {
@@ -137,6 +129,7 @@ Page({
     })
   },
 
+  // 弹窗
   showNotify: function(e) {
     this.setData({
       showNotify: true,
@@ -151,6 +144,7 @@ Page({
     }, 2000)
   },
 
+  // 复制文字
   copySentence(e) {
     let type = e.currentTarget.dataset.type
     let that = this
@@ -158,18 +152,18 @@ Page({
       data: type==='0'?that.data.sitem[that.data.curIndex].content:that.data.sitem[that.data.curIndex].note,
       success(res) {
         wx.showToast({
-          title: '',
+          title: '复制成功~',
         })
       }
     })
   },
 
-  // 点击复制
+  // 多个句子点击复制一个
   copydSentence(e) {
     let dindex = e.currentTarget.dataset.dindex
     let that = this
     wx.setClipboardData({
-      data: that.data.ditem[that.data.curDIndex][dindex],
+      data: that.data.ditem[that.data.curMIndex][dindex],
       success(res) {
         wx.showToast({
           title: '内容已复制',
@@ -182,7 +176,7 @@ Page({
   getSentence() {
     let that = this
     wx.request({
-      url: "http://127.0.0.1:8080//classic/latest",
+      url: app.globalData.baseUrl + "",
       method: "GET",
       data: {
         type: 0,
@@ -200,22 +194,26 @@ Page({
     })
   },
 
+  // 点击上方导航栏
   changeNav: function(e) {
     let curItem = e.currentTarget.dataset.id
-    console.log(curItem)  // 0 或 1
+    console.log(curItem)  // 0 或 1 或 2
     this.setData({
       curItem: curItem,
-      distance: 50*curItem + 15,
+      distance: 33*curItem + 7,
       showLoading: true
     })
     if (curItem===0) {
       this.getSentence()
-    } else {
+    } else if (curItem===1) {
+      this.getDuSentence()
+    }else if (curItem===1) {
       this.getDuSentence()
     }
     this.getVoteDetail()
   },
 
+  // 获取当前日期
   getDateStr(addDayCount) {
     let dd = new Date();
     dd.setDate(dd.getDate() + addDayCount); // 获取AddDayCount天后的日期 
@@ -231,6 +229,7 @@ Page({
     return y + "-" + m + "-" + d;
   },
 
+  // 获取当前日期
   getEnDateStr(addDayCount) {
     var dt = new Date();
     dt.setDate(dt.getDate() + addDayCount); // 获取AddDayCount天后的日期
@@ -260,7 +259,7 @@ Page({
     return res
   },
 
-  // 获取参数
+  // 获取句子数组
   getDuSentence() {
     let that = this
     wx.request({
@@ -282,131 +281,22 @@ Page({
     })
   },
 
-  // 将制作的海报保存到相册中
-  saveImageToAlbum() {
-    let that = this
-    let w = 0.9*this.data.pw
-    wx.canvasToTempFilePath({
-      x: 0,
-      y: 0,
-      width: w,
-      height: w,
-      destWidth: w-1,
-      destHeight: w-1,
-      fileType: 'jpg',
-      quality: 1,
-      canvas: that.data.canvas,
-      success: function (res) {
-        that.setData({
-          tempCanvasPath: res.tempFilePath
-        })
-        //将图片保存到相册
-        wx.saveImageToPhotosAlbum({
-          filePath: that.data.tempCanvasPath,
-          success(res) {
-            console.log(res);
-          }
-        })
-      },
-      fail: function (res) {
-        console.log(res)
-      }
-    })
-  },
-
-  // 关闭post
-  closePost() {
-    this.setData({
-      isCreatePost: false,
-      isShowFunc: false
-    })
-    let _context = this.data._context
-    let pw = this.data.pw
-    _context.clearRect(0, 0, 0.9*pw, 0.9*pw)
-  },
-
-  // 文字
-  createZPost(e) {
-    let posttype = e.currentTarget.dataset.posttype
-    let word = e.currentTarget.dataset.word
-    this.setData({
-      isCreatePost: true,
-      isShowFunc: true,
-      isZ: posttype === "0" ? true : false,
-      postword: word
-    })
-    this.toCreatePost(0, word)
-  },
-
-  // 绘制多行文本
-  drawText: function (ctx, str) {
-    let lineWidth = 0;
-    let lastSubStrIndex = 0; // 每次开始截取的字符串的索引
-    let pw = this.data.pw
-    let leftWidth = 0.1*pw; // 从左开始绘制文本的位置
-    let initHeight = 0.7*pw; // 开始绘制的文本距离画布顶部的距离
-    let canvasWidth = 0.9*pw
-    for (let i = 0; i < str.length; i++) {
-      lineWidth += ctx.measureText(str[i]).width;
-      if (lineWidth > 0.7*pw) {
-        ctx.fillText(str.substring(lastSubStrIndex, i), leftWidth, initHeight); // 绘制截取部分
-        initHeight += 30; // 16为字体的高度
-        lineWidth = 0;
-        lastSubStrIndex = i;
-      }
-      if (i == str.length - 1) { // 绘制剩余部分,此时i是最后一个字
-        let reststr = str.substring(lastSubStrIndex, i + 1)
-        ctx.fillText(reststr, 0.5*(canvasWidth - ctx.measureText(reststr).width), initHeight);
-      }
-    }
-  },
-
-  pickPostStyle(e) {
-    let postid = e.currentTarget.dataset.postid
-    this.toCreatePost(postid, this.data.postword)
-  },
-
-  // 选择海报样式
-  toCreatePost(e, word) {
-    let postid = e
-    let isZ = this.data.isZ?'zpost':'dpost'
-    let pw = this.data.pw
-    let canvas = this.data.canvas
-    let _context = this.data._context
-    _context.clearRect(0, 0, 0.9*pw, 0.9*pw)
-    _context.rect(0, 0, 0.9*pw, 0.9*pw)
-    _context.fillStyle = '#ffffff'
-    _context.fill()
-    let img = canvas.createImage()
-    // 图片地址
-    img.src = this.data.imgUrl + 'wxbg/' + isZ + '/p' + postid + '.png'
-    img.onload = () =>{
-      _context.drawImage(img, 0.15*pw, 0, 0.6*pw, 0.6*pw)
-    }
-    _context.fillStyle = '#000000'
-    _context.font = 'normal bold 24px sans-serif'
-    this.drawText(_context, word, pw)
-    _context.fillStyle = '#BBBBBB'
-    _context.font = 'normal bold 15px sans-serif'
-    _context.fillText('话题起源说', 0.7*pw, 0.85*pw, 0.7*pw);
-  },
-
   // 获取正能量上面的相关投票数据，包含对句子的投票和使用者是否对这个点赞了
+  // 获取当日投票详情
   getVoteDetail() {
     let that = this
     wx.request({
       url: app.globalData.baseUrl + "getVoteDetail",
-      // url: "http://localhost:8080/getVoteDetail",
       header: {
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID,
-        'content-type': 'application/www-x-form-urlencoded'
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
         type: that.data.curItem,
-        date: that.data.curItem == 0 ?that.getDateStr(-that.data.curIndex) : that.getDateStr(-that.data.curDIndex)
+        date: that.data.curItem == 0 ? that.getDateStr(-that.data.curIndex) : that.getDateStr(-that.data.curMIndex)
       },
       success(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
             voteDetail: res.data.data
           })
@@ -414,27 +304,25 @@ Page({
       },
     })
   },
-  
+  // 点击点赞按钮人数的变化
   changeVoteState() {
     let that = this
     wx.request({
       url: app.globalData.baseUrl + "changeVoteState",
-      // url: "http://localhost:8080/changeVoteState",
       header: {
-        'content-type': "application/www-x-form-urlencoded",
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': "application/json",
       },
       data: {
         type: that.data.curItem,
-        date: that.data.curItem == 0 ? that.getDateStr(-that.data.curIndex) : that.getDateStr(-that.data.curDIndex)
+        date: that.data.curItem == 0 ? that.getDateStr(-that.data.curIndex) : that.getDateStr(-that.data.curMIndex)
       },
       success(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
             voteDetail: res.data.data
           })
         }
       }
     })
-  },
+  }
 })
