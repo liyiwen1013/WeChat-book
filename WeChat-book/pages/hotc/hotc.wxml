@@ -33,13 +33,14 @@
 <view wx:if="{{curItem==0}}">
   <!-- 图片轮播，不自动播放 -->
 	<swiper class="outerZ" autoplay="{{false}}" duration="500" bindchange="changeSentence" style="height:{{picH}}px" indicator-dots="{{true}}">
-		<swiper-item wx:for="{{sitem}}" wx:key="index">
+		<swiper-item wx:for="{{bitem}}" wx:key="index">
 			<image src="{{item.picture2}}" mode="widthFix" bindtap="picPreview" data-url="{{item.picture2}}"></image>
     </swiper-item>
 	</swiper>
-  <view data-posttype="0" data-word="{{sitem[curIndex].note}}">
-    <view class="en-sentence" bindtap="copySentence" data-type="0">{{sitem[curIndex].content}}</view>
-    <view class="ch-sentence" bindtap="copySentence" data-type="1">{{sitem[curIndex].note}}</view>
+  <view data-posttype="0" data-word="{{bitem[curIndex].note}}">
+    <view class="en-sentence" bindtap="copySentence" data-type="0">{{bitem[curIndex].content}}</view>
+    <view class="ch-sentence" bindtap="copySentence" data-type="1">{{bitem[curIndex].note}}</view>
+    <view class="moN-sentence" data-type="2">{{bitem[curIndex].bookName}}</view>
   </view>
 	<view class="vote-default" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{voteDetail.voteCount}}</text>人❤喜欢❤</view>
@@ -56,18 +57,23 @@
 			<view class="dweekday">{{cdate[curMIndex][2]}}</view>
 		</swiper-item>
 	</swiper>
-  <view class="container" data-posttype="1" data-word="{{sitem[curMIndex].musicName}}">
-    <image class="classic-img {{playing?'rotation':''}}" src="{{img}}" />
-    <image class="player-img" bind:tap="onPlay" src="{{!playing?'../../components/classic/music/images/player@play.png':'../../components/classic/music/images/player@pause.png'}}" />
-    <text class="content">{{content}}</text>
-    <view class="ch-sentence" bindtap="copySentence" data-type="1">{{sitem[curMIndex].note}}</view>
+  <view class="container" data-posttype="1" data-word="{{uitem[curMIndex].musicName}}" style="margin-top:20rpx">
+    <view class="music-img" muted>
+      <image class="mupicture-img {{playing?'rotation':''}}" data-dindex="0" src="https://cdn.pixabay.com/photo/2023/01/01/23/37/woman-7691013__340.jpg" />
+      <image class="player-img" bindtap="onPlay" src="{{!playing?'../../components/classic/music/images/player@play.png':'../../components/classic/music/images/player@pause.png'}}" />
+    </view>
+    <view class="music-sentence">
+      <view class="ch-sentence" bindtap="copySentence" data-dindex="0">{{uitem[curUIndex].musicNote}}</view>
+      <view class="ch-sentence" bindtap="copySentence" data-dindex="0">{{uitem[curUIndex].musicName}}</view>
+    </view>
   </view>
-	<!-- <view class="dsentence" data-posttype="1" bindtap="copydSentence" data-dindex="0" data-word="{{ditem[curDIndex][0]}}" wx:if="{{ditem[curDIndex][0]}}" style="margin-top:20rpx" >{{ditem[curDIndex][0]}}</view> -->
+	<!-- <view class="dsentence" data-posttype="1" bindtap="copydSentence" data-dindex="0" data-word="{{uitem[curMIndex][0]}}" wx:if="{{uitem[curMIndex][0]}}" style="margin-top:20rpx" >{{uitem[curMIndex][0]}}</view> -->
 	<view class="vote-defaultt" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{voteDetail.voteCount}}</text>人觉得很赞</view>
 		<view class="votebtn" style="background-color:{{voteDetail.voteState==1?'#0081ff':'transparent'}};color:{{voteDetail.voteState==1?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">很赞+1</view>
 	</view>
 </view>
+
 <!-- 电影正文内容 -->
 <view wx:if="{{curItem==2}}">
 	<swiper class="outerZ" autoplay="{{false}}" duration="500" bindchange="changeSentence" style="height:{{picH}}px" indicator-dots="{{true}}">
@@ -75,10 +81,10 @@
 			<image src="{{item.picture2}}" mode="widthFix" bindtap="picPreview" data-url="{{item.picture2}}"></image>
     </swiper-item>
 	</swiper>
-  <view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="0" data-word="{{mitem[curDIndex].note[0]}}" wx:if="{{mitem[curDIndex].note[0]}}" style="margin-top:20rpx" >{{mitem[curDIndex].note[0]}}</view>
-	<view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="1" data-word="{{mitem[curDIndex].note[1]}}" wx:if="{{mitem[curDIndex].note[1]}}">{{mitem[curDIndex].note[1]}}</view>
-	<view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="2" data-word="{{mitem[curDIndex].note[2]}}" wx:if="{{mitem[curDIndex].note[2]}}">{{mitem[curDIndex].note[2]}}</view>
-  <view class="moN-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="3" data-word="{{mitem[curDIndex].movieName}}" wx:if="{{mitem[curDIndex].movieName}}">----{{mitem[curDIndex].movieName}}</view>
+  <view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="0" data-word="{{mitem[curMIndex].note[0]}}" wx:if="{{mitem[curMIndex].note[0]}}" style="margin-top:20rpx" >{{mitem[curMIndex].note[0]}}</view>
+	<view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="1" data-word="{{mitem[curMIndex].note[1]}}" wx:if="{{mitem[curMIndex].note[1]}}">{{mitem[curMIndex].note[1]}}</view>
+	<view class="mo-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="2" data-word="{{mitem[curMIndex].note[2]}}" wx:if="{{mitem[curMIndex].note[2]}}">{{mitem[curMIndex].note[2]}}</view>
+  <view class="moN-sentence" data-posttype="2" bindtap="copydSentence" data-dindex="3" data-word="{{mitem[curMIndex].movieName}}" wx:if="{{mitem[curMIndex].movieName}}">----{{mitem[curMIndex].movieName}}</view>
 	<view class="vote-default" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{voteDetail.voteCount}}</text>人看过并觉得好看</view>
 		<view class="votebtn" style="background-color:{{voteDetail.voteState==1?'#0081ff':'transparent'}};color:{{voteDetail.voteState==1?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">看过并觉得好看+1</view>

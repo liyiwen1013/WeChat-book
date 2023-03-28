@@ -1,20 +1,24 @@
 const app = getApp()
+const bgMusic = wx.getBackgroundAudioManager()
 Page({
   data: {
     isNormal: false,
     navs: ["书籍", "音乐", "电影"],
     curItem: 0, 
     curIndex: 0,
-    curMIndex: 0, // 音乐时间
+    curUIndex: 0, // 音乐
+    curMIndex: 0, // 电影
+    playing: false,
     aniBar: "",
     ww: wx.getSystemInfoSync().windowWidth, // 获取当前设备屏幕的宽度
     distance: 7,
     isSelect: false,
-    sitem: [
+    bitem: [
       {
         "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-        "content": "这里填写今天的句子内容",
-        "note": "这里填写今天句子的来源",
+        "content": "前路不明，但愿有星光引路，把我从黑暗中带出来，让我看到点亮的希望。",
+        "note": "探索这个宇宙的真正意义，在于我们从中汲取的文明和智慧，从而让我们的未来更加美好。",
+        "bookName": "《三体》",
       },
       {
         "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
@@ -32,7 +36,27 @@ Page({
         "note": "这里填写前三天句子的来源"
       }
     ], // 书籍
-    ditem: [['啊啊啊啊啊','啦啦啦啦啦','哒哒哒哒哒'],['钱钱钱钱钱钱钱','嗡嗡嗡嗡嗡嗡','呃呃呃呃呃呃'],['啵啵啵啵啵啵宝宝','你你你你你你','咩咩咩咩咩咩'],['谢谢谢谢谢谢','踩踩踩踩踩踩从','嘎嘎嘎嘎嘎嘎嘎']], // 音乐
+    uitem: [{
+      "mu-picture": "https://cdn.pixabay.com/photo/2023/01/01/23/37/woman-7691013__340.jpg",
+      "music": "http://music.163.com/song/media/outer/url?id=393926.mp3",
+      "musicName": "林",
+      "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
+    },{
+      "mu-picture": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+      "music": "http://music.163.com/song/media/outer/url?id=393926.mp3",
+      "musicName": "林",
+      "musicNote": "你陪我步入蝉夏,越过城市喧嚣~~~~",
+    },{
+      "mu-picture": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
+      "music": "http://music.163.com/song/media/outer/url?id=393926.mp3",
+      "musicName": "林",
+      "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
+    },{
+      "mu-picture": "http://bl.talelin.com/images/music.8.png",
+      "music": "http://music.163.com/song/media/outer/url?id=393926.mp3",
+      "musicName": "林",
+      "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
+    }], // 音乐
     mitem: [{
       "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
       "movieName": "深海",
@@ -52,7 +76,6 @@ Page({
       "movieName": "深海hai",
       "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
     }], // 电影
-    playing: false,
     picH: 0.4555 * wx.getSystemInfoSync().windowWidth,
     cdate: [],
     scdate: [],
@@ -105,10 +128,13 @@ Page({
   // 图片切换时触发
   changeSentence(e) {
     this.setData({
-      curIndex: e.detail.current, 
-      curMIndex: e.detail.current
+      curIndex: e.detail.current,
+      curUIndex: e.detail.current,
+      curMIndex: e.detail.current,
     })
     this.getVoteDetail()
+    this._recoverStatus()
+    this._monitorSwitch()
   },
 
   // 改变句子
@@ -147,9 +173,10 @@ Page({
   // 复制文字
   copySentence(e) {
     let type = e.currentTarget.dataset.type
+    console.log(type)
     let that = this
     wx.setClipboardData({
-      data: type==='0'?that.data.sitem[that.data.curIndex].content:that.data.sitem[that.data.curIndex].note,
+      data: type==='0'?that.data.bitem[that.data.curIndex].content:that.data.bitem[that.data.curIndex].note,
       success(res) {
         wx.showToast({
           title: '复制成功~',
@@ -188,7 +215,7 @@ Page({
       success(res) {
         that.setData({
           showLoading: false,
-          sitem: res.data.data
+          bitem: res.data.data
         })
       }
     })
@@ -206,9 +233,9 @@ Page({
     if (curItem===0) {
       this.getSentence()
     } else if (curItem===1) {
-      this.getDuSentence()
+      this.getMuSentence()
     }else if (curItem===1) {
-      this.getDuSentence()
+      this.getMoSentence()
     }
     this.getVoteDetail()
   },
@@ -259,11 +286,11 @@ Page({
     return res
   },
 
-  // 获取句子数组
-  getDuSentence() {
+  // 获取音乐数组
+  getMuSentence() {
     let that = this
     wx.request({
-      url: app.globalData.baseUrl + "getDailySentence",
+      url: app.globalData.baseUrl + "",
       method: "GET",
       data: {
         type: 1,
@@ -275,7 +302,72 @@ Page({
       success(res) {
         that.setData({
           showLoading: false,
-          ditem: res.data.data
+          uitem: res.data.data
+        })
+      }
+    })
+  },
+  onPlay: function (e) {
+    if (!this.data.playing) {
+      this.setData({
+        playing: true
+      })
+      bgMusic.title = '此时此刻';
+      // bgMusic.coverImgUrl = this.data.uitem[curUIndex].mu-picture;
+      bgMusic.src = 'music/M500001VfvsJ21xFqb.mp3';
+      bgMusic.play();
+    } else {
+      this.setData({
+        playing: false
+      })
+      bgMusic.pause()
+    }
+  },
+  _recoverStatus: function () {
+    if (bgMusic.paused) {
+      this.setData({
+        playing: false
+      })
+      return
+    }
+    if (bgMusic.src == this.data.uitem[curUIndex].music) {
+      this.setData({
+        playing: true
+      })
+    }
+  },
+  _monitorSwitch: function () {
+    bgMusic.onPlay(() => {
+      this._recoverStatus()
+    })
+    bgMusic.onPause(() => {
+      this._recoverStatus()
+    })
+    bgMusic.onStop(() => {
+      this._recoverStatus()
+    })
+    bgMusic.onEnded(() => {
+      this._recoverStatus()
+    })
+  },
+
+  // 获取电影数组
+  getMoSentence() {
+    let that = this
+    wx.request({
+      url: app.globalData.baseUrl + "getDailySentence",
+      method: "GET",
+      data: {
+        type: 2,
+        titlea: that.getDateStr(0),
+        titleb: that.getDateStr(-1),
+        titlec: that.getDateStr(-2),
+        titled: that.getDateStr(-3),
+      },
+      success(res) {
+        that.setData({
+          showLoading: false,
+          mitem: res.data.data
         })
       }
     })

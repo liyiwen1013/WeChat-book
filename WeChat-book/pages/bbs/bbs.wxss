@@ -166,7 +166,7 @@ page {
   height: 100%;
   top: 0;
   left: 0;
-  background-image: url("https://pic.616pic.com/ys_img/00/80/82/MxVk0ytZFY.jpg");
+  /* background-image: url("https://pic.616pic.com/ys_img/00/80/82/MxVk0ytZFY.jpg"); */
   background-repeat: no-repeat;
   background-position: center;
 }

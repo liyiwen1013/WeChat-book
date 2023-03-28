@@ -34,10 +34,6 @@ Component({
     this._monitorSwitch()
   },
 
-  detached: function (event) {
-    // wx:if hidden
-    // mMgr.stop()
-  },
 
   /**
    * 组件的方法列表 

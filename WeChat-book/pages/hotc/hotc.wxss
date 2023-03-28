@@ -131,7 +131,7 @@ page {
 }
 .outerZd {
   width: 100%;
-  margin-top: 50rpx;
+  margin: 50rpx 0 70rpx 0;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 10rpx;
   color: white;
@@ -371,22 +371,37 @@ page {
 
 .container {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 30rpx;
+  height: 300rpx;
+  border-radius: 20rpx;
+  background-color: #74c7f2;
+}
+music-img {
+  display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: rgb(226, 198, 198)
 }
-
-.classic-img {
-  width: 422rpx;
-  height: 422rpx;
-  margin-top: 60rpx;
+.mupicture-img {
+  width: 250rpx;
+  height: 250rpx;
+  margin-top: 130rpx;
   border-radius: 50%;
+  /* background-color: rgb(66, 39, 39); */
 }
-
 .player-img {
   width: 120rpx;
   height: 120rpx;
-  position: relative; 
-  bottom: 270rpx; 
+  position: relative;
+  bottom: 195rpx; 
+  left: 65rpx;
+}
+.music-sentence {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .rotation {

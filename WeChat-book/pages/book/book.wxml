@@ -7,22 +7,21 @@
       <text>搜索书籍</text>
     </view>
   </view>
-  <!-- <view class="sub-container"> -->
-    <view class="head" bindtap="toLibrary">
-      <view style="color: rgb(45, 136, 163); line-height: 70rpx;font-size: 44rpx; margin-left: 280rpx;">图书馆藏书 ></view>
+  <view class="head" bindtap="toLibrary">
+    <view style="color: rgb(45, 136, 163); line-height: 70rpx;font-size: 44rpx; margin-left: 280rpx;">图书馆藏书 ></view>
+  </view>
+
+  <view class="sub-container">
+    <view class="nav">
+      <view class="head-txt">精选书籍</view>
+      <view class="ani-bar"></view>
     </view>
-    <view class="sub-container">
-      <view class="nav">
-        <view class="head-txt">精选书籍</view>
-        <view class="ani-bar"></view>
-      </view>
-      <view class="books-container">
-        <block wx:key="id" wx:for="{{books.data}}">
-            <v-book book="{{item}}" />
-        </block>
-      </view>
+    <view class="books-container">
+      <block wx:key="id" wx:for="{{books.data}}">
+          <v-book book="{{item}}" />
+      </block>
     </view>
-  <!-- </view> -->
+  </view>
 </view>
 
 <v-search wx:if="{{searching}}" more="{{more}}" bind:cancel="onCancel" />
