@@ -4,7 +4,7 @@
     <view class="p-prtrait">
       <image class="p-avatar" src="{{posts.userAvatar}}" bindtap="previewAvatar" data-avatar="{{posts.userAvatar}}"></image>
     </view>
-    <view class="p-mark">{{posts.userUsername}} | {{posts.createTime}}</view>
+    <view class="p-mark">{{posts.userUsername}}</view>
   </view>
   <!-- 正文内容，包括图片和文本 -->
   <view class="p-main">
@@ -15,6 +15,7 @@
     <view class="p-pircture">
       <image  wx:if="{{posts.bgType != 3}}" class="p-picture" src="{{posts.bgContent}}" mode="widthFix" bindtap="picPreview" data-url="{{posts.bgContent}}"></image>
     </view>
+    <view style="font-size: 21rpx; text-align: left; margin:10rpx 0rpx 20rpx 40rpx;">{{posts.createTime}}</view>
     <!-- 点赞等数据 -->
     <view class="p-info">
       <!-- 浏览 -->

@@ -74,7 +74,7 @@ Page({
     this.data.isSearch ? this.goSearch(1) : this.getPosts(1)
   },
 
-  //下面是一个包含操作的数组 e 的主要函数
+  // 获取页面帖子列表
   getPosts: function(e) {
     var that = this
     var pageNum = this.data.pageNum
@@ -94,6 +94,7 @@ Page({
         'content-type': 'application/json',
       },
       success: function(res) {
+        console.log(res.data.data.list)
         if (res.data.code === "0000") {
           if (action === 0) {
             that.setData({

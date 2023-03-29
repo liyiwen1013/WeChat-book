@@ -20,6 +20,16 @@
   <view class="item" bindtap="toPassage" wx:for="{{postLists}}" wx:key="index" style="background:{{item.bgType==3?'#'+item.bgContent:'#fff'}}" data-title="{{item.title}}" data-id="{{item.id}}">
     <!-- 1表示自定义图片，2表示预设图片，3表示纯色图片 -->
     <image wx:if="{{item.bgType==1||item.bgType==2}}" class="item-pic" src="{{item.bgContent}}" mode="aspectFill"></image>
+    <!-- 个人信息 -->
+    <view class="item-user">
+      <view class="item-avatar">
+        <image class="item-usimg" src="{{item.userAvatar}}" data-avatar="{{posts.userAvatar}}"></image>
+      </view>
+      <view class="item-nati">
+        <view style="font-size: 34rpx;">{{item.userUsername}}</view>
+        <view style="font-size: 21rpx;">{{item.createTime}} 发表了{{navs[item.type]}}</view>
+      </view>
+    </view>
     <view class="item-title">{{item.title}}</view>
     <view class="item-content-box">
       <view class="item-content">{{item.content}}</view>

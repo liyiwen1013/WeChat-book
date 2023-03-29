@@ -122,7 +122,6 @@ Page({
       isInput: false,
       inputBoxTxt: "点击发表回复",
       isQuote: false,
-      // if user click quote button and entered some words but lastly cancel quote
       comment: "",
       floor: -1
     })
