@@ -86,7 +86,7 @@
 	<view class="innerModel">
 		<view class="closebtn" bindtap="closeWindow" data-windowid="showModifyName"></view>
 		<view class="title">修改昵称</view>
-    <input placeholder="数字、字母和中文(10字以内)" maxlength="10" bindinput="getInput" data-inputid="newname" value="{{username}}"></input>
+    <input placeholder="用户名由数字或字母组成（16字内）" maxlength="10" bindinput="getInput" data-inputid="newname"></input>
     <view class="go-feedback" bindtap="goModifyName">立即修改</view>
 	</view>
 </view>

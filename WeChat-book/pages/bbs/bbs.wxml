@@ -8,7 +8,7 @@
     </view>
     <!-- 搜索框 -->
     <view class="search">
-      <input class="search-input" placeholder="搜索" maxlength="20" bindinput="getKeyword" placeholder-class="search-input-pstyle"></input>
+      <input class="search-input" placeholder="搜索" maxlength="20" bindinput="getKeyword" placeholder-class="search-input-pstyle" value="{{ keyword }}"></input>
       <view class="search-go" bindtap="getSearchPosts"></view>
     </view>
   </view>
@@ -17,7 +17,7 @@
   <view class="addOne" bindtap="toSelect" hover-class="click-addOne" wx:if="{{isNormal==true}}"></view>
 
   <!-- 项目列表 -->
-  <view class="item" bindtap="toPassage" wx:for="{{postLists}}" wx:key="index" style="background:{{item.bgType==3?'#'+item.bgContent:'#fff'}}" data-title="{{item.title}}" data-postid="{{item.id}}">
+  <view class="item" bindtap="toPassage" wx:for="{{postLists}}" wx:key="index" style="background:{{item.bgType==3?'#'+item.bgContent:'#fff'}}" data-title="{{item.title}}" data-id="{{item.id}}">
     <!-- 1表示自定义图片，2表示预设图片，3表示纯色图片 -->
     <image wx:if="{{item.bgType==1||item.bgType==2}}" class="item-pic" src="{{item.bgContent}}" mode="aspectFill"></image>
     <view class="item-title">{{item.title}}</view>
@@ -30,8 +30,11 @@
 
 <!-- <view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../pics/space.jpg" /></view> -->
 
-<view class="logotxt" wx:if="{{isLoading}}">
+<view class="logotxt" wx:if="{{isLoading && pageNum < pages+1}}">
   <view class="txt">玩命加载中</view>
+</view>
+<view class="logotxt" wx:if="{{pageNum >= pages+1}}">
+  <view class="txt">到底啦</view>
 </view>
 
 <view style="height:80rpx"></view>

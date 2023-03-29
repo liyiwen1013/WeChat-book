@@ -194,6 +194,7 @@ Page({
 
   // 发布
   toPost: function() {
+    var that = this
     let title = this.data.title
     let content = this.data.content
     let bgType = this.data.bgType
@@ -220,8 +221,9 @@ Page({
         name: 'file',
         formData: {},
         success: function(res) {
-          this.data.bgContent = res.data.data
-          console.log(res)
+          that.setData({
+            bgContent: res.data.data
+          })
         },
         fail: function (res) {
           // 上传失败后返回的数据

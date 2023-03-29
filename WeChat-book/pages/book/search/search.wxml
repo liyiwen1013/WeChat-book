@@ -31,14 +31,21 @@
             </view>
         </view>
     </view>
-
     <view wx:if="{{searching}}" class="books-container">
         <block wx:for="{{dataArray}}" wx:key="{{item.id}}">
             <v-book showLike="{{false}}" book="{{item}}" class="book" />
         </block>
     </view>
-
     <v-loading class="loading-center" wx:if="{{loadingCenter}}"/>
     <v-loading class="loading" wx:if="{{loading}}"/>
     <text wx:if="{{noneResult}}" class="empty-tip">没有搜索到书籍</text>
 </view>
+
+<!-- 加载动画 -->
+<!-- 
+<view class="loading-model {{showLoading?'show-loading-model':''}}">
+  <view class="loading-model-inner">
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
+    <view class="loading-model-inner-clue">玩命加载中...</view>
+  </view>
+</view> -->

@@ -15,7 +15,7 @@ Page({
     let that = this
     wx.request({
       url: app.globalData.baseUrl + "message",
-      method: "POST",
+      method: "GET",
       header: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + app.globalData.token

@@ -14,7 +14,7 @@ page {
 }
 .date {
   font-size: 24rpx;
-  margin-bottom: 10rpx;
+  margin-bottom: 20rpx;
   background-color: rgba(0, 0, 0, 0.08);
   color: rgb(163, 201, 216);
   padding: 0 10rpx;
@@ -24,7 +24,7 @@ page {
   width: 100%;
   background-color: white;
   border-radius: 30rpx;
-  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.15);
   padding: 30rpx 20rpx;
   position: relative;
 }
@@ -35,9 +35,9 @@ page {
   width: 0px;
   height: 0px;
   border-color: #9efaaa #9efaaa transparent transparent;
-  border-width: 8px 8px 8px 8px;
+  border-width: 12px 12px 12px 12px;
   border-style: solid;
-  border-radius: 0 10rpx 0 0;
+  border-radius: 0 20rpx 0 0;
 }
 .type {
   color: #333;

@@ -1,16 +1,12 @@
 const app = getApp()
-// const imgUrl = app.globalData.imgUrl;
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     picHeight: 0.63*wx.getSystemInfoSync().windowWidth,
     isInput: false,
     floor: -1,
     inputBoxTxt: "留言",
-    postid: "",
-    postMain: [],
-    postInfo: [],
-    postComment: [],
+    postsId: 0,
+    posts: {},
     notifyTitle: "",
     notifyDetail: "",
     showLoading: false,
@@ -20,18 +16,19 @@ Page({
     quote: "",
     isReport: false,
     report: "",
-    isNormal: false
+    isNormal: false,
   },
   onLoad: function(e) {
+    // 页面标题
     wx.setNavigationBarTitle({
       title: e.title
     })
     this.setData({
-      postid: e.postid,
+      postsId: e.id,
       showLoading: true,
       loadingTxt: "玩命加载中"
     })
-    this.getCertainPost()
+    this.getPosts()
   },
 
   onShow: function() {
@@ -42,15 +39,12 @@ Page({
 
   // 预览头像
   previewAvatar(e) {
-    console.log(e.currentTarget.dataset.avatarurl)
-    let avatar = [this.data.imgUrl+e.currentTarget.dataset.avatarurl]
+    let avatar = [e.currentTarget.dataset.avatar]
     wx.previewImage({
       urls: avatar,
     })
   },
 
-  // show a notify window without close button and will disapear automatically
-  // an array should be given while using, array includs notifyTitle and notifyDetail
   showNotify: function(e) {
     this.setData({
       showNotify: true,
@@ -65,24 +59,20 @@ Page({
     }, 2000)
   },
 
-  getCertainPost: function() {
+  // 获取详情信息
+  getPosts: function() {
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "getCertainPost",
-      method: "POST",
+      url: app.globalData.baseUrl + "posts/" + this.data.postsId,
+      method: "GET",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
-      },
-      data: {
-        postid: that.data.postid
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
-            postMain: res.data.data.postMain,
-            postInfo: res.data.data.postInfo,
-            postComment: res.data.data.postComment
+            posts: res.data.data
           })
         } else {
           var e = ['提示', res.data.msg]
@@ -102,10 +92,10 @@ Page({
     })
   },
 
-  //图片方法预览
+  // 预览发布图片
   picPreview: function(e) {
     let pics = []
-    pics.push(this.data.imgUrl+e.currentTarget.dataset.url)
+    pics.push(e.target.dataset.url)
     wx.previewImage({
       urls: pics
     })
@@ -194,6 +184,7 @@ Page({
     })
   },
 
+  // 点赞
   toAgree: function() {
     var that = this
     wx.request({
@@ -224,6 +215,7 @@ Page({
     })
   },
 
+  // 收藏
   toCollect: function() {
     var that = this
     wx.request({
@@ -254,6 +246,7 @@ Page({
     })
   },
 
+  // 举报按钮
   toReport: function() {
     this.setData({
       isReport: this.data.isReport?false:true
@@ -266,6 +259,7 @@ Page({
     })
   },
 
+  // 发送举报
   reportbtn: function() {
     if (this.data.report==="" || this.data.report.replace(/\s+/g, '').length===0) {
       let e = ['提示', '举报信息空空如也']

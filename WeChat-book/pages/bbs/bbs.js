@@ -17,8 +17,9 @@ Page({
     isSearch: false,
     postLists: [],
     isNormal: false,
+    pageNum: 1,
     pageSize: 10,
-    pageNum: 1
+    pages: 0
   },
 
   onShow: function() {
@@ -56,7 +57,11 @@ Page({
   // 监听用户下拉刷新事件
   onPullDownRefresh() {
     this.setData({
-      isSearch: false
+      isSearch: false,
+      keyword: '',
+      pageNum: 1,
+      pageSize: 10,
+      postLists: []
     })
     this.getPosts(0);
   },
@@ -66,44 +71,41 @@ Page({
       isLoading: true
     })
     // 加载更多帖子，1 代表加载操作而不是更新
-    this.data.isSearch ? this.getSearchPosts(1) : this.getPosts(1)
+    this.data.isSearch ? this.goSearch(1) : this.getPosts(1)
   },
 
   //下面是一个包含操作的数组 e 的主要函数
   getPosts: function(e) {
     var that = this
-    var postlen = this.data.postLists.length
-    var resPosts = this.data.postLists
-    var currentDate = util.formatTime(new Date)  // 获取当前时间，并赋值给currentDate变量
-    var action = e // 0
+    var pageNum = this.data.pageNum
+    var action = e;
+    if (action === 1 && pageNum >= this.data.pages + 1) {
+      return
+    }
     wx.request({
       url: app.globalData.baseUrl + "posts",
       method: "GET",
       data: {
         type: that.data.curItem,
-        pageNum: this.data.pageNum,
-        pageSize: this.data.pageSize
+        pageNum: pageNum,
+        pageSize: that.data.pageSize
       },
       header: {
         'content-type': 'application/json',
       },
       success: function(res) {
-        console.log(".....",res.data.data.list)
-        console.log(".....,,,",res.data)
-        console.log(".....,,,...",action)
-        if (res.data.code==="0000") {
-          // 当更新时，直接替换原始帖子数组
-          if (action===0) {
+        if (res.data.code === "0000") {
+          if (action === 0) {
             that.setData({
-              postLists: res.data.data.list,
+              postLists: that.data.postLists.concat(res.data.data.list),
+              pageNum: pageNum + 1,
+              pages: res.data.data.pages
             })
           } else {
-            // 当加载更多时
-            if (!res.data===null) {
-              resPosts.push(res.data.data.list)
-              console.list(resPosts)
+            if (pageNum <= that.data.pages + 1 && res.data.data.list.length != 0) {
               that.setData({
-                postLists: resPosts
+                postLists: that.data.postLists.concat(res.data.data.list),
+                pageNum: pageNum + 1
               })
             }
           }
@@ -133,17 +135,19 @@ Page({
   // 导航栏点击反应
   changeNav: function(e) {
     var pickItem = e.currentTarget.dataset.id
-    console.log(".....,,")
-    console.log(e.currentTarget.dataset.id)
     this.setData({
       curItem: pickItem,
       distance: (30*pickItem + 5),
-      isSearch: false
+      isSearch: false,
+      pageNum: 1,
+      pageSize: 10,
+      postLists: [],
+      keyword: ''
     })
     this.getPosts(0)
   },
 
-  // 点击新建
+  // 点击进入帖子详情
   toPassage: function(e) {
     if (!app.globalData.isLogin) {
       this.setData({
@@ -152,7 +156,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: 'passage/passage?title='+e.currentTarget.dataset.title+'&postid='+e.currentTarget.dataset.id,
+      url: 'passage/passage?title=' + e.currentTarget.dataset.title + '&id=' + e.currentTarget.dataset.id
     })
   },
 
@@ -203,42 +207,54 @@ Page({
 
   getSearchPosts: function() {
     this.setData({
-      showLoading: true
+      showLoading: true,
+      isSearch: true,
+      pageNum: 1,
+      pageSize: 10,
+      curItem: 0,
+      distance: 5,
     })
     this.goSearch(0)
   },
 
   goSearch: function(e) {
     var that = this
-    var resPosts = this.data.postLists
-    var currentDate = util.formatTime(new Date())
-    var postlen = this.data.postLists.length
-    var action = e
+    var action = e;
+    var pageNum = this.data.pageNum
+    if (action === 1 && pageNum >= this.data.pages + 1) {
+      return
+    }
     wx.request({
-      url: app.globalData.baseUrl+"getSearchPosts",
-      method: "POST",
+      url: app.globalData.baseUrl + "posts",
+      method: "GET",
       data: {
         keyword: that.data.keyword,
-        lastdate: action===0?currentDate:that.data.postLists[postlen - 1].date
+        type: that.data.curItem,
+        pageNum: that.data.pageNum,
+        pageSize: that.data.pageSize
       },
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
       },
       success: function(res) {
         that.setData({
           showLoading: false
         })
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           if (action===0) {
             that.setData({
-              postLists: res.data.data
+              postLists: res.data.data.list,
+              pageNum: pageNum + 1,
+              pages: res.data.data.pages
             })
           } else {
-            resPosts.push(resPosts)
-            that.setData({
-              postLists: resPosts
-            })
+            console.log(pageNum <= that.data.pages + 1)
+            if (pageNum <= that.data.pages + 1 && res.data.data.list.length != 0) {
+              that.setData({
+                postLists: that.data.postLists.concat(res.data.data.list),
+                pageNum: pageNum + 1
+              })
+            }
           }
         } else {
           var e = ["刷新失败", res.data.msg]

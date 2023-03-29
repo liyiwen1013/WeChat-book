@@ -68,12 +68,11 @@ Page({
       })
     }
   },
-
+  // 获取用户信息
   getBasicInfo: function() {
     var that = this
     wx.request({
       url: app.globalData.baseUrl + "user/info",
-      // url: "http://192.168.3.2:8080/user/info",
       header: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + app.globalData.token
@@ -127,19 +126,17 @@ Page({
     })
   },
 
+  // 用户反馈
   toFeedBack: function() {
     this.setData({
       showFeedback: true
     })
   },
-
   getInput(e) {
-    let inputid = e.currentTarget.dataset.inputid
     this.setData({
-      [inputid]: e.detail.value
+      newname: e.detail.value
     })
   },
-
   goFeedback: function() {
     if (this.data.feedback==="" || this.data.feedback.replace(/\s+/g, '').length===0) {
       var e = ['提示', '总得写点儿什么吧']
@@ -155,8 +152,7 @@ Page({
       url: app.globalData.baseUrl + "addFeedback",
       method: "POST",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
       },
       data: {
         detail: that.data.feedback
@@ -186,7 +182,7 @@ Page({
     })
   },
 
-  // 更新用户头像
+  // 长按头像
   changeAvatar() {
     if (!app.globalData.isLogin) {
       let e = ['提示', '请先登录']
@@ -200,7 +196,8 @@ Page({
       sourceType: ['album', 'camera'],
       success (res) {
         let picsize = res.tempFiles[0].size;
-        let path = res.tempFiles[0].path
+        let path = res.tempFiles[0].tempFilePath;
+        console.log(res)
         let formatImage = path.split(".")[(path.split(".")).length - 1];
         if (formatImage!="png"&&formatImage!="jpg"&&formatImage!="jpeg"&&formatImage!="gif") {
           let e = ['提示', '仅支持png, jpg, jpeg, gif格式图片']
@@ -216,7 +213,7 @@ Page({
           showLoading: true,
           loadingTxt: "光速修改中..."
         })
-        that.toChangeAvatar(res.tempFilePaths[0])
+        that.toChangeAvatar(res.tempFiles[0])
       }
     })
   },
@@ -224,26 +221,44 @@ Page({
   // 修改头像
   toChangeAvatar(e) {
     let that = this
-    let newavatar = e
     wx.uploadFile({
-      filePath: newavatar,
+      filePath: e.tempFilePath,
+      url: app.globalData.baseUrl + "file/upload",
+      method: "POST",
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + app.globalData.token
       },
-      name: 'newavatar',
-      url: app.globalData.baseUrl + "user/avatar",
-      success(res) {
-        let resp = JSON.parse(res.data)
-        if (resp.code==="0000") {
+      name: 'file',
+      success: function(res) {
+        res = JSON.parse(res.data)
           that.setData({
-            'basicInfo.user.avatar': resp.data
+            'basicInfo.avatar': res.data
           })
-          let e = ['提示', '头像更换成功，如果没有刷新请重启小程序']
-          that.showNotify(e)
-        } else {
-          let e = ['提示', resp.msg]
-          that.showNotify(e)
-        }
+          wx.request({
+            url: app.globalData.baseUrl + "user/avatar",
+            method: "PUT",
+            header: {
+              'content-type': 'application/json',
+              'Authorization': 'Bearer ' + app.globalData.token
+            },
+            data: {
+              avatar: res.data
+            },
+            success(res) {
+              if (res.data.code == "0000") {
+                let e = ['提示', '头像更新成功']
+                that.showNotify(e)
+              } else {
+                let e = ['提示', res.data.msg]
+                that.showNotify(e)
+              }
+            },
+            error() {
+              let e = ['提示', '出了点儿错，稍后再试吧']
+              that.showNotify(e)
+            }
+          })
       },
       error() {
         let e = ['提示', '出了点儿错，稍后再试吧']
@@ -274,7 +289,7 @@ Page({
       success(res) {
         if (res.data.code==="0000") {
           that.setData({
-            'basicInfo.username': that.data.username,
+            'basicInfo.username': that.data.newname,
             'showModifyName': false
           })
           let e = ['提示', '用户名修改成功']
