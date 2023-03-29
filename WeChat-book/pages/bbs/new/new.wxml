@@ -7,9 +7,10 @@
   </view>
 
   <!-- 文字区 -->
-  <view class="selectPic" style="background-color:\#{{pickedCustomBg=='79d0fc'?'79d0fc':pickedCustomBg}}">
+  <view class="selectPic" style="background-color:\#{{bgContent=='74c7f2'?'74c7f2':bgContent}}">
     <image src="{{bgContent}}" mode="aspectFill"></image>
     <textarea class="p-content" placeholder="{{placeHolders[postType-1]}}（500字内）" placeholder-style="color:white" maxlength="500" bindinput="getInput" data-inputid="content"></textarea>
+    <view class="content-restNum">{{content.length}}/500</view>
     <view class="pic-del" wx:if="{{bgContent.length!=0}}" catchtap="deletePic"></view>
     <view class="pic-preview" wx:if="{{bgContent.length!=0}}" catchtap="previewPic"></view>
   </view>

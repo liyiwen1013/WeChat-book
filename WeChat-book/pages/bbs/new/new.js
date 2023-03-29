@@ -6,7 +6,6 @@ Page({
     isAnonymous: false,
     isMoreInfo: false,
     customBg: ['DA4453','E9573F','8CC152','39b54a','48CFAD','37BCC9','4FC1E9','3BAFDA','4A89DC','0081ff','967ADC','6739b6','D770AD','9c26b0','a5673f','8799a3','656D78','434A54'],
-    pickedCustomBg: "79d0fc",
     title: "",
     content: "",
     placeHolders: ["今日趣事", "优质资源"],
@@ -16,7 +15,7 @@ Page({
     showLoading: false,
     defaultbg: ['https://p.qqan.com/up/2016-7/2016071115340721509.gif', 'https://www.gif.cn/Upload/newsucai/2021-06-02/162262263362400.gif', 'https://cdn.pixabay.com/photo/2023/03/20/12/30/tulips-7864592__340.jpg'],
     bgType: 3,
-    bgContent: "79d0fc"
+    bgContent: "74c7f2"
   },
   onShow: function() {
     this.setData({
@@ -88,11 +87,9 @@ Page({
           self.showNotify(e)
           return
         }
-        console.log(res)
         self.setData({
           bgContent: res.tempFilePaths[0],
-          bgType: 1,
-          pickedCustomBg: "0081ff"
+          bgType: 1
         })
       }
     })
@@ -135,8 +132,7 @@ Page({
     this.deletePic()
     this.setData({
       bgType: 3,
-      bgContent: e.currentTarget.dataset.custombg,
-      pickedCustomBg: e.currentTarget.dataset.custombg
+      bgContent: e.currentTarget.dataset.custombg
     })
   },
 
