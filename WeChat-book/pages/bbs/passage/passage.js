@@ -11,24 +11,25 @@ Page({
     notifyDetail: "",
     showLoading: false,
     loadingTxt: "",
-    isQuote: false,
-    comment: "",
-    quote: "",
+    parentId: 0,
+    content: "",
+    referenceContent: "",
     isReport: false,
     report: "",
     isNormal: false,
   },
   onLoad: function(e) {
     // 页面标题
-    wx.setNavigationBarTitle({
-      title: e.title
-    })
+    // wx.setNavigationBarTitle({
+    //   title: e.title
+    // })
     this.setData({
       postsId: e.id,
       showLoading: true,
       loadingTxt: "玩命加载中"
     })
     this.getPosts()
+    this.getPostsComment()
   },
 
   onShow: function() {
@@ -70,6 +71,7 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
+        console.log(res.data)
         if (res.data.code==="0000") {
           that.setData({
             posts: res.data.data
@@ -91,6 +93,35 @@ Page({
       }
     })
   },
+  getPostsComment: function() {
+    var that = this
+    console.log("xxx",that.data)
+    wx.request({
+      url: app.globalData.baseUrl + "posts/comment/" + this.data.postsId,
+      method: "GET",
+      header: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
+      },
+      success: function(res) {
+        console.log("..",res.data)
+        if (res.data.code==="0000") {
+          that.setData({
+            postContent: res.data.data
+          })
+        } else {
+          var e = ["提示", res.data.msg]
+          that.showNotify(e)
+        }
+      },
+      complete: function() {
+        that.setData({
+          showLoading: false,
+          loadingTxt: ""
+        })
+      }
+    })
+  },
 
   // 预览发布图片
   picPreview: function(e) {
@@ -103,13 +134,15 @@ Page({
 
   //点击引用评论
   toQuote: function(e) {
+    console.log("e.f",e)
     var floorr = e.currentTarget.dataset.floor
+    var parentId = e.currentTarget.dataset.id
     this.setData({
       isInput: true,
       inputBoxTxt: "正在引用 "+(floorr+1)+" 楼的评论",
       floor: floorr,
-      isQuote: true,
-      comment: ""
+      parentId: parentId,
+      content: ""
     })
     wx.pageScrollTo({
       selector: "#inputBox",
@@ -120,56 +153,49 @@ Page({
   cancelQuote: function() {
     this.setData({
       isInput: false,
-      inputBoxTxt: "点击发表回复",
-      isQuote: false,
-      comment: "",
+      inputBoxTxt: "点击发表回复(字数在200字以内)",
+      parentId: 0,
+      content: "",
       floor: -1
     })
   },
 
   getInput: function(e) {
+    console.log("2e",e)
     var inputid = e.currentTarget.dataset.inputid
     this.setData({
       [inputid]: e.detail.value
     })
   },
 
+  // 点击评论发布评论
   toComment: function() {
-    var comment = this.data.comment
-    if (comment==="" || comment.replace(/\s+/g, '').length===0) {
+    var content = this.data.content
+    if (content==="" || content.replace(/\s+/g, '').length===0) {
       var e = ["提示", "评论内容是空的~"]
       this.showNotify(e)
       return
     }
-    if (this.data.isQuote) {
-      this.setData({
-        quote: "回复内容：" + this.data.postComment[this.data.floor].detail
-      })
-    }
+    console.log("aaa",this.data)
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "addComment",
+      url: app.globalData.baseUrl + "posts/comment",
       method: "POST",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        type: that.data.isQuote?1:0,
-        postid: that.data.postid,
-        comment: that.data.comment,
-        quote: that.data.quote,
-        roleb: that.data.isQuote?that.data.postComment[that.data.floor].id:"",
-        authorid: that.data.postMain.authorid
+        content: that.data.content,
+        parentId: that.data.parentId,
+        postsId: that.data.postsId,
       },
       success: function(res) {
-        if (res.data.code===0) {
-          // if comment succeed, update the post
+        console.log("111",res.data)
+        if (res.data.code==="0000") {
           that.setData({
-            postComment: res.data.data,
-            isQuote: false,
-            quote: "",
-            comment: ""
+            postContent: res.data.data,
+            content: ""
           })
         } else {
           var e = ["提示", res.data.msg]

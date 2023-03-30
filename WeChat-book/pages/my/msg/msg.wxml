@@ -1,13 +1,13 @@
 <!-- 消息 -->
-<view class="item" wx:for="{{message}}" wx:key="index" bindtap="toMessage" data-index="{{index}}" data-title="{{item.title}}" data-postid="{{item.postid}}" data-messageid="{{item.messageid}}" data-isread="{{item.status}}">
-  <view class="date">{{item.date}}</view>
+<view class="item" wx:for="{{message}}" wx:key="index" bindtap="toMessage" data-index="{{index}}" data-title="{{item.postsTitle}}" data-postid="{{item.postsId}}" data-messageid="{{item.id}}" data-isread="{{item.isRead}}">
+  <view class="date">{{item.createTime}}</view>
   <view class="innerbox">
-    <view class="unread" wx:if="{{item.status==0}}"></view>
+    <view class="unread" wx:if="{{item.isRead==0}}"></view>
     <view class="subject">
-      <text class="man">{{item.name}}</text>在以下话题中
+      <text class="man">{{item.fromUserName}}</text>在以下话题中
       <text class="way">{{item.type==0?"评论了你":"引用了你的评论"}}</text>
     </view>
-    <view class="title">{{item.title}}</view>
+    <view class="title">{{item.postsTitle}}</view>
   </view>
 </view>
 

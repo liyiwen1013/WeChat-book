@@ -104,12 +104,9 @@ page {
 .outerZ {
   width: 100%;
   margin-top: 20rpx;
-  border-radius: 30rpx;
 }
 .outerZ image {
   width: 100%;
-  border-radius: 30rpx;
-  background-color: rgb(110, 72, 72);
 }
 .outerZ .wx-swiper-dots.wx-swiper-dots-horizontal{
   margin-bottom: 2rpx;

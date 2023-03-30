@@ -1,16 +1,18 @@
 <view wx:if="{{isNormal==true}}">
   <!-- 基本信息 -->
-  <view class="p-detail">
-    <view class="p-prtrait">
-      <image class="p-avatar" src="{{posts.userAvatar}}" bindtap="previewAvatar" data-avatar="{{posts.userAvatar}}"></image>
-    </view>
-    <view class="p-mark">{{posts.userUsername}}</view>
-  </view>
+
   <!-- 正文内容，包括图片和文本 -->
   <view class="p-main">
+    <view class="p-detail">
+      <view class="p-prtrait">
+        <image class="p-avatar" src="{{posts.userAvatar}}" bindtap="previewAvatar" data-avatar="{{posts.userAvatar}}"></image>
+      </view>
+      <view class="p-mark">{{posts.userUsername}}</view>
+    </view>
     <view class="p-content">
+      <view class="p-main-title" style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.title}}</view>
       <view class="p-main-dp" style="{{posts.bgType == 3 ? ('background-color:#' + posts.bgContent) : ''}}"></view>
-      <view class="{{posts.bgType != 3 ? 'dp-whight' : ''}}" style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.content}}</view>
+      <view style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.content}}</view>
     </view>
     <view class="p-pircture">
       <image  wx:if="{{posts.bgType != 3}}" class="p-picture" src="{{posts.bgContent}}" mode="widthFix" bindtap="picPreview" data-url="{{posts.bgContent}}"></image>
@@ -62,7 +64,7 @@
   <!-- 评论框 -->
   <view wx:if="{{isNormal==true}}">
     <view class="p-comment" id="inputBox">
-      <textarea maxlength="200" placeholder="{{inputBoxTxt}}" focus="{{isInput}}" bindinput="getInput" data-inputid="comment" value="{{comment}}"></textarea>
+      <textarea maxlength="200" placeholder="{{inputBoxTxt}}" focus="{{isInput}}" bindinput="getInput" data-inputid="content" value="{{content}}"></textarea>
       <view class="todiscuss">
         <view class="cancelquotebtn" style="display:{{isInput?'block':'none'}}" bindtap="cancelQuote">取消</view>
         <view class="postcommentbtn" bindtap="toComment">评论</view>
@@ -70,19 +72,19 @@
     </view>
     <!-- 评论区 -->
     <view class="discuss-area">评论区</view>
-    <view class="p-discuss" wx:if="{{postComment.length!=0}}">
-      <view class="discuss-item" wx:for="{{postComment}}" wx:key="index">
+    <view class="p-discuss" wx:if="{{postContent.length!=0}}">
+      <view class="discuss-item" wx:for="{{postContent}}" wx:key="index">
         <view class="discuss-info">
-          <image class="discuss-portrait" src="{{posts.isAnonymous==0?(item.avatarurl):'../../../pics/defaultavatar.png'}}" bindtap="previewAvatar" data-avatarurl="{{item.avatarurl}}"></image>
-          <view class="discuss-nickname"><text wx:if="{{item.mark!='NONE'&&postMain.anonymous!=1}}">{{item.mark}}</text>{{postMain.anonymous==0?item.name:"匿名"}}</view>
-          <view class="discuss-date">{{item.date}}</view>
+          <image class="discuss-portrait" src="{{item.userAvatar}}" bindtap="previewAvatar" data-avatarurl="{{item.userAvatar}}"></image>
+          <view class="discuss-nickname">{{item.userUsername}}</view>
+          <view class="discuss-date">{{item.createTime}}</view>
         </view>
         <view class="discuss-content">
-          <view class="quote-content" wx:if="{{item.type==1}}">{{item.quote}}</view>
-          <view class="main-content">{{item.detail}}</view>
+          <view class="main-content">{{item.parentId==0?item.content:('回复'+'：'+item.content)}}</view>
+          <view class="quote-content" wx:if="{{item.parentId!=0}}">{{item.referenceContent}}</view>
         </view>
         <view class="p-func">
-          <view class="p-quote" data-floor="{{index}}" bindtap="toQuote"></view>
+          <view class="p-quote" data-floor="{{index}}" bindtap="toQuote" data-id="{{item.id}}"></view>
           <!-- <view class="p-floor">#{{index+1}}</view> -->
         </view>
       </view>  
@@ -94,6 +96,7 @@
       <view>快来发表第一个评论吧</view>
       <view style="height: 80rpx"></view>
     </view>
+
     <view class="bottomline" wx:if="{{postComment.length!=0}}"><text>我的底线</text></view>
   </view>
 </view>

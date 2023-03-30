@@ -215,9 +215,7 @@ Page({
               wx.setStorageSync('avatar', res.data.data.avatar)
               app.globalData.token = res.data.data.accessToken
               app.globalData.isLogin = true
-              wx.switchTab({
-                url: '../hotc/hotc',
-              })
+              wx.navigateBack()
             } else {
               var e = ["登陆失败", res.data.msg]
               that.showNotify(e)

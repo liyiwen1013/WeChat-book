@@ -21,6 +21,7 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       success(res) {
+        console.log(res.data)
         if (res.data.code==="0000") {
           that.setData({
             message: res.data.data,
@@ -38,9 +39,9 @@ Page({
   },
 
   toMessage(e) {
-    let title = e.currentTarget.dataset.title
-    let postid = e.currentTarget.dataset.postid
-    if (e.currentTarget.dataset.isread===0) {
+    let title = e.currentTarget.dataset.postsTitle
+    let postid = e.currentTarget.dataset.postsId
+    if (e.currentTarget.dataset.isRead===0) {
       let messageid = e.currentTarget.dataset.messageid
       let that = this
       wx.request({

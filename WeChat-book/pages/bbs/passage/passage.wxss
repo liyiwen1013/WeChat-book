@@ -2,7 +2,7 @@ page {
   width: 95%;
   margin: 0 auto;
   font-size: 30rpx;
-  color: #666;
+  color: rgb(56, 34, 34);
 }
 .p-detail {
   position: relative;
@@ -10,8 +10,6 @@ page {
   width: 100%;
   height: 100rpx;
   margin-top: 20rpx;
-  background-color: white;
-  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.15);
   border-radius: 20rpx;
   font-size: 28rpx;
   overflow: hidden;
@@ -37,6 +35,8 @@ page {
   top: 18rpx;
   left: 110rpx;
   line-height: 70rpx;
+  font-size: 30rpx;
+  font-weight: bold;
 }
 .p-main {
   width: 100%;
@@ -53,6 +53,11 @@ page {
   box-sizing: border-box;
   z-index: 0;
 }
+.p-main-title {
+  font-size: 33rpx;
+  font-weight: bold;
+  margin: 0 0 10rpx 0rpx;
+}
 .p-main-dp {
   width: 100%;
   height: 100%;
@@ -64,9 +69,6 @@ page {
   background-size: cover;
   border-radius: 20rpx;
   z-index: -1;
-}
-.dp-whight {
-  padding: 0 10rpx;
 }
 .p-pircture {
   display: flex;
@@ -334,9 +336,11 @@ page {
   position: relative;
   padding: 10rpx 0 10rpx 20rpx;
   box-sizing: border-box;
-  margin-left: 100rpx;
+  margin: 20rpx 10rpx 0 100rpx;
+  background-color: rgb(248, 245, 245, 0.3);
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
 }
-.quote-content::before {
+/* .quote-content::before {
   position: absolute;
   content: "";
   width: 6rpx;
@@ -344,7 +348,7 @@ page {
   background-color: #74c7f2;
   left: 0;
   top: 0;
-}
+} */
 .main-content {
   margin-top: 10rpx;
   margin-left: 100rpx;

@@ -2,7 +2,6 @@
 App({
   onLaunch: function () {
     wx.setStorageSync('isNormal', true)
-    // this.getDataNormal();
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -29,17 +28,6 @@ App({
       }
     }, 25 * 60 * 1000)
   },
-  // getDataNormal: function() {
-  //   wx.request({
-  //     url: this.globalData.baseUrl + 'getDataNormal',
-  //     header: {
-  //       'content-type': 'application/x-www-form-urlencoded'
-  //     },
-  //     success: (res) => {
-  //       wx.setStorageSync('isNormal', res.data == 0 ? false : true)
-  //     }
-  //   })
-  // },
   globalData: {
     token: "",
     baseUrl: "http://8.142.189.153:8080/",
