@@ -1,5 +1,7 @@
 const app = getApp()
-const bgMusic = wx.getBackgroundAudioManager()
+// const bgMusic = wx.getBackgroundAudioManager()
+var audioContext = null;
+var audioPath = 'http://music.163.com/song/media/outer/url?id=393926.mp3';
 Page({
   data: {
     isNormal: false,
@@ -309,17 +311,27 @@ Page({
   },
   onPlay: function (e) {
     if (!this.data.playing) {
+      // 创建音频上下文并开始播放
+      audioContext = wx.createInnerAudioContext();
+      audioContext.src = audioPath;
+      audioContext.play();
+      // 监听音频播放进度事件
+      audioContext.onTimeUpdate(() => {
+        this.setData({
+          duration: audioContext.duration,
+          currentTime: audioContext.currentTime.toFixed(2)
+        });
+      });
       this.setData({
         playing: true
       })
-      bgMusic.title = '此时此刻';
-      // bgMusic.coverImgUrl = this.data.uitem[curUIndex].mu-picture;
-      bgMusic.src = 'music/M500001VfvsJ21xFqb.mp3';
-      bgMusic.play();
     } else {
+      // 停止播放
+      audioContext.stop();
       this.setData({
-        playing: false
-      })
+        playing: false,
+        currentTime: 0
+      });
       bgMusic.pause()
     }
   },

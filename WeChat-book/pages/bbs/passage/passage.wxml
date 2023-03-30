@@ -1,14 +1,13 @@
 <view wx:if="{{isNormal==true}}">
-  <!-- 基本信息 -->
-
-  <!-- 正文内容，包括图片和文本 -->
   <view class="p-main">
+    <!-- 基本信息 -->
     <view class="p-detail">
       <view class="p-prtrait">
         <image class="p-avatar" src="{{posts.userAvatar}}" bindtap="previewAvatar" data-avatar="{{posts.userAvatar}}"></image>
       </view>
       <view class="p-mark">{{posts.userUsername}}</view>
     </view>
+    <!-- 正文内容，包括图片和文本 -->
     <view class="p-content">
       <view class="p-main-title" style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.title}}</view>
       <view class="p-main-dp" style="{{posts.bgType == 3 ? ('background-color:#' + posts.bgContent) : ''}}"></view>
@@ -80,12 +79,12 @@
           <view class="discuss-date">{{item.createTime}}</view>
         </view>
         <view class="discuss-content">
-          <view class="main-content">{{item.parentId==0?item.content:('回复'+'：'+item.content)}}</view>
-          <view class="quote-content" wx:if="{{item.parentId!=0}}">{{item.referenceContent}}</view>
+          <view class="main-content">{{item.parentId==0?item.content:('回复 ' + item.referenceUsername + '：'+item.content)}}</view>
+          <view class="quote-content" wx:if="{{item.parentId!=0}}">{{item.referenceUsername+'：'+item.referenceContent}}</view>
+          <view class="p-floor">{{index+1}}楼</view>
         </view>
         <view class="p-func">
           <view class="p-quote" data-floor="{{index}}" bindtap="toQuote" data-id="{{item.id}}"></view>
-          <!-- <view class="p-floor">#{{index+1}}</view> -->
         </view>
       </view>  
     </view>

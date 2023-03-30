@@ -230,11 +230,12 @@ page {
 .logotxt {
   width: 100%;
   text-align: center;
-  height: 60rpx;
+  height: 120rpx;
   line-height: 60rpx;
-  margin: 10rpx 0;
+  margin: 150rpx 0 200rpx 0;
   position: relative;
   color: #666;
+  /* background-color: violet; */
 }
 .logotxt::after {
   content: "";
@@ -242,9 +243,9 @@ page {
   left: 30%;
   width: 40%;
   z-index: -1;
-  height:30rpx;
+  height: 30rpx;
   border-bottom: 1rpx solid rgba(0, 0, 0, 0.4);
-  top: 0;
+  /* top: 0; */
 }
 .logotxt .txt {
   background-color: rgb(245, 247, 250);

@@ -1,27 +1,54 @@
 <!--pages/book/library/library.wxml-->
 <view class="container">
+  <!-- 左侧导航栏 -->
   <view class="left-list">
     <block wx:for="{{categoryList}}" wx:key="category">
       <view class="item{{index === current ? ' active' : ''}}" bindtap="onCategoryTap"  data-index="{{ index }}" data-category="{{item.id}}">
-        {{item.name}}
+        {{item.caName}}
       </view>
     </block>
   </view>
+  <!-- 右侧书籍 -->
   <view class="right-container">
     <block wx:if="{{booksList.length}}">
       <scroll-view scroll-y="true" style="height: 100%;">
         <block wx:for="{{booksList}}" wx:key="book">
-          <view class="book-item" bindtap="onNextBook">
-            <image src="{{item.imgUrl}}" mode="aspectFit" />
+          <view class="book-item" bindtap="onBook">
+            <image src="{{item.image}}" mode="aspectFit" />
             <view class="book-item-mess">
               <view class="name">{{item.name}}</view>
-              <view class="author">{{item.author}}</view>
-              <!-- <view class="author">{{item.author}}</view> -->
+              <view class="author">{{item.author}} | {{item.favNums}}人喜欢</view>
             </view>
           </view>
         </block>
       </scroll-view>
     </block>
     <view wx:else class="empty-tip">暂无数据</view>
+  </view>
+</view>
+
+<!-- 弹出层，弹出需要登陆的信息提示 -->
+<view class="outModel {{isShowLogin?'show':''}}">
+	<view class="innerModel">
+		<view class="closebtn" bindtap="closeWindow" data-modelid="isShowLogin"></view>
+		<view class="title">登录</view>
+		<view class="notify">登陆后方可使用本功能</view>
+    <view class="go-login" bindtap="goLogin">立即登录</view>
+	</view>
+</view>
+
+<!-- 信息提示层，一定时间后自动关闭 -->
+<view class="notify-model {{showNotify?'show-notify-model':''}}">
+	<view class="notify-model-inner">
+		<view class="notify-model-inner-title">{{notifyTitle}}</view>
+		<view class="notify-model-inner-detail">{{notifyDetail}}</view>
+	</view>
+</view>
+
+<!-- 加载动画 -->
+<view class="loading-model {{showLoading?'show-loading-model':''}}">
+  <view class="loading-model-inner">
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
+    <view class="loading-model-inner-clue">玩命加载中...</view>
   </view>
 </view>

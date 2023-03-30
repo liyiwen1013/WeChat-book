@@ -5,7 +5,7 @@
     <view class="unread" wx:if="{{item.isRead==0}}"></view>
     <view class="subject">
       <text class="man">{{item.fromUserName}}</text>在以下话题中
-      <text class="way">{{item.type==0?"评论了你":"引用了你的评论"}}</text>
+      <text class="way">{{item.type==1?"评论了你":"引用了你的评论"}}</text>
     </view>
     <view class="title">{{item.postsTitle}}</view>
   </view>

@@ -2,7 +2,7 @@
 <!-- for 循环 wx:for -->
 <view wx:if="{{!searching}}" class="container">
   <view class="header">
-    <view class='search' bind:tap="onSearching">
+    <view class='search' bindtap="onSearching">
       <image src="/images/icon/search.png" />
       <text>搜索书籍</text>
     </view>
@@ -17,11 +17,46 @@
       <view class="ani-bar"></view>
     </view>
     <view class="books-container">
-      <block wx:key="id" wx:for="{{books.data}}">
-          <v-book book="{{item}}" />
+      <block wx:key="id" wx:for="{{books}}">
+        <view bind:tap="onTap" class="item-books">
+          <image src="{{ item.image }}"></image>
+          <view class="item-description">
+            <text class='item-title'>{{ item.name }}</text>
+            <text class='item-author'>{{ item.author }}</text>
+            <view class='item-foot'>
+              <text class="item-footer">{{ item.favNums }}  喜欢</text>
+            </view>
+          </view>
+        </view>
       </block>
     </view>
   </view>
 </view>
 
 <v-search wx:if="{{searching}}" more="{{more}}" bind:cancel="onCancel" />
+
+<!-- 弹出层，弹出需要登陆的信息提示 -->
+<view class="outModel {{isShowLogin?'show':''}}">
+	<view class="innerModel">
+		<view class="closebtn" bindtap="closeWindow" data-modelid="isShowLogin"></view>
+		<view class="title">登录</view>
+		<view class="notify">登陆后方可使用本功能</view>
+    <view class="go-login" bindtap="goLogin">立即登录</view>
+	</view>
+</view>
+
+<!-- 信息提示层，一定时间后自动关闭 -->
+<view class="notify-model {{showNotify?'show-notify-model':''}}">
+	<view class="notify-model-inner">
+		<view class="notify-model-inner-title">{{notifyTitle}}</view>
+		<view class="notify-model-inner-detail">{{notifyDetail}}</view>
+	</view>
+</view>
+
+<!-- 加载动画 -->
+<view class="loading-model {{showLoading?'show-loading-model':''}}">
+  <view class="loading-model-inner">
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
+    <view class="loading-model-inner-clue">玩命加载中...</view>
+  </view>
+</view>

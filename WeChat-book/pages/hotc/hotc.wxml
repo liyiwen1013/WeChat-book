@@ -61,6 +61,7 @@
     <view class="music-img" muted>
       <image class="mupicture-img {{playing?'rotation':''}}" data-dindex="0" src="https://cdn.pixabay.com/photo/2023/01/01/23/37/woman-7691013__340.jpg" />
       <image class="player-img" bindtap="onPlay" src="{{!playing?'../../components/classic/music/images/player@play.png':'../../components/classic/music/images/player@pause.png'}}" />
+      <view>{{currentTime}} / {{duration}}</view>
     </view>
     <view class="music-sentence">
       <view class="ch-sentence" bindtap="copySentence" data-dindex="0">{{uitem[curUIndex].musicNote}}</view>

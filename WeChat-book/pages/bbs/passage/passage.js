@@ -176,7 +176,6 @@ Page({
       this.showNotify(e)
       return
     }
-    console.log("aaa",this.data)
     var that = this
     wx.request({
       url: app.globalData.baseUrl + "posts/comment",
@@ -191,12 +190,13 @@ Page({
         postsId: that.data.postsId,
       },
       success: function(res) {
-        console.log("111",res.data)
         if (res.data.code==="0000") {
           that.setData({
             postContent: res.data.data,
             content: ""
           })
+          var e = ["评论成功", '去评论区看看吧~']
+          that.showNotify(e)
         } else {
           var e = ["提示", res.data.msg]
           that.showNotify(e)

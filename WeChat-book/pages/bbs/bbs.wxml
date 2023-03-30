@@ -47,7 +47,7 @@
   <view class="txt">到底啦</view>
 </view>
 
-<view style="height:80rpx"></view>
+<!-- <view style="height:0rpx"></view> -->
 
 <!-- 弹出层，在新建发布的时候弹出 -->
 <view class="newSelect newSelectBottom {{isSelect?'show':''}}">

@@ -43,7 +43,7 @@ Page({
   },
 
   onLoad: function() {
-    // 如果用户之前登陆过，自动登录
+    // // 如果用户之前登陆过，自动登录
     if (app.globalData.name && !app.globalData.isLogin) {
       this.goLogin()
     }
