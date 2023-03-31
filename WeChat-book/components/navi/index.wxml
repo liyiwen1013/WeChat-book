@@ -1,6 +1,0 @@
-<!-- 首页下边导航条 -->
-<view class="container">
-  <image bind:tap="onLeft" class="icon" src="{{ first?disLeftSrc:leftSrc }}"/>
-  <text class="title">{{ title }}</text>
-  <image bind:tap="onRight" class="icon" src="{{ latest?disRightSrc:rightSrc }}"/>
-</view>

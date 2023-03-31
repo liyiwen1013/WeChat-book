@@ -4,7 +4,7 @@
     <view class="date">{{item.createTime}}</view>
     <view class="innerbox">
       <view class="content">{{item.content}}</view>
-      <view class="title"><text>{{item.type==0?"评论":"引用"}}</text> {{item.postsTitle}}</view>
+      <view class="title"><text>{{item.parentId==0?"评论":"引用"}}</text> {{item.postsTitle}}</view>
     </view>
   </view>
   <view style="height: 60rpx"></view>

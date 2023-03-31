@@ -3,8 +3,8 @@
   <!-- 左侧导航栏 -->
   <view class="left-list">
     <block wx:for="{{categoryList}}" wx:key="category">
-      <view class="item{{index === current ? ' active' : ''}}" bindtap="onCategoryTap"  data-index="{{ index }}" data-category="{{item.id}}">
-        {{item.caName}}
+      <view class="item{{index === current ? ' active' : ''}}" bindtap="onCategoryTap"  data-index="{{ index }}" data-category-id="{{item.id}}">
+        {{item.name}}
       </view>
     </block>
   </view>
@@ -17,7 +17,7 @@
             <image src="{{item.image}}" mode="aspectFit" />
             <view class="book-item-mess">
               <view class="name">{{item.name}}</view>
-              <view class="author">{{item.author}} | {{item.favNums}}人喜欢</view>
+              <view class="author">{{item.author}} | {{item.collectCount}}人喜欢</view>
             </view>
           </view>
         </block>

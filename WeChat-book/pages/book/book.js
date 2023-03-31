@@ -14,7 +14,8 @@ Page({
     showNotify: false,
     notifyTitle: "",
     notifyDetail: "",
-    more: ''
+    more: '',
+    bookCategoryId: 0
   },
 
   showNotify: function(e) {
@@ -41,13 +42,16 @@ Page({
   getHotList: function() {
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "book/featured",
+      url: app.globalData.baseUrl + "book",
       method: "GET",
       header: {
         'content-type': 'application/json'
       },
+      data: {
+        bookCategoryId: that.data.bookCategoryId
+      },
       success: function(res) {
-        console.log(',,..,,,',res.data)
+        console.log(',,..,,',res.data)
         if (res.data.code==="0000") {
           that.setData({
             books: res.data.data
@@ -83,7 +87,7 @@ Page({
   toLibrary: function(e) {
     console.log("e",e)
     wx.navigateTo({
-      url: 'library/library',
+      url: 'book-library/library',
     })
   },
   onTap: function(e){
@@ -97,7 +101,6 @@ Page({
       url:'book-detail/book-detail?bid=' + e.currentTarget.bookId
     })
   },
-
   // 根据响应窗口类型关闭窗口
   closeWindow: function(e) {
     var modelid = e.currentTarget.dataset.modelid
@@ -105,7 +108,6 @@ Page({
       [modelid]: false
     })
   },
-
   goLogin: function() {
     this.setData({
       isShowLogin: false

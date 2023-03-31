@@ -10,17 +10,13 @@ Component({
   /**
    * 组件的属性列表
    */
-  behaviors: [ paginationBev ],
+  // behaviors: [ paginationBev ],
   properties: {
     more: {
       type: String,
       observer: 'loadMore'
     }
   },
-
-  /**
-   * 组件的初始数据
-   */
   data: {
     historyWords: [],
     hotWords: [],
@@ -29,45 +25,60 @@ Component({
     loading: false,
     loadingCenter: false
   },
+  onLoad: function () {
+    const pages = getCurrentPages()
+    console.log('当前页面信息为：', pages)
+  },
+
 
   attached() {
     this.setData({
-      historyWords: keywordModel.getHistory()
+      historyWords: getHistory()
     })
-
-    keywordModel.getHot().then(res => {
+    getHot().then(res => {
       this.setData({
         hotWords: res.data
       })
     })
   },
+  // 获取历史搜索词
+  getHistory(){
+    const words = wx.getStorageSync(this.data.q)
+    if(!words){
+      return []
+    }
+    return words
+  },
+  // 获取热门搜索词
+  getHot(){
+    return this.request({
+      url: 'book/hot_keyword'
+    }) 
+  },
+  
+  loadMore() {
+    if (!this.data.q) {
+      return
+    }
+    if (this.isLocked()) {
+      return
+    }
+    if (this.hasMore()) {
+      this.locked()
+      bookModel.search(this.getCurrentStart(), this.data.q)
+        .then(res => {
+          this.setMoreData(res.data.list)
+          this.unLocked()
+        }, () => {
+          this.unLocked()
+        })
+    }
+  },
 
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-    loadMore() {
-      if (!this.data.q) {
-        return
-      }
-      if (this.isLocked()) {
-        return
-      }
-      if (this.hasMore()) {
-        this.locked()
-        bookModel.search(this.getCurrentStart(), this.data.q)
-          .then(res => {
-            this.setMoreData(res.data.list)
-            this.unLocked()
-          }, () => {
-            this.unLocked()
-          })
-      }
-    },
-
-    onCancel(event) {
-      this.initialize()
-      this.triggerEvent('cancel', {}, {})
+    onCancel: function() {
+      wx.navigateBack({
+        delta: 1 // 返回上一页，delta 为 1
+      })
     },
 
     onDelete(event) {
@@ -115,11 +126,11 @@ Component({
         searching: false,
         q: ''
       })
-    }
+    },
 
-    // onReachBottom(){
-    //   console.log(123123)
-    // }
+    onReachBottom(){
+      console.log(123123)
+    }
     // scroll-view | Page onReachBottom
   }
-})
+)

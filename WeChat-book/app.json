@@ -2,7 +2,7 @@
   "pages":[
     "pages/hotc/hotc",
     "pages/book/book",
-    "pages/book/library/library",
+    "pages/book/book-library/library",
     "pages/book/book-detail/book-detail",
     "pages/bbs/bbs",
     "pages/bbs/new/new",
