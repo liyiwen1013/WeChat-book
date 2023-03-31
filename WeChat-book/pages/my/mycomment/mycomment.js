@@ -61,7 +61,7 @@ Page({
   toComment(e) {
     console.log(e)
     wx.navigateTo({
-      url: '../../bbs/passage/passage?id=' + e.currentTarget.dataset.id
+      url: '../../bbs/passage/passage?id=' + e.currentTarget.dataset.postId
     })
   }
 })

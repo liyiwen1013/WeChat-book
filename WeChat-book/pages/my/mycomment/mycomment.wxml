@@ -1,6 +1,6 @@
 <!-- 评论 -->
 <view  wx:if="{{isNormal==true}}">
-  <view class="item" wx:for="{{mycomment}}" wx:key="index" bindtap="toComment" bindlongpress="deleteComment" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}">
+  <view class="item" wx:for="{{mycomment}}" wx:key="index" bindtap="toComment" bindlongpress="deleteComment" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}" data-post-id="{{item.postsId}}">
     <view class="date">{{item.createTime}}</view>
     <view class="innerbox">
       <view class="content">{{item.content}}</view>
