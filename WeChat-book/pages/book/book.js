@@ -6,43 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    books: [{
-      "bookId":"1",
-      "image":"https://img3.doubanio.com/view/subject/l/public/s2768378.jpg",
-      "name":"三体",
-      "author":"刘慈欣",
-      "favNums":"5",
-    },{
-      "bookId":"1",
-      "image":"https://img3.doubanio.com/view/subject/l/public/s2768378.jpg",
-      "name":"三体",
-      "author":"刘慈欣",
-      "favNums":"5",
-    },{
-      "bookId":"1",
-      "image":"https://img3.doubanio.com/view/subject/l/public/s2768378.jpg",
-      "name":"三体",
-      "author":"刘慈欣",
-      "favNums":"5",
-    },{
-      "bookId":"1",
-      "image":"https://img3.doubanio.com/view/subject/l/public/s2768378.jpg",
-      "name":"三体",
-      "author":"刘慈欣",
-      "favNums":"5",
-    },{
-      "bookId":"1",
-      "image":"https://img3.doubanio.com/view/subject/l/public/s2768378.jpg",
-      "name":"三体",
-      "author":"刘慈欣",
-      "favNums":"5",
-    },{
-      "bookId":"1",
-      "image":"https://img3.doubanio.com/view/subject/l/public/s2768378.jpg",
-      "name":"三体",
-      "author":"刘慈欣",
-      "favNums":"5",
-    }],
+    books: [],
     searching: false,
     isLoading: false,
     isShowLogin: false,
@@ -77,14 +41,13 @@ Page({
   getHotList: function() {
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "",
+      url: app.globalData.baseUrl + "book/featured",
       method: "GET",
       header: {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer ' + app.globalData.token
+        'content-type': 'application/json'
       },
       success: function(res) {
-        console.log(res.data)
+        console.log(',,..,,,',res.data)
         if (res.data.code==="0000") {
           that.setData({
             books: res.data.data
@@ -118,8 +81,9 @@ Page({
   },
 
   toLibrary: function(e) {
+    console.log("e",e)
     wx.navigateTo({
-      url: '/pages/book/library/library',
+      url: 'library/library',
     })
   },
   onTap: function(e){
@@ -130,7 +94,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url:'book-detail/book-detail?bid=' + this.properties.bookId
+      url:'book-detail/book-detail?bid=' + e.currentTarget.bookId
     })
   },
 

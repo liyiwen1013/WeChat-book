@@ -2,14 +2,15 @@
 <view class="container" wx:id="{{isNormal==true}}">
 
   <!-- 偏好统计分析 -->
-  <block wx:if="{{preferencePercent.ta!=0||preferencePercent.tb!=0||preferencePercent.tc!=0}}">
+  <block wx:if="{{preferencePercent.dynamicCount!=0||preferencePercent.sharingCount!=0}}">
     <ec-canvas id="mychart-dom-multi-bar" canvas-id="mychart-multi-bar" ec="{{ ecPreference }}"></ec-canvas>
   </block>
-  <view>偏好统计分析{{preferencePercent.ta==0&&preferencePercent.tb==0&&preferencePercent.tc==0?"(暂无数据)":""}}</view>
+  <view>偏好统计分析{{preferencePercent.dynamicCount==0&&preferencePercent.sharingCount==0?"(暂无数据)":""}}</view>
 
   <!-- 行为统计分析 -->
   <view class="split-line"></view>
-  <ec-canvas id="mychart-dom-multi-scatter" canvas-id="mychart-multi-scatter" ec="{{ ecBehavior }}"></ec-canvas>
+  <!-- <ec-canvas id="mychart-dom-multi-scatter" canvas-id="mychart-multi-scatter" ec="{{ ecBehavior }}"></ec-canvas> -->
+  <canvas canvas-id="mychart" style="width: 100%; height: 300px;"></canvas>
   <view>行为统计分析</view>
 
   <!-- 时间统计分析 -->

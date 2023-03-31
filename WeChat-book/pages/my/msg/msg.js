@@ -115,7 +115,7 @@ Page({
           that.setData({
             message: updatedMessages
           })
-          let e = ['提示', '消息已成功删除啦']
+          let e = ['删除成功', '消息已成功删除啦']
           that.showNotify(e)
         } else {
           let e = ['提示', res.data.msg]

@@ -50,8 +50,6 @@ Component({
   },
 
   ready: function () {
-    // Disable prograssive because drawImage doesn't support DOM as parameter
-    // See https://developers.weixin.qq.com/miniprogram/dev/api/canvas/CanvasContext.drawImage.html
     echarts.registerPreprocessor(option => {
       if (option && option.series) {
         if (option.series.length > 0) {

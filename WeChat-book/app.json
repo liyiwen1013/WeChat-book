@@ -4,6 +4,9 @@
     "pages/book/book",
     "pages/book/library/library",
     "pages/book/book-detail/book-detail",
+    "pages/bbs/bbs",
+    "pages/bbs/new/new",
+    "pages/bbs/passage/passage",
     "pages/login/login",
     "pages/login/wxlogin/wxlogin",
     "pages/login/forgetpwd/forgetpwd",
@@ -13,13 +16,11 @@
     "pages/my/history/history",
     "pages/my/instruc/instruc",
     "pages/my/msg/msg",
+    "pages/my/portray/portray",
     "pages/my/mycollect/mycollect",
     "pages/my/mycomment/mycomment",
     "pages/my/notify/notify",
-    "pages/my/mypost/mypost",
-    "pages/bbs/bbs",
-    "pages/bbs/new/new",
-    "pages/bbs/passage/passage"
+    "pages/my/mypost/mypost"
   ],
   "window":{
     "backgroundTextStyle":"light",

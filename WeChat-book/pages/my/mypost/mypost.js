@@ -83,6 +83,7 @@ Page({
       loadingTxt: "删除中"
     })
     let that = this
+    console.log(this.data)
     let delid = this.data.delid
     let myposts = this.data.myposts
     wx.request({
@@ -101,7 +102,7 @@ Page({
           that.setData({
             myposts: updatedMyposts
           })
-          let e = ['提示', '发布内容已成功删除啦']
+          let e = ['删除成功', '发布内容已成功删除啦']
           that.showNotify(e)
         } else {
           let e = ['提示', res.data.msg]
