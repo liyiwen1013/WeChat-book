@@ -13,36 +13,36 @@ page {
 }
 .date {
   font-size: 24rpx;
-  margin-bottom: 10rpx;
   background-color: rgba(0, 0, 0, 0.08);
-  color: white;
+  margin-bottom: 20rpx;
+  color: rgb(163, 201, 216);
   padding: 0 10rpx;
   border-radius: 8rpx;
 }
 .innerbox {
   width: 100%;
   background-color: white;
-  border-radius: 10rpx;
-  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.04);
+  border-radius: 20rpx;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.15);
   padding: 30rpx 20rpx;
   box-sizing: border-box;
 }
-.title {
+.content {
   color: #333;
   font-size: 30rpx;
   margin-bottom: 10rpx;
 }
-.detail {
+.title {
   display: -webkit-box;
   overflow: hidden;
   word-break: break-all;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
-.detail text {
+.title text {
   padding: 0 10rpx;
   margin-right: 10rpx;
-  background-color: #cce6ff;
+  background-color: #74c7f2;
   color: white;
   line-height: 1;
 }

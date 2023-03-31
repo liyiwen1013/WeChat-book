@@ -148,12 +148,14 @@ Page({
   },
   getPreferencePercent() {
     wx.request({
-      // url: 'http://localhost:8080/getPreferencePercent',
-      url: app.globalData.baseUrl + "getPreferencePercent",
+      url: app.globalData.baseUrl + "user/analysis",
+      method: "GET",
       header: {
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success: (res)=> {
+        console.log(res.data)
         this.setData({
           preferencePercent: res.data.data
         })

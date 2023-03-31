@@ -1,11 +1,11 @@
 <!-- 发布 -->
 <view  wx:if="{{isNormal==true}}" >
-  <view class="item" wx:for="{{myposts}}" wx:key="index" data-title="{{item.title}}" data-delid="{{index}}" data-postid="{{item.postid}}" bindtap="toMyPost" bindlongpress="deletePost">
-    <view class="date">{{item.date}}</view>
+  <view class="item" wx:for="{{myposts}}" wx:key="index" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}" bindtap="toMyPost" bindlongpress="deletePost">
+    <view class="date">{{item.createTime}}</view>
     <view class="innerbox">
       <view class="title">
-        <text class="posttype">{{item.type==0?"观点":(item.type==1?"趣事":"资源")}}</text>
-        <text class="isanonumous" wx:if="{{item.anonymous==1}}">匿名</text>
+        <text class="posttype">{{item.type==1?"趣闻":"分享"}}</text>
+        <text class="isanonumous" wx:if="{{item.isAnonymous}}">匿名</text>
         {{item.title}}
       </view>
       <view class="detail">{{item.content}}</view>

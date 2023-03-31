@@ -208,29 +208,32 @@ Page({
       // 用户自定义的图片，需要上传到服务器
       wx.uploadFile({
         filePath: this.data.bgContent,
-        url: app.globalData.baseUrl + 'file/upload',
+        url: app.globalData.baseUrl + "file/upload",
+        method: "POST",
         header: {
           'content-type': 'application/x-www-form-urlencoded',
           'Authorization': 'Bearer ' + app.globalData.token
         },
-        method: "POST",
         name: 'file',
-        formData: {},
         success: function(res) {
-          that.setData({
-            bgContent: res.data.data
-          })
+          res = JSON.parse(res.data)
+          if (res.code == "0000") {
+            that.setData({
+              bgContent: res.data
+            })
+            that.addPost()
+          }
         },
         fail: function (res) {
           // 上传失败后返回的数据
-          console.log(res.errMsg);
           var e = ["提示","图片上传失败~"]
           this.showNotify(e)
           return
         }
       })
+    } else {
+      this.addPost()
     }
-    this.addPost()
   },
 
   closeResultMsg: function() {

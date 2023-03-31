@@ -36,11 +36,6 @@
 </view>
 
 <view class="conf" style="margin-bottom:0">
-  <!-- <view bindtap="toNext" data-id="statistics" wx:if="{{isNormal==true}}">
-    <image src="../../pics/statistics.png"></image>
-    <view class="txt">统计</view>
-    <text class="more"></text>
-  </view> -->
   <view bindtap="toNext" data-id="portray" wx:if="{{isNormal==true}}">
     <image src="../../pics/portray.png"></image>
     <view class="txt">统计</view>

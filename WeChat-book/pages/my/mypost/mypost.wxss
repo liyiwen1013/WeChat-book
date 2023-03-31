@@ -14,18 +14,18 @@ page {
 }
 .date {
   font-size: 24rpx;
-  margin-bottom: 10rpx;
+  margin-bottom: 20rpx;
+  color: rgb(163, 201, 216);
   background-color: rgba(0, 0, 0, 0.08);
-  color: white;
   padding: 0 10rpx;
   border-radius: 8rpx;
 }
 .innerbox {
   width: 100%;
   background-color: white;
+  border-radius: 20rpx;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.15);
   padding: 30rpx 20rpx;
-  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.04);
-  border-radius: 10rpx;
 }
 .title {
   color: #333;
@@ -34,7 +34,7 @@ page {
 }
 .posttype {
   padding: 0 10rpx;
-  background-color: #cce6ff;
+  background-color: #74c7f2;
   margin-right: 10rpx;
   color: white;
 }

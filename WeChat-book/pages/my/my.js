@@ -231,6 +231,7 @@ Page({
       },
       name: 'file',
       success: function(res) {
+        console.log(res)
         res = JSON.parse(res.data)
           that.setData({
             'basicInfo.avatar': res.data

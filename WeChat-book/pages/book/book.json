@@ -3,7 +3,6 @@
   "navigationBarTitleText": "书库",
   "navigationBarTextStyle": "white",
   "usingComponents": {
-      "v-book": "/components/book/index",
       "v-search": "search/search"
   }
 }

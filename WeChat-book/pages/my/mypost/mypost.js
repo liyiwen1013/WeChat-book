@@ -38,19 +38,19 @@ Page({
   getMyPosts() {
     let that = this
     wx.request({
-      url: app.globalData.baseUrl + "getMyPosts",
-      method: "POST",
+      url: app.globalData.baseUrl + "posts/my",
+      method: "GET",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
           that.setData({
             myposts: res.data.data
           })
         } else {
-          let e = ['获取发表失败', res.data.msg]
+          let e = ['获取发布失败', res.data.msg]
           that.showNotify(e)
         }
       },
@@ -62,20 +62,18 @@ Page({
   },
 
   toMyPost(e) {
-    let title = e.currentTarget.dataset.title
-    let postid = e.currentTarget.dataset.postid
+    console.log(e)
     wx.navigateTo({
-      url: '/pages/bbs/passage/passage?title=' + title + "&postid=" + postid,
+      url: '../../bbs/passage/passage?id=' + e.currentTarget.dataset.id
     })
   },
 
   deletePost(e) {
-    let postid = e.currentTarget.dataset.postid
-    let delid = e.currentTarget.dataset.delid
+    console.log(e)
+    let delid = e.currentTarget.dataset.id
     this.setData({
       showDel: true,
-      delpostid: postid,
-      delid: delid
+      delid: delid,
     })
   },
 
@@ -85,25 +83,25 @@ Page({
       loadingTxt: "删除中"
     })
     let that = this
-    let delpostid = this.data.delpostid
-    let postss = this.data.myposts
+    let delid = this.data.delid
+    let myposts = this.data.myposts
     wx.request({
-      url: app.globalData.baseUrl + "deletePost",
-      // url: 'http://localhost:8080/deletePost',
+      url: app.globalData.baseUrl + "posts",
+      method: "DELETE",
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        delpostid: delpostid
+        id: delid
       },
       success(res) {
-        if (res.data.code===0) {
-          postss.splice(that.data.delid, 1)
+        if (res.data.code==="0000") {
+          const updatedMyposts = myposts.filter(item => item.id !== delid)
           that.setData({
-            myposts: postss
+            myposts: updatedMyposts
           })
-          let e = ['提示', '话题已成功删除啦']
+          let e = ['提示', '发布内容已成功删除啦']
           that.showNotify(e)
         } else {
           let e = ['提示', res.data.msg]

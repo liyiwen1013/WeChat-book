@@ -34,13 +34,15 @@ Page({
   getMyComments() {
     let that = this
     wx.request({
-      url: app.globalData.baseUrl + "getMyComments",
-      method: "POST",
+      url: app.globalData.baseUrl + "posts/comment/my",
+      method: "GET",
       header: {
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success(res) {
-        if (res.data.code===0) {
+        console.log(".,.,.,",res.data)
+        if (res.data.code==="0000") {
           that.setData({
             mycomment: res.data.data
           })
@@ -57,10 +59,9 @@ Page({
   },
 
   toComment(e) {
-    let title = e.currentTarget.dataset.title
-    let postid = e.currentTarget.dataset.postid
+    console.log(e)
     wx.navigateTo({
-      url: '/pages/bbs/passage/passage?title=' + title + "&postid=" + postid,
+      url: '../../bbs/passage/passage?id=' + e.currentTarget.dataset.id
     })
   }
 })

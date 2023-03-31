@@ -23,6 +23,7 @@ Page({
     // wx.setNavigationBarTitle({
     //   title: e.title
     // })
+    console.log(e)
     this.setData({
       postsId: e.id,
       showLoading: true,

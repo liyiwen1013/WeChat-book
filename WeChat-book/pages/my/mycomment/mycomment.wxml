@@ -1,10 +1,10 @@
 <!-- 评论 -->
 <view  wx:if="{{isNormal==true}}">
-  <view class="item" wx:for="{{mycomment}}" wx:key="index" bindtap="toComment" data-title="{{item.title}}" data-postid="{{item.postid}}">
-    <view class="date">{{item.date}}</view>
+  <view class="item" wx:for="{{mycomment}}" wx:key="index" bindtap="toComment" bindlongpress="deleteComment" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}">
+    <view class="date">{{item.createTime}}</view>
     <view class="innerbox">
-      <view class="title">{{item.title}}</view>
-      <view class="detail"><text>{{item.type==0?"评论":"引用"}}</text> {{item.detail}}</view>
+      <view class="content">{{item.content}}</view>
+      <view class="title"><text>{{item.type==0?"评论":"引用"}}</text> {{item.postsTitle}}</view>
     </view>
   </view>
   <view style="height: 60rpx"></view>
