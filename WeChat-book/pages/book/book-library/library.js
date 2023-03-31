@@ -68,10 +68,11 @@ Page({
           var e = ['提示', '出了点儿错，稍后再试吧']
           that.showNotify(e)
         },
-        fail: function(err) {
-          var e = ['提示', '出了点儿错，稍后再试吧']
-          that.showNotify(e)
-          reject(err)
+        complete() {
+          that.setData({
+            showLoading: false,
+            loadingTxt: ""
+          })
         }
       })
     })
@@ -79,7 +80,6 @@ Page({
 
   // 点击每个分类触发的事件
   onCategoryTap: function (e) {
-    console.log(".....",e)
     let index = e.currentTarget.dataset.index
     let bookCategoryId = e.currentTarget.dataset.categoryId
     if (this.data.current != index) {
@@ -92,7 +92,6 @@ Page({
 
   // 根据分类索引获取列表
   getBooksList: function (bookCategoryId) {
-    console.log("sse",bookCategoryId)
     wx.request({
       url: app.globalData.baseUrl + 'book', 
       method: 'GET',
@@ -100,7 +99,6 @@ Page({
         bookCategoryId: bookCategoryId
       },
       success: (res) => {
-        console.log(',,..,,,',res.data)
         if (res.data.code==="0000") {
           this.setData({
             booksList: res.data.data

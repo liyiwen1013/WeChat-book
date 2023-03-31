@@ -58,7 +58,7 @@ page {
 .click-addOne {
   background-color: #74c7f2;
 }
-.hot-info {
+/* .hot-info {
   width: 100%;
   text-align: center;
   height: 40rpx;
@@ -67,8 +67,8 @@ page {
   position: relative;
   color: #999;
   font-size: 24rpx;
-}
-.hot-info::after {
+} */
+/* .hot-info::after {
   content: "";
   position: absolute;
   left: 30%;
@@ -76,12 +76,12 @@ page {
   z-index: -1;
   height:30rpx;
   top: 0;
-}
-.hot-info .txt {
-  background-color: rgb(245, 247, 250);
+} */
+/* .hot-info .txt {
+  background-color: rgb(24, 32, 44);
   padding: 0 20rpx;
   display: inline;
-}
+} */
 
 .search {
   flex: 1;
