@@ -1,8 +1,9 @@
 {
+  "navigationBarBackgroundColor": "#74c7f2",
+  "navigationBarTextStyle": "white",
   "navigationBarTitleText": "书籍详情",
   "usingComponents": {
     "v-tag": "../../../components/tag/index",
-      "v-like": "../../../components/like/index",
-      "v-mask": "../../../components/mask/index"
+    "v-mask": "../../../components/mask/index"
   }
 }

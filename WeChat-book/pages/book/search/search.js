@@ -7,10 +7,7 @@ const keywordModel = new KeywordModel()
 const bookModel = new BookModel()
 
 Component({
-  /**
-   * 组件的属性列表
-   */
-  // behaviors: [ paginationBev ],
+  behaviors: [ paginationBev ],
   properties: {
     more: {
       type: String,
@@ -26,8 +23,11 @@ Component({
     loadingCenter: false
   },
   onLoad: function () {
-    const pages = getCurrentPages()
-    console.log('当前页面信息为：', pages)
+    // 获取热门书籍(概要)
+    this.setData({
+      showLoading: true
+    })
+    this.getAllSelete()
   },
 
 
@@ -49,11 +49,47 @@ Component({
     }
     return words
   },
-  // 获取热门搜索词
-  getHot(){
-    return this.request({
-      url: 'book/hot_keyword'
-    }) 
+  // 获取所有信息
+  getAllSelete(){
+    var that = this
+    wx.request({
+      url: app.globalData.baseUrl + "book/search",
+      method: "GET",
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        keyword: that.data.q,
+        // pageNum:,
+        // pageSize:,
+      },
+      success: function(res) {
+        console.log(',,.,,',res.data)
+        if (res.data.code==="0000") {
+          that.setData({
+            books: res.data.data
+          })
+        } else {
+          // 显示通知窗口
+          var e = ["获取失败", res.data.msg]
+          that.showNotify(e)
+        }
+      },
+      error: function() {
+        // 隐藏刷新动画
+        wx.stopPullDownRefresh()
+        var e = ["提示", "出了点儿错，稍后再试吧"]
+        this.showNotify(e)
+      },
+      complete: function() {
+        that.setData({
+          showLoading: false,
+          isLoading: false
+        })
+        // 隐藏刷新动画
+        wx.stopPullDownRefresh()
+      }
+    })
   },
   
   loadMore() {
@@ -75,9 +111,10 @@ Component({
     }
   },
 
-    onCancel: function() {
-      wx.navigateBack({
-        delta: 1 // 返回上一页，delta 为 1
+    onCancel: function(e) {
+      this.setData({
+        searching: false,
+        q: ''
       })
     },
 

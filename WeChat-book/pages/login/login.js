@@ -181,7 +181,7 @@ Page({
       url: 'forgetpwd/forgetpwd',
     })
   },
-  // 获取用户信息按钮的回调函数
+  // 微信登陆
   getUserInfo: function(e) {
     var that = this;
     /* 展示加载动画 */

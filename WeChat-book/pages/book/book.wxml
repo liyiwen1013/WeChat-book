@@ -16,7 +16,7 @@
     </view>
     <view class="books-container">
       <block wx:key="id" wx:for="{{books}}">
-        <view bind:tap="onTap" class="item-books">
+        <view bindtap="onTap" class="item-books" data-book-id="{{item.id}}">
           <image src="{{item.image}}"></image>
           <view class="item-description">
             <text class='item-title'>{{item.name}}</text>

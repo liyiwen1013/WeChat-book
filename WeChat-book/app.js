@@ -22,7 +22,7 @@ App({
         wx.request({
           url: that.globalData.baseUrl + "refreshSession",
           header: {
-            'Authorization': 'Bearer ' + app.globalData.token
+            'Authorization': 'Bearer ' + that.globalData.token
           }
         })
       }

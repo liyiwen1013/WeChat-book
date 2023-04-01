@@ -56,11 +56,11 @@
     <view class="title">新建</view>
     <view class="options">
       <view hover-class="click-select"  bindtap="toNew" data-id="1">
-        <image src="../../pics/memory.png"></image>
+        <image src="../../images/趣闻.png"></image>
         <view>趣闻</view>
       </view>
       <view hover-class="click-select"  bindtap="toNew" data-id="2">
-        <image src="../../pics/share.png"></image>
+        <image src="../../images/评论.png"></image>
         <view>分享</view>
       </view>
     </view>

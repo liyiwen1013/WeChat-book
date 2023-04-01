@@ -91,29 +91,8 @@ Page({
     })
   },
   onTap: function(e){
-    if (!app.globalData.isLogin) {
-      this.setData({
-        isShowLogin: true
-      })
-      return
-    }
     wx.navigateTo({
-      url:'book-detail/book-detail?bid=' + e.currentTarget.bookId
-    })
-  },
-  // 根据响应窗口类型关闭窗口
-  closeWindow: function(e) {
-    var modelid = e.currentTarget.dataset.modelid
-    this.setData({
-      [modelid]: false
-    })
-  },
-  goLogin: function() {
-    this.setData({
-      isShowLogin: false
-    })
-    wx.navigateTo({
-      url: '../login/login',
+      url:'book-detail/book-detail?id=' + e.currentTarget.dataset.bookId
     })
   },
 

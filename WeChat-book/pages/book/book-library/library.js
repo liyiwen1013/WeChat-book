@@ -50,7 +50,6 @@ Page({
           'content-type': 'application/json'
         },
         success: function(res) {
-          console.log(',,,,list',res.data)
           if (res.data.code==="0000") {
             if (res.data.data.length != 0) {
               that.setData({
@@ -111,7 +110,7 @@ Page({
     })
   },
 
-  onBook: function() {
+  onBook: function(e) {
     if (!app.globalData.isLogin) {
       this.setData({
         isShowLogin: true
@@ -119,7 +118,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url:'../book-detail/book-detail?bid=' + this.properties.bookId
+      url:'../book-detail/book-detail?id=' + e.currentTarget.dataset.bookId
     })
   },
 

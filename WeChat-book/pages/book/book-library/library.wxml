@@ -13,11 +13,11 @@
     <block wx:if="{{booksList.length}}">
       <scroll-view scroll-y="true" style="height: 100%;">
         <block wx:for="{{booksList}}" wx:key="book">
-          <view class="book-item" bindtap="onBook">
+          <view class="book-item" bindtap="onBook" data-book-id="{{item.id}}">
             <image src="{{item.image}}" mode="aspectFit" />
             <view class="book-item-mess">
               <view class="name">{{item.name}}</view>
-              <view class="author">{{item.author}} | {{item.collectCount}}人喜欢</view>
+              <view class="author">{{item.author}} | {{item.collectCount}} 收藏</view>
             </view>
           </view>
         </block>

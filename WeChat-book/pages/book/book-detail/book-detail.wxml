@@ -2,9 +2,13 @@
 <view class="container">
     <view class="head">
         <image src="{{book.image}}"></image>
-        <text class='title'>{{book.title}}</text>
-        <text class='author'>{{book.author}}</text>
+        <view class="head-right">
+          <text class='book-title'>{{book.name}}</text>
+          <text class='book-author'>{{book.author}}</text>
+          <text class='book-subtitle'>{{book.subtitle}}</text>
+        </view>
     </view>
+    <!-- 短评 -->
     <view class="sub-container">
         <text class="headline">短评</text>
          <text class="shadow" wx:if="{{comments==false}}">还没有短评</text>
@@ -16,10 +20,12 @@
             </block>
         </view>
     </view>
+    <!-- 内容简介 -->
     <view class="sub-container">
         <text class="headline">内容简介</text>
         <text class="content" decode="{{true}}">{{util.format(book.summary)}}</text>
     </view>
+    <!-- 书本信息 -->
     <view class="sub-container">
         <text class="headline">书本信息</text>
         <view class="detail-container">
@@ -28,31 +34,39 @@
                 <text>出版年</text>
                 <text>页数</text>
                 <text>定价</text>
-                <text>装帧</text>
+                <text>编号</text>
+                <text>装订方式</text>
             </view>
             <view class="vertical">
                 <text>{{book.publisher}}</text>
-                <text>{{book.pubdate}}</text>
+                <text>{{book.publishDate}}</text>
                 <text>{{book.pages}}</text>
                 <text>{{book.price}}</text>
-                <text>{{book.binding}}</text>
+                <text>{{book.isbn}}</text>
+                <text>{{book.bindingType==1?'平装':'精装'}}</text>
             </view>
         </view>
     </view>
 </view>
 <view class="post-container" hidden="{{posting}}">
-    <view bind:tap="onFakePost" class="post-fake">
+    <view bindtap="onFakePost" class="post-fake">
         <text>输入短评</text>
     </view>
-    <view class="like-container">
-        <v-like bind:like="onLike" class="like" like="{{likeStatus}}" count="{{likeCount}}" />      
+    <view class="collect-container">
+      <view bindtap="onLike" class="collect-img" data-book-id="{{book.id}}">
+        <image src="{{book.isCollect?'/images/收藏hover.png':'/images/收藏.png'}}"/>
+        <text>{{book.collectCount}}</text>
+      </view>
+      <view class="share-btn">
+        <button class="userInfo-btn" open-type="share" size="mini" bindtap="onShareImageTap" data-book-id="{{book.id}}">
+          <image src='/images/分享2.png' mode='aspectFit'></image>
+        </button>
+      </view>
     </view>
 </view>
 <view class="posting-container" wx:if="{{posting}}">
     <view class="post-header">
-        <text wx:if="{{comments.length > 0}}">仅可点击标签+1</text>
-        <text wx:else>暂无短评</text> 
-        <text bind:tap="onCancel" class="cancel">取消</text>
+        <text>{{comments.length > 0 ? '仅可点击标签+1' : '暂无短评'}}</text>
     </view>
     <view class="comment-container">
         <block wx:for="{{util.limit(comments, 3)}}" wx:key="content">
@@ -62,6 +76,10 @@
         </block>
     </view>
     <input bindconfirm="onPost" class="post" placeholder='短评最多12个字'></input>
+    <view class="post-footer">  
+      <text bindtap="onPost" class="cancel">提交</text>
+      <text bindtap="onCancel" class="cancel">取消</text>
+    </view>
 </view>
 <v-mask wx:if="{{posting}}"/>
 
@@ -79,3 +97,29 @@
       highlight: highlight
     }
 </wxs>
+
+<!-- 弹出层，弹出需要登陆的信息提示 -->
+<view class="outModel {{isShowLogin?'show':''}}">
+	<view class="innerModel">
+		<view class="closebtn" bindtap="closeWindow" data-modelid="isShowLogin"></view>
+		<view class="title">登录</view>
+		<view class="notify">登陆后方可使用本功能</view>
+    <view class="go-login" bindtap="goLogin">立即登录</view>
+	</view>
+</view>
+
+<!-- 信息提示层，一定时间后自动关闭 -->
+<view class="notify-model {{showNotify?'show-notify-model':''}}">
+	<view class="notify-model-inner">
+		<view class="notify-model-inner-title">{{notifyTitle}}</view>
+		<view class="notify-model-inner-detail">{{notifyDetail}}</view>
+	</view>
+</view>
+
+<!-- 加载动画 -->
+<view class="loading-model {{showLoading?'show-loading-model':''}}">
+  <view class="loading-model-inner">
+    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
+    <view class="loading-model-inner-clue">玩命加载中...</view>
+  </view>
+</view>
