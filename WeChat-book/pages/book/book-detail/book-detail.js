@@ -55,6 +55,10 @@ Page({
       },
       success: function(res) {
         console.log("..",res.data)
+        if (res.data.data.summary.includes("展开全部")) {
+          console.log("该文本中包含“展开全部”");
+          res.data.data.summary=res.data.data.summary.substring(0, res.data.data.summary.length - 6)
+        }
         if (res.data.code==="0000") {
           that.setData({
             book: res.data.data

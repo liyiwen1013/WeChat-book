@@ -6,8 +6,6 @@ Page({
     booksList: [], // 图书数据
     current: 0, // 当前选中的分类索引
     bookCategoryId: -1,
-    isLoading: false,
-    isShowLogin: false,
     showLoading: false,
     showNotify: false,
     notifyTitle: "",
@@ -111,30 +109,8 @@ Page({
   },
 
   onBook: function(e) {
-    if (!app.globalData.isLogin) {
-      this.setData({
-        isShowLogin: true
-      })
-      return
-    }
     wx.navigateTo({
       url:'../book-detail/book-detail?id=' + e.currentTarget.dataset.bookId
-    })
-  },
-
-  goLogin: function() {
-    this.setData({
-      isShowLogin: false
-    })
-    wx.navigateTo({
-      url: '../../login/login',
-    })
-  },
-  // 根据响应窗口类型关闭窗口
-  closeWindow: function(e) {
-    var modelid = e.currentTarget.dataset.modelid
-    this.setData({
-      [modelid]: false
     })
   }
 })

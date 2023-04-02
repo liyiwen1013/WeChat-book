@@ -1,53 +1,54 @@
 <wxs src="../../../utils/filter.wxs" module="util" />
-<view class="container">
-    <view class="head">
-        <image src="{{book.image}}"></image>
-        <view class="head-right">
-          <text class='book-title'>{{book.name}}</text>
-          <text class='book-author'>{{book.author}}</text>
-          <text class='book-subtitle'>{{book.subtitle}}</text>
-        </view>
-    </view>
-    <!-- 短评 -->
-    <view class="sub-container">
-        <text class="headline">短评</text>
-         <text class="shadow" wx:if="{{comments==false}}">还没有短评</text>
-        <view class="comment-container">
-            <block wx:for="{{util.limit(comments, 10)}}" wx:key="content">
-                <v-tag tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
-                    <text class="num" slot="after">{{'+'+item.nums}}</text>
-                </v-tag>
-            </block>
-        </view>
-    </view>
-    <!-- 内容简介 -->
-    <view class="sub-container">
-        <text class="headline">内容简介</text>
-        <text class="content" decode="{{true}}">{{util.format(book.summary)}}</text>
-    </view>
-    <!-- 书本信息 -->
-    <view class="sub-container">
-        <text class="headline">书本信息</text>
-        <view class="detail-container">
-            <view class="vertical description">
-                <text>出版社</text>
-                <text>出版年</text>
-                <text>页数</text>
-                <text>定价</text>
-                <text>编号</text>
-                <text>装订方式</text>
-            </view>
-            <view class="vertical">
-                <text>{{book.publisher}}</text>
-                <text>{{book.publishDate}}</text>
-                <text>{{book.pages}}</text>
-                <text>{{book.price}}</text>
-                <text>{{book.isbn}}</text>
-                <text>{{book.bindingType==1?'平装':'精装'}}</text>
-            </view>
-        </view>
-    </view>
+<view class="head">
+  <image src="{{book.image}}"></image>
+  <view class="head-right">
+    <text class='book-title'>{{book.name}}</text>
+    <text class='book-author'>{{book.author}}</text>
+    <text class='book-author'>{{book.translator.length>0?'翻译：'+book.translator:''}}</text>
+    <text class='book-subtitle'>{{book.subtitle}}</text>
+  </view>
 </view>
+<!-- 短评 -->
+<view class="sub-container">
+  <text class="headline">短评</text>
+   <text class="shadow" wx:if="{{comments==false}}">还没有短评</text>
+  <view class="comment-container">
+    <block wx:for="{{util.limit(comments, 10)}}" wx:key="content">
+      <v-tag tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
+        <text class="num" slot="after">{{'+'+item.nums}}</text>
+      </v-tag>
+    </block>
+  </view>
+</view>
+<!-- 内容简介 -->
+<view class="sub-container">
+  <text class="headline">内容简介</text>
+  <!-- <text class="content" decode="{{true}}">{{util.format(book.summary)}}</text> -->
+  <text class="content" decode="{{true}}">{{book.summary}}</text>
+</view>
+<!-- 书本信息 -->
+<view class="sub-container">
+  <text class="headline">书本信息</text>
+  <view class="detail-container">
+    <view class="vertical description">
+      <text>出版社</text>
+      <text>出版年</text>
+      <text>页数</text>
+      <text>定价</text>
+      <text>编号</text>
+      <text>装订方式</text>
+    </view>
+    <view class="vertical">
+      <text>{{book.publisher}}</text>
+      <text>{{book.publishDate}}</text>
+      <text>{{book.pages}}</text>
+      <text>{{book.price}}</text>
+      <text>{{book.isbn}}</text>
+      <text>{{book.bindingType==1?'平装':'精装'}}</text>
+    </view>
+  </view>
+</view>
+<view style="height: 120rpx;"></view>
 <view class="post-container" hidden="{{posting}}">
     <view bindtap="onFakePost" class="post-fake">
         <text>输入短评</text>
@@ -58,7 +59,7 @@
         <text>{{book.collectCount}}</text>
       </view>
       <view class="share-btn">
-        <button class="userInfo-btn" open-type="share" size="mini" bindtap="onShareImageTap" data-book-id="{{book.id}}">
+        <button class="share-btn-btn" open-type="share" size="mini" bindtap="onShareImageTap" data-book-id="{{book.id}}">
           <image src='/images/分享2.png' mode='aspectFit'></image>
         </button>
       </view>
