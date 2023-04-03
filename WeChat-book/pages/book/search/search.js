@@ -113,9 +113,8 @@ Component({
 
     onCancel: function(e) {
       this.setData({
-        searching: false,
-        q: ''
-      })
+        showModal: false
+      });
     },
 
     onDelete(event) {

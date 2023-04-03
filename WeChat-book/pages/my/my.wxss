@@ -8,7 +8,7 @@ page {
 .user-info {
   margin: 0 auto;
   width: 200rpx;
-  margin-top: -500rpx;
+  margin-top: -570rpx;
   border-radius: 10rpx;
   position: relative;
   box-sizing: border-box;
@@ -65,6 +65,7 @@ page {
   margin: 0 auto;
   margin-top: 30rpx;
   background-color: rgba(255, 255, 255, 0.6);
+  /* background-color: rgba(255, 255, 255); */
   border-radius: 10rpx;
   /* box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1); */
   position: relative;

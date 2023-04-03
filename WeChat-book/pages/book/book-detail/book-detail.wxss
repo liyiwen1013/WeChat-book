@@ -6,7 +6,7 @@
 .head {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   width: 90%;
   border-radius: 30rpx;
@@ -15,10 +15,17 @@
   background-color: white;
   box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.15);
 }
+.head image {
+  margin-left: 50rpx;
+  width: 200rpx;
+  height: 270rpx;
+  box-shadow: 2px 2px 3px #9c9c9c;
+}
 .head-right {
   display: flex;
   flex-direction: column;
   line-height: 60rpx;
+  width: 50%;
 }
 .book-title {
   color: #2f2f2f;
@@ -33,11 +40,6 @@
 .book-subtitle {
   font-size: 30rpx;
   color: #2f2f2f;
-}
-.head image {
-  width: 200rpx;
-  height: 270rpx;
-  box-shadow: 2px 2px 3px #9c9c9c;
 }
 
 .sub-container {
@@ -75,12 +77,14 @@
   text-indent: 58rpx;
   font-weight: 500;
   padding: 0 30rpx;
+  width: 90%;
+  word-wrap: break-word;
 }
 
 .num {
-    margin-left: 10rpx;
-    font-size: 22rpx;
-    color: #aaa;
+  margin-left: 10rpx;
+  font-size: 22rpx;
+  color: #aaa;
 }
 
 /* .comment-container>v-tag:nth-child(1)>view {
@@ -241,7 +245,7 @@
 }
 
 .shadow {
-    color: #999;
+  color: #999;
 }
 
 /* 没有登陆的时候的弹窗 */

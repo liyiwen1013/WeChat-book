@@ -50,16 +50,16 @@
 </view>
 <view style="height: 120rpx;"></view>
 <view class="post-container" hidden="{{posting}}">
-    <view bindtap="onFakePost" class="post-fake">
-        <text>输入短评</text>
-    </view>
+  <view bindtap="onFakePost" class="post-fake">
+    <text>输入短评</text>
+  </view>
     <view class="collect-container">
       <view bindtap="onLike" class="collect-img" data-book-id="{{book.id}}">
         <image src="{{book.isCollect?'/images/收藏hover.png':'/images/收藏.png'}}"/>
         <text>{{book.collectCount}}</text>
       </view>
       <view class="share-btn">
-        <button class="share-btn-btn" open-type="share" size="mini" bindtap="onShareImageTap" data-book-id="{{book.id}}">
+        <button class="share-btn-btn" open-type="share" size="mini" bindtap="onShareImageTap">
           <image src='/images/分享2.png' mode='aspectFit'></image>
         </button>
       </view>
@@ -76,7 +76,7 @@
             </v-tag>
         </block>
     </view>
-    <input bindconfirm="onPost" class="post" placeholder='短评最多12个字'></input>
+    <input bindconfirm="onPost" class="post" placeholder="短评最多10个字" data-inputid="content"></input>
     <view class="post-footer">  
       <text bindtap="onPost" class="cancel">提交</text>
       <text bindtap="onCancel" class="cancel">取消</text>

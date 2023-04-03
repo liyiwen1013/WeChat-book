@@ -5,7 +5,6 @@
 <view class="logotxt">
   <view class="txt">一场心灵沉淀之旅</view>
 </view>
-
 <view class="login-form">
   <view class="uname">
     <view>用户名</view>
@@ -21,7 +20,6 @@
   </view>
 </view>
 <view class="forgetpwd" bindtap="forgetpwd" wx:if="{{isNormal==true}}">忘记密码?</view>
-
 <!-- 微信登录 -->
 <view class="wx-login">
   <button class="userInfo-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
@@ -29,7 +27,6 @@
   </button>
   <view style="margin: auto; font-size: 1rem; color: #74c7f2;">微信登录</view>
 </view>
-
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{showNotify?'show-notify-model':''}}">
 	<view class="notify-model-inner">
@@ -37,7 +34,6 @@
 		<view class="notify-model-inner-detail">{{notifyDetail}}</view>
 	</view>
 </view>
-
 <!-- 加载动画 -->
 <view class="loadingbox {{isLoading?'show-model':''}}">
   <view class="innerloadingbox">

@@ -22,13 +22,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(e) {
-    console.log("额度的e",e)
+    console.log("bookId",e)
     this.setData({
       bookId: e.id,
       showLoading: true,
       loadingTxt: "玩命加载中"
     })
     this.getBookDetail()
+    this.getBookComment()
   },
   showNotify: function(e) {
     this.setData({
@@ -51,7 +52,6 @@ Page({
       method: "GET",
       header: {
         'content-type': 'application/json',
-        'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
         console.log("..",res.data)
@@ -59,6 +59,34 @@ Page({
           console.log("该文本中包含“展开全部”");
           res.data.data.summary=res.data.data.summary.substring(0, res.data.data.summary.length - 6)
         }
+        if (res.data.code==="0000") {
+          that.setData({
+            book: res.data.data
+          })
+        } else {
+          var e = ["提示", res.data.msg]
+          that.showNotify(e)
+        }
+      },
+      complete: function() {
+        that.setData({
+          showLoading: false,
+          loadingTxt: ""
+        })
+      }
+    })
+  },
+  getBookComment: function() {
+    var that = this
+    console.log("getBookComment",this.data)
+    wx.request({
+      url: app.globalData.baseUrl + "book/comment",
+      method: "GET",
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function(res) {
+        console.log("getBookComment.res.data",res.data)
         if (res.data.code==="0000") {
           that.setData({
             book: res.data.data
@@ -132,35 +160,35 @@ Page({
 
   // 提交短评
   onPost: function(e) {
-    const comment = e.detail.text || e.detail.value
-    if (comment==="" || comment.replace(/\s+/g, '').length===0) {
+    console.log("........e",e)
+    console.log("........this.data",this.data)
+    const comment = this.data.comment
+    if (comment.trim().length===0) {
       var e = ["提示", '内容为空,请输入短评']
       that.showNotify(e)
       return
     }
-    if (comment.length > 12) {
-      var e = ["提示", '短评最多12个字']
+    if (comment > 10) {
+      var e = ["提示", '短评最多10个字']
       that.showNotify(e)
       return
     }
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "posts/comment",
+      url: app.globalData.baseUrl + "book/comment",
       method: "POST",
       header: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        comment: that.data.comment,
+        content: that.data.comments,
         bookId: that.data.bookId,
       },
       success: function(res) {
+        console.log(res.data)
         if (res.data.code==="0000") {
-          this.data.comments.unshift({
-            content: comment,
-            nums: 1
-          })
+          this.data.comments.unshift({content: comment,nums: 1})
           that.setData({
             comments: this.data.comments,
             posting: false

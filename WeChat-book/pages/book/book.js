@@ -15,7 +15,10 @@ Page({
     notifyTitle: "",
     notifyDetail: "",
     more: '',
-    bookCategoryId: 0
+    bookCategoryId: 0,
+    pageNum: 1,
+    pageSize: 10,
+    pages: 0
   },
 
   showNotify: function(e) {
@@ -37,10 +40,34 @@ Page({
     this.setData({
       showLoading: true
     })
-    this.getHotList()
+    this.getHotList(0)
   },
-  getHotList: function() {
+  // 监听用户下拉刷新事件
+  onPullDownRefresh() {
+    this.setData({
+      pageNum: 1,
+      pageSize: 10,
+      books: []
+    })
+    this.getHotList(0);
+  },
+  // 页面滚动到底部加载更多帖子
+  onReachBottom() {
+    this.setData({
+      isLoading: true
+    })
+    // 加载更多帖子，1 代表加载操作而不是更新
+    this.getHotList(1)
+  },
+  getHotList: function(e) {
     var that = this
+    let action = e
+    console.log(action) // 1
+    console.log(this.data.pageNum) // 1
+    console.log(this.data.pages) // 0
+    if (action === 1 && this.data.pageNum >= this.data.pages + 1) {
+      return
+    }
     wx.request({
       url: app.globalData.baseUrl + "book",
       method: "GET",
@@ -48,18 +75,34 @@ Page({
         'content-type': 'application/json'
       },
       data: {
-        bookCategoryId: that.data.bookCategoryId
+        bookCategoryId: that.data.bookCategoryId,
+        pageNum: that.data.pageNum,
+        pageSize: that.data.pageSize,
       },
       success: function(res) {
         console.log(',,..,,',res.data)
+        console.log("////////,,,,,,,,",that.data.books)
         if (res.data.code==="0000") {
-          that.setData({
-            books: res.data.data
-          })
+          console.log("/,,,,,,,",action)
+          if (action === 0) {
+            that.setData({
+              books: that.data.books.concat(res.data.data.list),
+              pageNum: res.data.data.current + 1,
+            })
+          } else {
+            console.log("////////,,,,,,,,",action)
+            console.log("]]]]]]]]]]",that.data.books)
+            if (that.data.pageNum <= that.data.pages + 1 && res.data.data.list.length != 0) {
+              that.setData({
+                books: that.data.books.concat(res.data.data.list),
+                pageNum: res.data.data.current + 1
+              })
+            }
+          }
         } else {
           // 显示通知窗口
-          var e = ["获取失败", res.data.msg]
-          that.showNotify(e)
+          var e = ["刷新失败", res.data.msg]
+          this.showNotify(e)
         }
       },
       error: function() {

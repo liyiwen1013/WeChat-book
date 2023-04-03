@@ -1,9 +1,7 @@
 <!-- my/my.wxml -->
-<image class="mebg" src="../../pics/bgbg.jpg" mode="widthFix" bindtap="previewImg"></image>
+<image class="mebg" src="https://cdn.pixabay.com/photo/2022/12/10/08/38/christmas-tree-7646798_960_720.jpg" mode="widthFix" bindtap="previewImg"></image>
 <view class="user-info">
   <image class="user-info-portrait" src="{{isLogin?(basicInfo.avatar):'../../pics/defaultavatar.png'}}" bindtap="previewImg" data-avatarurl="{{isLogin?(basicInfo.avatar):'../../pics/defaultavatar.png'}}" bindlongpress="changeAvatar"></image>
-  <!-- <view class="user-info-mark" wx:if="{{isLogin&&basicInfo.user.mark!='NONE'}}">"{{basicInfo.user.mark}}"</view> -->
-  <!-- <view class="user-info-getmark" wx:if="{{isLogin&&basicInfo.user.mark=='NONE'}}" bindtap="showAuthentication">前往认证</view> -->
   <view class="loginbtn" wx:if="{{!isLogin}}" bindtap="toLogin">立即登录</view>
   <view class="user-info-nickname" wx:if="{{isLogin}}" bindtap="changeName">{{basicInfo.username}}</view>
 </view>
@@ -54,11 +52,11 @@
     <view class="txt">关于</view>
     <text class="more"></text>
   </view>
-  <view bindtap="toNext" data-id="history" wx:if="{{isNormal==true}}">
+  <!-- <view bindtap="toNext" data-id="history" wx:if="{{isNormal==true}}">
     <image src="../../pics/history.png"></image>
     <view class="txt">更新日志</view>
     <text class="more"></text>
-  </view>
+  </view> -->
   <view bindtap="toFeedBack">
     <image src="../../pics/feedback.png"></image>
     <view class="txt">反馈</view>
@@ -66,7 +64,7 @@
   </view>
   <view class="clearcache" bindtap="clearCache">
     <image src="../../pics/cache.png"></image>
-    <view class="txt">清除缓存</view>
+    <view class="txt">退出登录</view>
     <text class="more"></text>
   </view>
 </view>

@@ -35,6 +35,13 @@
 
 <v-search wx:if="{{searching}}" more="{{more}}" bind:cancel="onCancel" />
 
+<view class="logotxt" wx:if="{{isLoading && pageNum < pages+1}}">
+  <view class="txt">玩命加载中</view>
+</view>
+<view class="logotxt" wx:if="{{pageNum >= pages+1}}">
+  <view class="txt">到底啦</view>
+</view>
+
 <!-- 弹出层，弹出需要登陆的信息提示 -->
 <view class="outModel {{isShowLogin?'show':''}}">
 	<view class="innerModel">
