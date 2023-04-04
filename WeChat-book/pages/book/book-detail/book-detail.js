@@ -6,6 +6,7 @@ Page({
    */
   data: {
     comments: [],
+    content: [],
     book: null,
     bookId: 0,
     likeStatus: false,
@@ -44,6 +45,7 @@ Page({
       })
     }, 2000)
   },
+  // 书籍详情
   getBookDetail: function() {
     var that = this
     console.log("eeee",this.data)
@@ -76,6 +78,7 @@ Page({
       }
     })
   },
+  // 获取短评
   getBookComment: function() {
     var that = this
     console.log("getBookComment",this.data)
@@ -89,7 +92,7 @@ Page({
         console.log("getBookComment.res.data",res.data)
         if (res.data.code==="0000") {
           that.setData({
-            book: res.data.data
+            comments: res.data.data
           })
         } else {
           var e = ["提示", res.data.msg]
@@ -107,7 +110,6 @@ Page({
 
   // 点击收藏
   onLike: function(e) {
-    console.log("..........e",e)
     if (!app.globalData.isLogin) {
       this.setData({
         isShowLogin: true
@@ -151,6 +153,14 @@ Page({
     })
   },
 
+  // 标题输入
+  getInput: function(e) {
+    var inputid = e.currentTarget.dataset.inputid
+    this.setData({
+      [inputid]: e.detail.value,
+    })
+  },
+
   // 取消输入短评
   onCancel: function(e) {
     this.setData({
@@ -162,18 +172,17 @@ Page({
   onPost: function(e) {
     console.log("........e",e)
     console.log("........this.data",this.data)
-    const comment = this.data.comment
-    if (comment.trim().length===0) {
+    const content = this.data.content
+    if (content=="" || content == null || content.replace( / (^\s*)l(\s*$)/g,"") == "") {
       var e = ["提示", '内容为空,请输入短评']
-      that.showNotify(e)
-      return
+      this.showNotify(e)
     }
-    if (comment > 10) {
+    if (content > 10) {
       var e = ["提示", '短评最多10个字']
-      that.showNotify(e)
-      return
+      this.showNotify(e)
     }
     var that = this
+    console.log("........this.data",this.data)
     wx.request({
       url: app.globalData.baseUrl + "book/comment",
       method: "POST",
@@ -182,15 +191,15 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        content: that.data.comments,
+        content: that.data.content,
         bookId: that.data.bookId,
       },
       success: function(res) {
         console.log(res.data)
         if (res.data.code==="0000") {
-          this.data.comments.unshift({content: comment,nums: 1})
+          that.data.comments.unshift({content: content,count: 1})
           that.setData({
-            comments: this.data.comments,
+            comments: that.data.comments,
             posting: false
           })
           var e = ["评论成功", '去看看吧~']
@@ -205,18 +214,6 @@ Page({
         that.showNotify(e)
       }
     })
-    // postComment(this.data.book.id, comment)
-    //   .then(res => {
-    //     this.data.comments.unshift({
-    //       content: comment,
-    //       nums: 1
-    //     })
-    //     // 更新数据
-    //     this.setData({
-    //       comments: this.data.comments,
-    //       posting: false
-    //     })
-    //   })
   },
   
   goLogin: function() {

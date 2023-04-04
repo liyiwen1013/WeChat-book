@@ -11,14 +11,14 @@
 <!-- 短评 -->
 <view class="sub-container">
   <text class="headline">短评</text>
-   <text class="shadow" wx:if="{{comments==false}}">还没有短评</text>
-  <view class="comment-container">
-    <block wx:for="{{util.limit(comments, 10)}}" wx:key="content">
-      <v-tag tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
-        <text class="num" slot="after">{{'+'+item.nums}}</text>
-      </v-tag>
-    </block>
-  </view>
+    <text class="shadow" wx:if="{{comments==false}}">还没有短评</text>
+    <view class="comment-container">
+      <block wx:for="{{util.limit(comments, 10)}}" wx:key="content">
+        <v-tag tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
+          <text class="num" slot="after">{{'+'+item.nums}}</text>
+        </v-tag>
+      </block>
+    </view>
 </view>
 <!-- 内容简介 -->
 <view class="sub-container">
@@ -76,7 +76,7 @@
             </v-tag>
         </block>
     </view>
-    <input bindconfirm="onPost" class="post" placeholder="短评最多10个字" data-inputid="content"></input>
+    <input bindconfirm="onPost" bindinput="getInput" class="post" placeholder="短评最多10个字" data-inputid="content"></input>
     <view class="post-footer">  
       <text bindtap="onPost" class="cancel">提交</text>
       <text bindtap="onCancel" class="cancel">取消</text>
