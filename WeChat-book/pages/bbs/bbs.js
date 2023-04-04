@@ -3,7 +3,7 @@ const util = require('../../utils/util')
 Page({
   data: {
     curItem: 0,
-    navs: ["热点", "趣闻", "分享"],
+    navs: ["热点", "趣闻", "书评"],
     distance: 5,
     picHeight: 0.27*wx.getSystemInfoSync().windowWidth,
     isSelect: false,

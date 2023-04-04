@@ -1,4 +1,4 @@
-<!-- 新建书评 -->
+<!-- 新建帖子 -->
 <view wx:if="{{isNormal==true}}">
   <!-- 标题区 -->
   <view class="p-title">

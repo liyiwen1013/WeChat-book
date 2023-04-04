@@ -61,7 +61,7 @@
       </view>
       <view hover-class="click-select"  bindtap="toNew" data-id="2">
         <image src="../../images/评论.png"></image>
-        <view>分享</view>
+        <view>书评</view>
       </view>
     </view>
   </view>
