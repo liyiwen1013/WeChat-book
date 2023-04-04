@@ -8,17 +8,13 @@
   </view>
 
   <view class="registerform">
-    <!-- <view class="avatar" bindtap="selectAvatar">
-      <image class="avatar-img" src="{{avatarUrl==''?'../../../pics/anonymous.jpg':avatarUrl}}"></image>
-      <view class="pickimg"></view>
-    </view> -->
     <view class="username">
       <view>用户名</view>
-      <input placeholder="数字、字母和中文(10字以内)" maxlength="10" bindinput="getInput" data-inputid="name" disabled="{{isInfoConfirmed}}"></input>
+      <input placeholder="数字、字母(10字以内)" maxlength="10" bindinput="getInput" data-inputid="name" disabled="{{isInfoConfirmed}}"></input>
     </view>
     <view class="upwd">
       <view>密码</view>
-      <input placeholder="密码包含字母、数字和下划线" maxlength="20" bindinput="getInput" data-inputid="password" password disabled="{{isInfoConfirmed}}"></input>
+      <input placeholder="必有大小写字母和数字(8~16字)" maxlength="16" bindinput="getInput" data-inputid="password" password disabled="{{isInfoConfirmed}}"></input>
     </view>
     <view class="ensureupwd">
       <view>确认密码</view>

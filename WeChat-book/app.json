@@ -9,7 +9,6 @@
     "pages/bbs/new/new",
     "pages/bbs/passage/passage",
     "pages/login/login",
-    "pages/login/wxlogin/wxlogin",
     "pages/login/forgetpwd/forgetpwd",
     "pages/login/register/register",
     "pages/my/my",
