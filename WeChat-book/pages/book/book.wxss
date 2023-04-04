@@ -151,12 +151,10 @@
 .logotxt {
   width: 100%;
   text-align: center;
-  height: 120rpx;
+  height: 100rpx;
   line-height: 60rpx;
-  margin: 150rpx 0 200rpx 0;
   position: relative;
   color: #666;
-  /* background-color: violet; */
 }
 .logotxt::after {
   content: "";

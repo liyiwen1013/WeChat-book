@@ -40,22 +40,22 @@ Page({
     ], // 书籍
     uitem: [{
       "mu-picture": "https://cdn.pixabay.com/photo/2023/01/01/23/37/woman-7691013__340.jpg",
-      "music": "http://music.163.com/song/media/outer/url?id=393926.mp3",
+      "music": "https://music.163.com/song/media/outer/url?id=2032293645.mp3",
       "musicName": "林",
       "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
     },{
       "mu-picture": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-      "music": "http://music.163.com/song/media/outer/url?id=393926.mp3",
+      "music": "https://music.163.com/song/media/outer/url?id=2032293645.mp3",
       "musicName": "林",
       "musicNote": "你陪我步入蝉夏,越过城市喧嚣~~~~",
     },{
       "mu-picture": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-      "music": "http://music.163.com/song/media/outer/url?id=393926.mp3",
+      "music": "https://music.163.com/song/media/outer/url?id=2032293645.mp3",
       "musicName": "林",
       "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
     },{
       "mu-picture": "http://bl.talelin.com/images/music.8.png",
-      "music": "http://music.163.com/song/media/outer/url?id=393926.mp3",
+      "music": "https://music.163.com/song/media/outer/url?id=2032293645.mp3",
       "musicName": "林",
       "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
     }], // 音乐

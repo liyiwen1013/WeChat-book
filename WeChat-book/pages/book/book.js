@@ -1,5 +1,5 @@
 // pages/book/book.js
-import { random } from '../../utils/common.js'
+// import { random } from '../../utils/common.js'
 const app = getApp()
 Page({
   /**
@@ -14,11 +14,10 @@ Page({
     showNotify: false,
     notifyTitle: "",
     notifyDetail: "",
-    more: '',
     bookCategoryId: 0,
     pageNum: 1,
     pageSize: 10,
-    pages: 0
+    pages: 0,
   },
 
   showNotify: function(e) {
@@ -49,23 +48,23 @@ Page({
       pageSize: 10,
       books: []
     })
+    // 0:更新帖子
     this.getHotList(0);
   },
   // 页面滚动到底部加载更多帖子
   onReachBottom() {
-    this.setData({
-      isLoading: true
-    })
-    // 加载更多帖子，1 代表加载操作而不是更新
-    this.getHotList(1)
+    if (this.data.isLoading == false && this.data.pageNum <= this.data.pages) {
+      this.setData({
+        isLoading: true
+      })
+      // 加载更多帖子，1:加载
+      this.getHotList(1)
+    }
   },
   getHotList: function(e) {
     var that = this
     let action = e
-    console.log(action) // 1
-    console.log(this.data.pageNum) // 1
-    console.log(this.data.pages) // 0
-    if (action === 1 && this.data.pageNum >= this.data.pages + 1) {
+    if (action === 1 && that.data.pageNum >= that.data.pages + 1) {
       return
     }
     wx.request({
@@ -80,18 +79,15 @@ Page({
         pageSize: that.data.pageSize,
       },
       success: function(res) {
-        console.log(',,..,,',res.data)
-        console.log("////////,,,,,,,,",that.data.books)
         if (res.data.code==="0000") {
-          console.log("/,,,,,,,",action)
+          // 下拉更新
           if (action === 0) {
             that.setData({
-              books: that.data.books.concat(res.data.data.list),
+              books: res.data.data.list,
               pageNum: res.data.data.current + 1,
+              pages: res.data.data.pages
             })
-          } else {
-            console.log("////////,,,,,,,,",action)
-            console.log("]]]]]]]]]]",that.data.books)
+          } else if (action === 1){
             if (that.data.pageNum <= that.data.pages + 1 && res.data.data.list.length != 0) {
               that.setData({
                 books: that.data.books.concat(res.data.data.list),
@@ -121,14 +117,12 @@ Page({
       }
     })
   },
-  onSearching: function(e){
+  onSearching: function(){
     this.setData({
       searching: true
     })
   },
-
-  toLibrary: function(e) {
-    console.log("e",e)
+  toLibrary: function() {
     wx.navigateTo({
       url: 'book-library/library',
     })
@@ -139,15 +133,9 @@ Page({
     })
   },
 
-  onCancel: function(e){
+  onCancel: function(){
     this.setData({
       searching: false
     }) 
-  },
-
-  onReachBottom(){
-    this.setData({
-      more: random(16)
-    })
   }
 })

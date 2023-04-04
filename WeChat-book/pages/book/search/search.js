@@ -23,7 +23,7 @@ Component({
     loadingCenter: false
   },
   onLoad: function () {
-    // 获取热门书籍(概要)
+    // 获取搜索界面
     this.setData({
       showLoading: true
     })
