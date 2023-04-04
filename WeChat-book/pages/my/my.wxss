@@ -8,7 +8,7 @@ page {
 .user-info {
   margin: 0 auto;
   width: 200rpx;
-  margin-top: -570rpx;
+  margin-top: -275rpx;
   border-radius: 10rpx;
   position: relative;
   box-sizing: border-box;
@@ -63,11 +63,10 @@ page {
   margin-top: 20rpx;
   width: 90%;
   margin: 0 auto;
-  margin-top: 30rpx;
+  margin-top: 60rpx;
   background-color: rgba(255, 255, 255, 0.6);
-  /* background-color: rgba(255, 255, 255); */
-  border-radius: 10rpx;
-  /* box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1); */
+  border-radius: 15rpx;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.2);
   position: relative;
 }
 .lightme > view {
@@ -123,8 +122,8 @@ page {
   margin: 0 auto;
   margin-top: 30rpx;
   background-color: white;
-  border-radius: 10rpx;
-  /* box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.2);
+  border-radius: 15rpx;
   position: relative;
 }
 .conf > view, .confnav {

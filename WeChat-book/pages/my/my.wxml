@@ -1,5 +1,6 @@
 <!-- my/my.wxml -->
-<image class="mebg" src="https://cdn.pixabay.com/photo/2022/12/10/08/38/christmas-tree-7646798_960_720.jpg" mode="widthFix" bindtap="previewImg"></image>
+<!-- mode="widthFix" -->
+<image class="mebg" src="https://cdn.pixabay.com/photo/2017/10/09/04/55/flowers-2832485_960_720.jpg" bindtap="previewImg"></image>
 <view class="user-info">
   <image class="user-info-portrait" src="{{isLogin?(basicInfo.avatar):'../../pics/defaultavatar.png'}}" bindtap="previewImg" data-avatarurl="{{isLogin?(basicInfo.avatar):'../../pics/defaultavatar.png'}}" bindlongpress="changeAvatar"></image>
   <view class="loginbtn" wx:if="{{!isLogin}}" bindtap="toLogin">立即登录</view>
@@ -52,17 +53,12 @@
     <view class="txt">关于</view>
     <text class="more"></text>
   </view>
-  <!-- <view bindtap="toNext" data-id="history" wx:if="{{isNormal==true}}">
-    <image src="../../pics/history.png"></image>
-    <view class="txt">更新日志</view>
-    <text class="more"></text>
-  </view> -->
   <view bindtap="toFeedBack">
     <image src="../../pics/feedback.png"></image>
     <view class="txt">反馈</view>
     <text class="more"></text>
   </view>
-  <view class="clearcache" bindtap="clearCache">
+  <view class="clearcache" bindtap="clearCache" wx:if="{{isLogin}}">
     <image src="../../pics/cache.png"></image>
     <view class="txt">退出登录</view>
     <text class="more"></text>
@@ -84,13 +80,13 @@
 	</view>
 </view>
 
-<!-- 清除缓存的弹窗 -->
+<!-- 退出登录的弹窗 -->
 <view class="auth-model {{showClear?'show-auth-model':''}}">
 	<view class="auth-model-inner">
 		<view class="closebtn" bindtap="closeWindow" data-windowid="showClear"></view>
-		<view class="auth-title">清除缓存</view>
-		<view class="auth">此操作将清除小程序缓存，包括登录信息等。清除成功后，请关闭小程序后再重新打开。</view>
-    <view class="go-feedback" bindtap="toClearCache">立即清除</view>
+		<view class="auth-title">退出登录</view>
+		<view class="auth">此操作将退出登录，包括登录信息等。</view>
+    <view class="go-feedback" bindtap="toClearCache">确认退出</view>
 	</view>
 </view>
 
@@ -101,15 +97,6 @@
 		<view class="notify-model-inner-detail">{{notifyDetail}}</view>
 	</view>
 </view>
-
-<!-- 弹出层，弹出需要登陆的信息提示 -->
-<!-- <view class="auth-model {{showAuth?'show-auth-model':''}}">
-	<view class="auth-model-inner">
-		<view class="closebtn" bindtap="closeWindow" data-windowid="showAuth"></view>
-		<view class="auth-title">认证</view>
-		<view class="auth">认证可以在昵称前展示实名或职位，如第8届X协会部长。如有需要可添加qq1773714090。一个月内用户可修改(包括清除)认证信息2次。</view>
-	</view>
-</view> -->
 
 <!-- 弹出层，反馈 -->
 <view class="outModel" wx:if="{{showFeedback}}">

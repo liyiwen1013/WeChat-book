@@ -51,7 +51,7 @@ Page({
       showAuth: true
     })
   },
-  
+  // 关闭弹窗
   closeWindow(e) {
     var windowid = e.currentTarget.dataset.windowid
     this.setData({
@@ -114,7 +114,7 @@ Page({
   // 关于界面跳转
   toNext: function(e) {
     let id = e.currentTarget.dataset.id
-    if (id!=="about" && id!=="history" && id!=="instruc") {
+    if (id!=="about" && id!=="instruc") {
       if (!this.data.isLogin) {
         var e = ['提示', '请先登录']
         this.showNotify(e)
@@ -313,22 +313,20 @@ Page({
       showClear: true
     })
   },
-
   toClearCache() {
     let that = this
-    wx.clearStorage({
-      success: (res) => {
-        that.setData({
-          showClear: false
-        })
-        wx.showToast({
-          title: '操作成功!',
-        })
-      },
-    })
-    // wx.clearStorageSync()
-    // this.setData({
-    //   showClear: false
+    success
+    wx.setStorageSync('token', '')
+    // wx.clearStorage({
+    //   success: (res) => {
+    //     that.setData({
+    //       showClear: false,
+    //       basicInfo: ''
+    //     })
+    //     wx.showToast({
+    //       title: '操作成功!',
+    //     })
+    //   },
     // })
   }
 })

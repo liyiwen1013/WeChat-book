@@ -1,26 +1,17 @@
 // components/search/index.js
-import { KeywordModel } from '../../../models/keyword.js'
-import { BookModel } from '../../../models/book.js'
-import { paginationBev } from '../../../components/behaviors/pagination.js'
-
-const keywordModel = new KeywordModel()
-const bookModel = new BookModel()
-
-Component({
-  behaviors: [ paginationBev ],
-  properties: {
-    more: {
-      type: String,
-      observer: 'loadMore'
-    }
-  },
+const app = getApp()
+Page({
   data: {
     historyWords: [],
     hotWords: [],
     searching: false,
-    q: '', //搜索内容,比如你想搜索python相关书籍,则输入python
+    keyword: '', //搜索内容,比如你想搜索python相关书籍,则输入python
+    noneResult: false,
     loading: false,
-    loadingCenter: false
+    loadingCenter: false,
+    pages: 0,
+    pageNum: 1,
+    pageSize: 10
   },
   onLoad: function () {
     // 获取搜索界面
@@ -29,17 +20,15 @@ Component({
     })
     this.getAllSelete()
   },
-
-
   attached() {
-    this.setData({
-      historyWords: getHistory()
-    })
-    getHot().then(res => {
-      this.setData({
-        hotWords: res.data
-      })
-    })
+    // this.setData({
+    //   historyWords: getHistory()
+    // })
+    // getHot().then(res => {
+    //   this.setData({
+    //     hotWords: res.data
+    //   })
+    // })
   },
   // 获取历史搜索词
   getHistory(){
@@ -48,6 +37,12 @@ Component({
       return []
     }
     return words
+  },
+  // 获取热门关键字
+  getHot(){
+    return this.request({
+      url: 'book/hot_keyword'
+    }) 
   },
   // 获取所有信息
   getAllSelete(){
@@ -91,82 +86,85 @@ Component({
       }
     })
   },
-  
-  loadMore() {
-    if (!this.data.q) {
-      return
-    }
-    if (this.isLocked()) {
-      return
-    }
-    if (this.hasMore()) {
-      this.locked()
-      bookModel.search(this.getCurrentStart(), this.data.q)
-        .then(res => {
-          this.setMoreData(res.data.list)
-          this.unLocked()
-        }, () => {
-          this.unLocked()
-        })
-    }
+
+  // 点击取消
+  onCancel: function(e) {
+    console.log("e",e)
+    this.setData({
+      showModal: false
+    });
   },
 
-    onCancel: function(e) {
-      this.setData({
-        showModal: false
-      });
-    },
+  // 点击清除搜索内容
+  onDelete(e) {
+    console.log("e",e)
+    console.log("...........")
+    console.log("this.data",this.data)
+    this.setData({
+      keyword: '',
+      searching: false
+    })
+    wx.navigateTo({
+      url: '/pages/book/book'
+    })
+  },
 
-    onDelete(event) {
-      this.initialize()
-      this._closeResult()
-    },
-
-    onConfirm(event) {
-      this._showResult()
-      this._showLoadingCenter()
-      // this.initialize() 
-      const q = event.detail.value || event.detail.text
-      this.setData({
-        q
-      })
-      bookModel.search(0, q)
-        .then(res => {
-          this.setMoreData(res.data.list)
-          this.setTotal(res.data.total)
-          keywordModel.addToHistory(q)
-          this._hideLoadingCenter()
+  getKeyword: function(e) {
+    this.setData({
+      keyword: e.detail.value
+    })
+  },
+  // 搜索
+  onConfirm() {
+    var that = this
+    console.log("that.data",that.data)
+    wx.request({
+      url: app.globalData.baseUrl + "book/search",
+      method: "GET",
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        keyword: that.data.keyword,
+        pageNum: that.data.pageNum,
+        pageSize: that.data.pageSize,
+      },
+      success: function(res) {
+        console.log(',,.,,',res.data)
+        if (res.data.code==="0000") {
+          if (res.data.data.list.length !== 0) {
+            console.log(".")
+            that.setData({
+              books: res.data.data.list,
+              searching: true
+            })
+          } else {
+            console.log("........")
+            that.setData({
+              noneResult: true,
+              searching: true
+            })
+          }
+        } else {
+          // 显示通知窗口
+          var e = ["获取失败", res.data.msg]
+          that.showNotify(e)
+        }
+      },
+      error: function() {
+        // 隐藏刷新动画
+        wx.stopPullDownRefresh()
+        var e = ["提示", "出了点儿错，稍后再试吧"]
+        this.showNotify(e)
+      },
+      complete: function() {
+        that.setData({
+          showLoading: false,
+          isLoading: false
         })
-    },
-
-    _showLoadingCenter() {
-      this.setData({
-        loadingCenter: true
-      })
-    },
-
-    _hideLoadingCenter() {
-      this.setData({
-        loadingCenter: false
-      })
-    },
-
-    _showResult() {
-      this.setData({
-        searching: true
-      })
-    },
-
-    _closeResult() {
-      this.setData({
-        searching: false,
-        q: ''
-      })
-    },
-
-    onReachBottom(){
-      console.log(123123)
-    }
-    // scroll-view | Page onReachBottom
+        // 隐藏刷新动画
+        wx.stopPullDownRefresh()
+      }
+    })
   }
-)
+})

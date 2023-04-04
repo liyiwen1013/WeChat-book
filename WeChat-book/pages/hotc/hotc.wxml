@@ -15,7 +15,7 @@
 	<view class="trianglea" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
 </view>
 
-<!-- 正能量背景 -->
+<!-- 音乐背景 -->
 <view class="bgshapec" wx:if="{{curItem==1}}">
 	<view class="squarec"></view>
 </view>

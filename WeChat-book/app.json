@@ -2,6 +2,7 @@
   "pages":[
     "pages/hotc/hotc",
     "pages/book/book",
+    "pages/book/search/search",
     "pages/book/book-library/library",
     "pages/book/book-detail/book-detail",
     "pages/bbs/bbs",
@@ -13,7 +14,6 @@
     "pages/login/register/register",
     "pages/my/my",
     "pages/my/about/about",
-    "pages/my/history/history",
     "pages/my/instruc/instruc",
     "pages/my/msg/msg",
     "pages/my/portray/portray",

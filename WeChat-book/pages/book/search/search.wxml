@@ -2,7 +2,7 @@
     <view class="header">
         <view class="search-container">
             <image class="icon" src="images/search.png" />
-            <input value="{{q}}"  bind:confirm="onConfirm" maxlength="10" placeholder-class='in-bar' placeholder='书籍名' class='bar' auto-focus="true" />
+            <input value="{{keyword}}" bindinput="getKeyword" bindconfirm="onConfirm" maxlength="10" placeholder-class='in-bar' placeholder='书籍名' class='bar' focus="true" />
             <image bindtap="onDelete" class="cancel-img" src="images/cancel.png" />
         </view>
         <view bindtap="onCancel" class='cancel'>取消</view>
@@ -32,28 +32,24 @@
         </view>
     </view>
     <view wx:if="{{searching}}" class="books-container">
-      <block wx:for="{{dataArray}}" wx:key="{{item.id}}">
-        <view bind:tap="onTap" class="item-books">
-          <image src="{{ item.image }}"></image>
-          <view class="item-description">
-            <text class='item-title'>{{ item.name }}</text>
-            <text class='item-author'>{{ item.author }}</text>
-            <view class='item-foot'>
-              <text class="item-footer">{{ item.favNums }}  喜欢</text>
-            </view>
-          </view>
-        </view>
-        <v-book showLike="{{false}}" book="{{item}}" class="book" />
-      </block>
+        <block wx:if="{{!noneResult}}" wx:for="{{ books }}" wx:key="book">
+			  	<view class="book-item" bindtap="onBook" data-book-id="{{ item.id }}">
+			  		<image src="{{ item.image }}" mode="aspectFit" />
+			  		<view class="book-item-mess">
+			  			<view class="name">{{item.name}}</view>
+			  			<view class="author">{{item.author}}</view>
+              <view class='item-foot'>
+                <view class="collectCount">{{item.collectCount}} 收藏</view>
+              </view>
+			  		</view>
+			  	</view>
+			  </block>
+        <text wx:if="{{noneResult}}" class="empty-tip">没有搜索到书籍</text>
     </view>
-    <v-loading class="loading-center" wx:if="{{loadingCenter}}"/>
-    <v-loading class="loading" wx:if="{{loading}}"/>
-    <text wx:if="{{noneResult}}" class="empty-tip">没有搜索到书籍</text>
 </view>
 
 <!-- 加载动画 -->
-<!-- 
-<view class="loading-model {{showLoading?'show-loading-model':''}}">
+<!-- <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
     <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>

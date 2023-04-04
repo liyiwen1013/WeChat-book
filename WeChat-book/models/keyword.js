@@ -4,11 +4,11 @@ class KeywordModel extends HTTP{
     key = 'q'
     maxLength = 10
     getHistory(){
-        const words = wx.getStorageSync(this.key)
-        if(!words){
-            return []
-        }
-        return words
+      const words = wx.getStorageSync(this.key)
+      if(!words){
+          return []
+      }
+      return words
     }
     // 获取热搜关键字
     getHot(){
