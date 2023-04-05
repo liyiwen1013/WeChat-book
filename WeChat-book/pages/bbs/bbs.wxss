@@ -253,6 +253,14 @@ page {
   display: inline;
 }
 
+.empty-tip {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+}
+
 /* sla弹窗 */
 .newSelect {
   position: fixed;

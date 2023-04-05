@@ -43,8 +43,11 @@
 <view class="logotxt" wx:if="{{isLoading && pageNum < pages+1}}">
   <view class="txt">玩命加载中</view>
 </view>
-<view class="logotxt" wx:if="{{pageNum >= pages+1}}">
+<view class="logotxt" wx:if="{{postLists.length != 0 && pageNum >= pages+1}}">
   <view class="txt">到底啦</view>
+</view>
+<view class="logotxt" wx:if="{{postLists.length == 0}}">
+  <view class="txt">没有搜索到对应的帖子</view>
 </view>
 
 <!-- <view style="height:0rpx"></view> -->

@@ -58,7 +58,7 @@ page {
   position: relative;
 }
 .username view, .upwd view, .ensureupwd view, .email view {
-  width: 100rpx;
+  width: 130rpx;
   height: 80rpx;
   text-align: justify;
   line-height: 80rpx;

@@ -14,7 +14,7 @@
     </view>
     <view class="upwd">
       <view>密码</view>
-      <input placeholder="必有大小写字母和数字(8~16字)" maxlength="16" bindinput="getInput" data-inputid="password" password disabled="{{isInfoConfirmed}}"></input>
+      <input placeholder="必含大小写字母和数字(8~16)" maxlength="16" bindinput="getInput" data-inputid="password" password disabled="{{isInfoConfirmed}}"></input>
     </view>
     <view class="ensureupwd">
       <view>确认密码</view>

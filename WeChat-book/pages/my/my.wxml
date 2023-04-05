@@ -1,5 +1,4 @@
 <!-- my/my.wxml -->
-<!-- mode="widthFix" -->
 <image class="mebg" src="https://cdn.pixabay.com/photo/2017/10/09/04/55/flowers-2832485_960_720.jpg" bindtap="previewImg"></image>
 <view class="user-info">
   <image class="user-info-portrait" src="{{isLogin?(basicInfo.avatar):'../../pics/defaultavatar.png'}}" bindtap="previewImg" data-avatarurl="{{isLogin?(basicInfo.avatar):'../../pics/defaultavatar.png'}}" bindlongpress="changeAvatar"></image>
@@ -34,13 +33,13 @@
   </view>
 </view>
 
-<view class="conf" style="margin-bottom:0">
+<!-- <view class="conf" style="margin-bottom:0">
   <view bindtap="toNext" data-id="portray" wx:if="{{isNormal==true}}">
     <image src="../../pics/portray.png"></image>
     <view class="txt">统计</view>
     <text class="more"></text>
   </view>
-</view>
+</view> -->
 
 <view class="conf">
   <view bindtap="toNext" data-id="instruc" wx:if="{{isNormal==true}}">
@@ -75,7 +74,7 @@
 	<view class="innerModel">
 		<view class="closebtn" bindtap="closeWindow" data-windowid="showModifyName"></view>
 		<view class="title">修改昵称</view>
-    <input placeholder="用户名由数字或字母组成（16字内）" maxlength="10" bindinput="getInput" data-inputid="newname"></input>
+    <input placeholder="用户名由数字或字母组成（20字内）" maxlength="20" bindinput="getInput" data-inputid="newname"></input>
     <view class="go-feedback" bindtap="goModifyName">立即修改</view>
 	</view>
 </view>
