@@ -1,83 +1,19 @@
 const app = getApp()
-// const bgMusic = wx.getBackgroundAudioManager()
-var audioContext = null;
-var audioPath = 'http://music.163.com/song/media/outer/url?id=393926.mp3';
+const innerAudioContext = wx.createInnerAudioContext({
+  useWebAudioImplement: false
+})
 Page({
   data: {
     isNormal: false,
-    navs: ["书籍", "音乐", "电影"],
+    navs: ["句子", "音乐", "电影"],
     curItem: 0, 
     curIndex: 0,
-    curUIndex: 0, // 音乐
-    curMIndex: 0, // 电影
+    type: 0,
     playing: false,
-    aniBar: "",
     ww: wx.getSystemInfoSync().windowWidth, // 获取当前设备屏幕的宽度
     distance: 7,
     isSelect: false,
-    bitem: [
-      {
-        "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-        "content": "前路不明，但愿有星光引路，把我从黑暗中带出来，让我看到点亮的希望。",
-        "note": "探索这个宇宙的真正意义，在于我们从中汲取的文明和智慧，从而让我们的未来更加美好。",
-        "bookName": "《三体》",
-      },
-      {
-        "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-        "content": "这里填写昨天的句子内容",
-        "note": "这里填写昨天句子的来源"
-      },
-      {
-        "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-        "content": "这里填写前天的句子内容",
-        "note": "这里填写前天句子的来源"
-      },
-      {
-        "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-        "content": "这里填写前三天的句子内容",
-        "note": "这里填写前三天句子的来源"
-      }
-    ], // 书籍
-    uitem: [{
-      "mu-picture": "https://cdn.pixabay.com/photo/2023/01/01/23/37/woman-7691013__340.jpg",
-      "music": "https://music.163.com/song/media/outer/url?id=2032293645.mp3",
-      "musicName": "林",
-      "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
-    },{
-      "mu-picture": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-      "music": "https://music.163.com/song/media/outer/url?id=2032293645.mp3",
-      "musicName": "林",
-      "musicNote": "你陪我步入蝉夏,越过城市喧嚣~~~~",
-    },{
-      "mu-picture": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-      "music": "https://music.163.com/song/media/outer/url?id=2032293645.mp3",
-      "musicName": "林",
-      "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
-    },{
-      "mu-picture": "http://bl.talelin.com/images/music.8.png",
-      "music": "https://music.163.com/song/media/outer/url?id=2032293645.mp3",
-      "musicName": "林",
-      "musicNote": "你陪我步入蝉夏,越过城市喧嚣",
-    }], // 音乐
-    mitem: [{
-      "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-      "movieName": "深海",
-      "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
-    },{
-      "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-      "movieName": "深海哈",
-      "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
-    },
-    {
-      "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-      "movieName": "深海案件",
-      "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
-    },
-    {
-      "picture2": "https://cdn.pixabay.com/photo/2022/12/01/00/13/antique-7627999__340.jpg",
-      "movieName": "深海hai",
-      "note": ["这里填写今天句子的来源","这里填写今天句子的来源","这里填写今天句子的来源"],
-    }], // 电影
+    allItem: [],
     picH: 0.4555 * wx.getSystemInfoSync().windowWidth,
     cdate: [],
     scdate: [],
@@ -85,13 +21,10 @@ Page({
     notifyTitle: "",
     notifyDetail: "",
     showLoading: false,
-    canvas: null,
-    _context: null,
     zpostarray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
     dpostarray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
     pw: wx.getSystemInfoSync().windowWidth,
     ph: wx.getSystemInfoSync().windowHeight,
-    postword: '',
     voteDetail: [],
     isLogin: false
   },
@@ -114,8 +47,8 @@ Page({
       'scdate[2][1]': cdate[2][1].substr(0, cdate[2][1].length - 2),
       'scdate[3][1]': cdate[3][1].substr(0, cdate[3][1].length - 2),
     })
-    this.getSentence() // 获取当日格言
-    this.getEnDateStr(0) // 获取当前日期
+    this.getAllPush(1) // 获取当日格言
+    this.getEnDateStr(this.data.type) // 获取当前日期
     this.getVoteDetail() // 获取当日投票详情
   },
 
@@ -126,28 +59,18 @@ Page({
       isNormal: wx.getStorageSync('isNormal')
     })
   },
-
   // 图片切换时触发
   changeSentence(e) {
+    console.log("e,e,e",e)
     this.setData({
       curIndex: e.detail.current,
-      curUIndex: e.detail.current,
-      curMIndex: e.detail.current,
     })
     this.getVoteDetail()
-    this._recoverStatus()
-    this._monitorSwitch()
+    if (this.data.type == 2) {
+      this._recoverStatus()
+      this._monitorSwitch()
+    }
   },
-
-  // 改变句子
-  // changeDSentence(e) {
-  //   this.setData({
-  //     curMIndex: e.detail.current,
-  //     curIndex: e.detail.current
-  //   })
-  //   this.getVoteDetail()
-  // },
-
   //图片方法预览
   picPreview: function(e) {
     var picUrl = []
@@ -156,7 +79,6 @@ Page({
       urls: picUrl
     })
   },
-
   // 弹窗
   showNotify: function(e) {
     this.setData({
@@ -171,14 +93,11 @@ Page({
       })
     }, 2000)
   },
-
   // 复制文字
-  copySentence(e) {
-    let type = e.currentTarget.dataset.type
-    console.log(type)
+  copySentence() {
     let that = this
     wx.setClipboardData({
-      data: type==='0'?that.data.bitem[that.data.curIndex].content:that.data.bitem[that.data.curIndex].note,
+      data: that.data.allItem[that.data.curIndex].content,
       success(res) {
         wx.showToast({
           title: '复制成功~',
@@ -186,38 +105,15 @@ Page({
       }
     })
   },
-
   // 多个句子点击复制一个
   copydSentence(e) {
     let dindex = e.currentTarget.dataset.dindex
     let that = this
     wx.setClipboardData({
-      data: that.data.ditem[that.data.curMIndex][dindex],
+      data: that.data.ditem[that.data.curIndex][dindex],
       success(res) {
         wx.showToast({
           title: '内容已复制',
-        })
-      }
-    })
-  },
-
-  // 当日格言
-  getSentence() {
-    let that = this
-    wx.request({
-      url: app.globalData.baseUrl + "",
-      method: "GET",
-      data: {
-        type: 0,
-        titlea: that.getDateStr(0),
-        titleb: that.getDateStr(-1),
-        titlec: that.getDateStr(-2),
-        titled: that.getDateStr(-3),
-      },
-      success(res) {
-        that.setData({
-          showLoading: false,
-          bitem: res.data.data
         })
       }
     })
@@ -230,14 +126,15 @@ Page({
     this.setData({
       curItem: curItem,
       distance: 33*curItem + 7,
-      showLoading: true
+      showLoading: true,
+      type: curItem + 1
     })
     if (curItem===0) {
-      this.getSentence()
+      this.getAllPush(1)
     } else if (curItem===1) {
-      this.getMuSentence()
-    }else if (curItem===1) {
-      this.getMoSentence()
+      this.getAllPush(2)
+    } else if (curItem===2) {
+      this.getAllPush(3)
     }
     this.getVoteDetail()
   },
@@ -257,7 +154,6 @@ Page({
     };
     return y + "-" + m + "-" + d;
   },
-
   // 获取当前日期
   getEnDateStr(addDayCount) {
     var dt = new Date();
@@ -287,100 +183,100 @@ Page({
     }
     return res
   },
-
-  // 获取音乐数组
-  getMuSentence() {
-    let that = this
-    wx.request({
-      url: app.globalData.baseUrl + "",
-      method: "GET",
-      data: {
-        type: 1,
-        titlea: that.getDateStr(0),
-        titleb: that.getDateStr(-1),
-        titlec: that.getDateStr(-2),
-        titled: that.getDateStr(-3),
-      },
-      success(res) {
-        that.setData({
-          showLoading: false,
-          uitem: res.data.data
-        })
-      }
-    })
-  },
-  onPlay: function (e) {
+  onPlay: function () {
+    console.log("this.data",this.data)  
     if (!this.data.playing) {
-      // 创建音频上下文并开始播放
-      audioContext = wx.createInnerAudioContext();
-      audioContext.src = audioPath;
-      audioContext.play();
-      // 监听音频播放进度事件
-      audioContext.onTimeUpdate(() => {
-        this.setData({
-          duration: audioContext.duration,
-          currentTime: audioContext.currentTime.toFixed(2)
-        });
-      });
+      innerAudioContext.src = this.data.allItem[this.data.curIndex].content;
+      innerAudioContext.play() // 播放
+      // // 监听音频播放进度事件
+      // audioContext.onTimeUpdate(() => {
+      //   this.setData({
+      //     duration: audioContext.duration,
+      //     currentTime: audioContext.currentTime.toFixed(2)
+      //   });
+      // });
       this.setData({
         playing: true
       })
     } else {
       // 停止播放
-      audioContext.stop();
+      // innerAudioContext.stop() // 停止
       this.setData({
         playing: false,
-        currentTime: 0
       });
-      bgMusic.pause()
+      innerAudioContext.pause() // 暂停
     }
   },
-  _recoverStatus: function () {
-    if (bgMusic.paused) {
+  _recoverStatus: function (type) {
+    console.log("ddddd",innerAudioContext.src)
+    console.log("aaaaa",this.data.allItem[this.data.curIndex].content)
+    if (innerAudioContext.paused) {
       this.setData({
         playing: false
       })
       return
     }
-    if (bgMusic.src == this.data.uitem[curUIndex].music) {
+    if (innerAudioContext.src === this.data.allItem[this.data.curIndex].content) {
       this.setData({
         playing: true
+      })
+    } else {
+      this.setData({
+        playing: false
       })
     }
   },
   _monitorSwitch: function () {
-    bgMusic.onPlay(() => {
+    innerAudioContext.onPlay(() => {
       this._recoverStatus()
     })
-    bgMusic.onPause(() => {
+    innerAudioContext.onPause(() => {
       this._recoverStatus()
     })
-    bgMusic.onStop(() => {
+    innerAudioContext.onStop(() => {
       this._recoverStatus()
     })
-    bgMusic.onEnded(() => {
+    innerAudioContext.onEnded(() => {
       this._recoverStatus()
     })
   },
 
-  // 获取电影数组
-  getMoSentence() {
+  getAllPush(type) {
     let that = this
+    console.log("type",type)
     wx.request({
-      url: app.globalData.baseUrl + "getDailySentence",
+      url: app.globalData.baseUrl + "push",
       method: "GET",
       data: {
-        type: 2,
+        type: type,
         titlea: that.getDateStr(0),
         titleb: that.getDateStr(-1),
         titlec: that.getDateStr(-2),
         titled: that.getDateStr(-3),
       },
-      success(res) {
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function(res) {
+        that.setData({
+          showLoading: false
+        })
+        if (res.data.code==="0000") {
+          console.log(res.data)
+          that.setData({
+            allItem: res.data.data
+          })
+        } else {
+          var e = ["刷新失败", res.data.msg]
+          that.showNotify(e)
+        }
+      },
+      error: function() {
         that.setData({
           showLoading: false,
-          mitem: res.data.data
         })
+        var e = ["提示", "出了点儿错，稍后再试吧"]
+        this.showNotify(e)
       }
     })
   },

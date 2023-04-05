@@ -15,7 +15,7 @@
     <view class="comment-container">
       <block wx:for="{{util.limit(comments, 10)}}" wx:key="content">
         <v-tag tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
-          <text class="num" slot="after">{{'+'+item.nums}}</text>
+          <text class="num" slot="after">{{'+'+item.count}}</text>
         </v-tag>
       </block>
     </view>
@@ -70,11 +70,16 @@
         <text>{{comments.length > 0 ? '仅可点击标签+1' : '暂无短评'}}</text>
     </view>
     <view class="comment-container">
-        <block wx:for="{{util.limit(comments, 3)}}" wx:key="content">
-            <v-tag bind:tapping="onPost" tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
-                <text class="num" slot="after">{{'+'+item.nums}}</text>
-            </v-tag>
-        </block>
+      <block wx:for="{{util.limit(comments, 3)}}" wx:key="content">
+        <v-tag bind:tapping="onPost" tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
+            <text class="num" slot="after">{{'+'+item.count}}</text>
+        </v-tag>
+        <!-- <view bindtap="onTap" class="container tag-class ">
+          <slot name="before"></slot>
+          <text >{{text}}</text>
+          <slot name="after"></slot>
+        </view> -->
+      </block>
     </view>
     <input bindconfirm="onPost" bindinput="getInput" class="post" placeholder="短评最多10个字" data-inputid="content"></input>
     <view class="post-footer">  

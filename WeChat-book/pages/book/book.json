@@ -5,8 +5,5 @@
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "light",
   "backgroundColor": "#74c7f2",
-  "onReachBottomDistance": 20,
-  "usingComponents": {
-      "v-search": "search/search"
-  }
+  "onReachBottomDistance": 20
 }

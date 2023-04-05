@@ -23,7 +23,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(e) {
-    console.log("bookId",e)
     this.setData({
       bookId: e.id,
       showLoading: true,
@@ -48,7 +47,6 @@ Page({
   // 书籍详情
   getBookDetail: function() {
     var that = this
-    console.log("eeee",this.data)
     wx.request({
       url: app.globalData.baseUrl + "book/" + this.data.bookId,
       method: "GET",
@@ -56,9 +54,7 @@ Page({
         'content-type': 'application/json',
       },
       success: function(res) {
-        console.log("..",res.data)
         if (res.data.data.summary.includes("展开全部")) {
-          console.log("该文本中包含“展开全部”");
           res.data.data.summary=res.data.data.summary.substring(0, res.data.data.summary.length - 6)
         }
         if (res.data.code==="0000") {
@@ -81,15 +77,16 @@ Page({
   // 获取短评
   getBookComment: function() {
     var that = this
-    console.log("getBookComment",this.data)
     wx.request({
-      url: app.globalData.baseUrl + "book/comment",
+      url: app.globalData.baseUrl + "book/comment/" + that.data.bookId,
       method: "GET",
       header: {
         'content-type': 'application/json',
       },
+      data: {
+        bookId: that.data.bookId,
+      },
       success: function(res) {
-        console.log("getBookComment.res.data",res.data)
         if (res.data.code==="0000") {
           that.setData({
             comments: res.data.data
@@ -128,7 +125,6 @@ Page({
         id: e.currentTarget.dataset.bookId
       },
       success(res) {
-        console.log("............like",res.data)
         if (res.data.code==="0000") {
           that.setData({
             'book.collectCount': res.data.data.collectCount,
@@ -141,7 +137,6 @@ Page({
 
   // 点击输入短评
   onFakePost: function(e) {
-    console.log(app.globalData.isLogin)
     if (!app.globalData.isLogin) {
       this.setData({
         isShowLogin: true
@@ -170,8 +165,6 @@ Page({
 
   // 提交短评
   onPost: function(e) {
-    console.log("........e",e)
-    console.log("........this.data",this.data)
     const content = this.data.content
     if (content=="" || content == null || content.replace( / (^\s*)l(\s*$)/g,"") == "") {
       var e = ["提示", '内容为空,请输入短评']
@@ -182,7 +175,6 @@ Page({
       this.showNotify(e)
     }
     var that = this
-    console.log("........this.data",this.data)
     wx.request({
       url: app.globalData.baseUrl + "book/comment",
       method: "POST",
@@ -191,11 +183,10 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        content: that.data.content,
+        content: content,
         bookId: that.data.bookId,
       },
       success: function(res) {
-        console.log(res.data)
         if (res.data.code==="0000") {
           that.data.comments.unshift({content: content,count: 1})
           that.setData({
