@@ -4,7 +4,6 @@
     <view class="item" wx:for="{{guides}}" wx:key="index">
       <view class="title">{{item.title}}</view>
       <view class="content">{{item.content}}</view>
-      <view class="img"><image mode="aspectFill" src="{{item.img}}" bindtap="previewImg" data-imgurl="{{item.img}}" mode="widthFix" /></view>
     </view>
   </view>
 </view>
