@@ -9,21 +9,11 @@
 </view>
 <view style="height:60rpx"></view>
 
-<!-- 句子背景 -->
-<view class="bgshapea" wx:if="{{curItem==0}}">
+<view class="bgshapea">
 	<view class="squarea"></view>
-	<view class="trianglea" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
-</view>
-
-<!-- 音乐背景 -->
-<view class="bgshapec" wx:if="{{curItem==1}}">
-	<view class="squarec"></view>
-</view>
-
-<!-- 电影背景 -->
-<view class="bgshapeb" wx:if="{{curItem==2}}">
-	<view class="squareb"></view>
-	<view class="triangleb" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
+  <view wx:if="{{curItem==0}}" class="trianglea" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
+  <view wx:if="{{curItem==1}}" class="trianglec" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
+  <view wx:if="{{curItem==2}}" class="triangleb" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
 </view>
 
 <!-- 日期 -->
@@ -40,7 +30,7 @@
   <view data-posttype="0" data-word="{{allItem[curIndex].content}}">
     <view class="en-sentence" bindtap="copySentence">{{allItem[curIndex].content}}</view>
     <view class="moN-sentence">{{allItem[curIndex].name}}</view>
-    <view class="ch-sentence">{{allItem[curIndex].createTime}}</view>
+    <!-- <view class="ch-sentence">{{allItem[curIndex].createTime}}</view> -->
   </view>
 	<view class="vote-default" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text> 人喜欢</view>
@@ -59,16 +49,14 @@
   <view class="container" data-posttype="1" data-word="{{allItem[curIndex].name}}" style="margin-top:20rpx">
     <view class="music-img" muted>
       <image class="mupicture-img {{playing?'rotation':''}}" data-dindex="0" src="{{allItem[curIndex].picture}}" />
-      <image class="player-img" bindtap="onPlay" src="{{!playing?'../../components/classic/music/images/player@play.png':'../../components/classic/music/images/player@pause.png'}}" />
+      <image class="player-img" bindtap="onPlay" src="{{!playing?'/images/player@play.png':'/images/player@pause.png'}}" />
     </view>
     <view class="music-sentence">
       <view class="ch-sentence" bindtap="copySentence">{{allItem[curIndex].name}}</view>
       <view class="ch-sentence" bindtap="copySentence">{{allItem[curIndex].remark}}</view>
     </view>
   </view>
-  <!-- {{allItem[curIndex].createTime}} /  -->
-  <!-- <view class="music-remark">{{allItem[curIndex].remark}}</view> -->
-	<view class="vote-defaultt" wx:if="{{isNormal==true}}">
+	<view class="vote-default" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text>人觉得很赞</view>
 		<view class="votebtn" data-centence-id="{{allItem[curIndex].id}}" style="background-color:{{allItem[curIndex].isLike?'#74c7f2':'transparent'}};color:{{allItem[curIndex].isLike?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">很赞+1</view>
 	</view>
@@ -81,9 +69,9 @@
 			<image src="{{item.picture}}" mode="widthFix" bindtap="picPreview" data-url="{{item.picture}}"></image>
     </swiper-item>
 	</swiper>
+  <view class="moS-sentence" data-posttype="2" data-word="{{allItem[curIndex].remark}}" wx:if="{{allItem[curIndex].remark}}">{{allItem[curIndex].remark}}</view>
   <view class="mo-sentence" data-posttype="2" bindtap="copySentence" data-word="{{allItem[curIndex].content}}" wx:if="{{allItem[curIndex].content}}" style="margin-top:20rpx" >{{allItem[curIndex].content}}</view>
   <view class="moN-sentence" data-posttype="2" data-word="{{allItem[curIndex].name}}" wx:if="{{allItem[curIndex].name}}">{{allItem[curIndex].name}}</view>
-  <view class="mo-sentence" data-posttype="2" data-word="{{allItem[curIndex].remark}}" wx:if="{{allItem[curIndex].remark}}">{{allItem[curIndex].remark}}</view>
   <view class="vote-default" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text>人看过并觉得好看</view>
 		<view class="votebtn" data-centence-id="{{allItem[curIndex].id}}" style="background-color:{{allItem[curIndex].isLike?'#0081ff':'transparent'}};color:{{allItem[curIndex].isLike?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">看过并觉得好看+1</view>
