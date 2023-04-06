@@ -28,10 +28,11 @@ Page({
     voteDetail: [],
     isLogin: false
   },
-  onLoad() {
+  onShow() {
     // 初始化了一些页面所需的数据变量
     this.setData({
       isLogin: app.globalData.isLogin,
+      isNormal: wx.getStorageSync('isNormal'),
       showLoading: true,
       'cdate[0]': this.getEnDateStr(0),
       'cdate[1]': this.getEnDateStr(-1),
@@ -47,25 +48,24 @@ Page({
       'scdate[2][1]': cdate[2][1].substr(0, cdate[2][1].length - 2),
       'scdate[3][1]': cdate[3][1].substr(0, cdate[3][1].length - 2),
     })
-    this.getAllPush(1) // 获取当日格言
+    this.getAllPush(1)
     this.getEnDateStr(this.data.type) // 获取当前日期
-    this.getVoteDetail() // 获取当日投票详情
   },
 
   // 把监听用户登陆的函数放到onshow里面来，保证能够实时更新用户的登录态
-  onShow() {
-    this.setData({
-      isLogin: app.globalData.isLogin,
-      isNormal: wx.getStorageSync('isNormal')
-    })
-  },
+  // onShow() {
+  //   this.setData({
+  //     isLogin: app.globalData.isLogin,
+  //     isNormal: wx.getStorageSync('isNormal')
+  //   })
+  //   this.getAllPush(1)
+  //   this.getEnDateStr(this.data.type) // 获取当前日期
+  // },
   // 图片切换时触发
   changeSentence(e) {
-    console.log("e,e,e",e)
     this.setData({
       curIndex: e.detail.current,
     })
-    this.getVoteDetail()
     if (this.data.type == 2) {
       this._recoverStatus()
       this._monitorSwitch()
@@ -105,19 +105,6 @@ Page({
       }
     })
   },
-  // 多个句子点击复制一个
-  copydSentence(e) {
-    let dindex = e.currentTarget.dataset.dindex
-    let that = this
-    wx.setClipboardData({
-      data: that.data.ditem[that.data.curIndex][dindex],
-      success(res) {
-        wx.showToast({
-          title: '内容已复制',
-        })
-      }
-    })
-  },
 
   // 点击上方导航栏
   changeNav: function(e) {
@@ -136,7 +123,6 @@ Page({
     } else if (curItem===2) {
       this.getAllPush(3)
     }
-    this.getVoteDetail()
   },
 
   // 获取当前日期
@@ -207,7 +193,7 @@ Page({
       innerAudioContext.pause() // 暂停
     }
   },
-  _recoverStatus: function (type) {
+  _recoverStatus: function () {
     console.log("ddddd",innerAudioContext.src)
     console.log("aaaaa",this.data.allItem[this.data.curIndex].content)
     if (innerAudioContext.paused) {
@@ -240,7 +226,6 @@ Page({
       this._recoverStatus()
     })
   },
-
   getAllPush(type) {
     let that = this
     console.log("type",type)
@@ -256,6 +241,7 @@ Page({
       },
       header: {
         'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
         that.setData({
@@ -281,45 +267,30 @@ Page({
     })
   },
 
-  // 获取正能量上面的相关投票数据，包含对句子的投票和使用者是否对这个点赞了
-  // 获取当日投票详情
-  getVoteDetail() {
+  // 点击点赞按钮
+  changeVoteState(e) {
     let that = this
+    let idx = this.data.curIndex
+    let allItem = this.data.allItem
     wx.request({
-      url: app.globalData.baseUrl + "getVoteDetail",
+      url: app.globalData.baseUrl + "push/like",
+      method: "POST",
       header: {
-        'content-type': 'application/json',
+        'content-type': "application/json",
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        type: that.data.curItem,
-        date: that.data.curItem == 0 ? that.getDateStr(-that.data.curIndex) : that.getDateStr(-that.data.curMIndex)
+        id: e.currentTarget.dataset.centenceId,
       },
       success(res) {
+        console.log(res.data.code==="0000")
         if (res.data.code==="0000") {
+          console.log(allItem)
+          allItem[idx].isLike = res.data.data.isLike
+          allItem[idx].likeCount = res.data.data.likeCount
+          console.log(allItem)
           that.setData({
-            voteDetail: res.data.data
-          })
-        }
-      },
-    })
-  },
-  // 点击点赞按钮人数的变化
-  changeVoteState() {
-    let that = this
-    wx.request({
-      url: app.globalData.baseUrl + "changeVoteState",
-      header: {
-        'content-type': "application/json",
-      },
-      data: {
-        type: that.data.curItem,
-        date: that.data.curItem == 0 ? that.getDateStr(-that.data.curIndex) : that.getDateStr(-that.data.curMIndex)
-      },
-      success(res) {
-        if (res.data.code==="0000") {
-          that.setData({
-            voteDetail: res.data.data
+            allItem: allItem
           })
         }
       }

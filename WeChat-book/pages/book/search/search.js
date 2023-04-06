@@ -18,17 +18,17 @@ Page({
     this.setData({
       showLoading: true
     })
-    this.getAllSelete()
+    this.getHot()
   },
   attached() {
-    // this.setData({
-    //   historyWords: getHistory()
-    // })
-    // getHot().then(res => {
-    //   this.setData({
-    //     hotWords: res.data
-    //   })
-    // })
+    this.setData({
+      historyWords: getHistory()
+    })
+    getHot().then(res => {
+      this.setData({
+        hotWords: res.data
+      })
+    })
   },
   // 获取历史搜索词
   getHistory(){
@@ -40,9 +40,26 @@ Page({
   },
   // 获取热门关键字
   getHot(){
-    return this.request({
-      url: 'book/hot_keyword'
-    }) 
+    var that = this
+    wx.request({
+      url: app.globalData.baseUrl + 'book/hot',
+      method: "GET",
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        console.log(',,.,,',res.data)
+        if (res.data.code==="0000") {
+          that.setData({
+            hotWords: res.data.data
+          })
+        } else {
+          // 显示通知窗口
+          var e = ["获取失败", res.data.msg]
+          that.showNotify(e)
+        }
+      }
+    })
   },
   // 获取所有信息
   getAllSelete(){
@@ -55,8 +72,6 @@ Page({
       },
       data: {
         keyword: that.data.q,
-        // pageNum:,
-        // pageSize:,
       },
       success: function(res) {
         console.log(',,.,,',res.data)
@@ -118,6 +133,10 @@ Page({
   onConfirm() {
     var that = this
     console.log("that.data",that.data)
+    // if () {
+
+    
+    // }
     wx.request({
       url: app.globalData.baseUrl + "book/search",
       method: "GET",

@@ -1,6 +1,6 @@
 {
   "pages":[
-    "pages/hotc/hotc",
+    "pages/square/square",
     "pages/book/book",
     "pages/book/search/search",
     "pages/book/book-library/library",
@@ -32,7 +32,7 @@
     "borderStyle": "black",
     "list": [
     {
-      "pagePath": "pages/hotc/hotc",
+      "pagePath": "pages/square/square",
       "selectedIconPath": "images/home.png",
       "iconPath": "images/home_.png",
       "text": "广场"

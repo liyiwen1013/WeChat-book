@@ -6,27 +6,27 @@
   <view class="user-info-nickname" wx:if="{{isLogin}}" bindtap="changeName">{{basicInfo.username}}</view>
 </view>
 <view class="lightme">
-  <view bindtap="toNext" data-id="notify" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="notify" wx:if="{{isLogin}}">
     <image src="../../pics/notify.png"></image>
     <view class="txt">通知</view>
     <text class="num" wx:if="{{isLogin}}">未读 {{basicInfo.unreadNotifyCount}}</text>
   </view>
-  <view bindtap="toNext" data-id="msg" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="msg" wx:if="{{isLogin}}">
     <image src="../../pics/unreadmsg.png"></image>
     <view class="txt">消息</view>
     <text class="num" wx:if="{{isLogin}}">未读 {{basicInfo.unreadMessageCount}}</text>
   </view>
-  <view bindtap="toNext" data-id="mypost" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="mypost" wx:if="{{isLogin}}">
     <image src="../../pics/mypost.png"></image>
     <view class="txt">发布</view>
     <text class="more"></text>
   </view>
-  <view bindtap="toNext" data-id="mycomment" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="mycomment" wx:if="{{isLogin}}">
     <image src="../../pics/mycomment.png"></image>
     <view class="txt">评论</view>
     <text class="more"></text>
   </view>
-  <view bindtap="toNext" data-id="mycollect" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="mycollect" wx:if="{{isLogin}}">
     <image src="../../pics/mycollect.png"></image>
     <view class="txt">收藏</view>
     <text class="more"></text>
@@ -34,7 +34,7 @@
 </view>
 
 <view class="conf" style="margin-bottom:0">
-  <view bindtap="toNext" data-id="portray" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="portray" wx:if="{{isLogin}}">
     <image src="../../pics/portray.png"></image>
     <view class="txt">统计</view>
     <text class="more"></text>
