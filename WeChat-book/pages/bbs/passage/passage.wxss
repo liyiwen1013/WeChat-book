@@ -371,7 +371,7 @@ page {
   align-items: center;
 }
 .no-comment image {
-  width: 200rpx;
+  width: 400rpx;
   margin-bottom: 10rpx;
 }
 .p-quote {

@@ -125,60 +125,9 @@ Page({
       url: id + '/' + id,
     })
   },
-
-  // 用户反馈
-  toFeedBack: function() {
-    this.setData({
-      showFeedback: true
-    })
-  },
   getInput(e) {
     this.setData({
       newname: e.detail.value
-    })
-  },
-  goFeedback: function() {
-    if (this.data.feedback==="" || this.data.feedback.replace(/\s+/g, '').length===0) {
-      var e = ['提示', '总得写点儿什么吧']
-      this.showNotify(e)
-      return
-    }
-    this.setData({
-      showLoading: true,
-      loadingTxt: "反馈中..."
-    })
-    var that = this
-    wx.request({
-      url: app.globalData.baseUrl + "addFeedback",
-      method: "POST",
-      header: {
-        'content-type': 'application/json',
-      },
-      data: {
-        detail: that.data.feedback
-      },
-      success(res) {
-        if (res.data.code===0) {
-          var e = ['反馈成功', '你的建议我已经收到啦，我会认真阅读并尽快回复你哒']
-          that.showNotify(e)
-          that.setData({
-            showFeedback: false
-          })
-        } else {
-          var e = ['反馈失败', res.data.msg]
-          that.showNotify(e)
-        }
-      },
-      error() {
-        var e = ['提示', '出了点儿错，稍后再试吧']
-        that.showNotify(e)
-      },
-      complete() {
-        that.setData({
-          showLoading: false,
-          loadingTxt: ""
-        })
-      }
     })
   },
 
@@ -315,18 +264,16 @@ Page({
   },
   toClearCache() {
     let that = this
-    success
-    wx.setStorageSync('token', '')
-    // wx.clearStorage({
-    //   success: (res) => {
-    //     that.setData({
-    //       showClear: false,
-    //       basicInfo: ''
-    //     })
-    //     wx.showToast({
-    //       title: '操作成功!',
-    //     })
-    //   },
-    // })
+    wx.clearStorage({
+      success: (res) => {
+        that.setData({
+          showClear: false,
+          basicInfo: ''
+        })
+        wx.showToast({
+          title: '操作成功!',
+        })
+      },
+    })
   }
 })

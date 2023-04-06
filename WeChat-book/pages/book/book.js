@@ -118,8 +118,8 @@ Page({
     })
   },
   onSearching: function(){
-    this.setData({
-      searching: true
+    wx.navigateTo({
+      url: 'search/search',
     })
   },
   toLibrary: function() {

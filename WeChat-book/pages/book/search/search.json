@@ -1,4 +1,5 @@
 {
+  "navigationBarBackgroundColor": "#74c7f2",
   "component": true,
   "usingComponents": {
     "v-tag": "../../../components/tag/index",

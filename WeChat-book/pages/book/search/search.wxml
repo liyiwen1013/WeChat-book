@@ -49,7 +49,8 @@
 </view>
 
 <!-- 加载动画 -->
-<!-- <view class="loading-model {{showLoading?'show-loading-model':''}}">
+<!-- 
+<view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
     <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>

@@ -11,7 +11,7 @@
     <view class="p-content">
       <view class="p-main-title" style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.title}}</view>
       <view class="p-main-dp" style="{{posts.bgType == 3 ? ('background-color:#' + posts.bgContent) : ''}}"></view>
-      <view style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.content}}</view>
+      <view style="color:{{posts.bgType != 3 ? 'black' : 'white'}}; text-indent: 2em;">{{posts.content}}</view>
     </view>
     <view class="p-pircture">
       <image  wx:if="{{posts.bgType != 3}}" class="p-picture" src="{{posts.bgContent}}" mode="widthFix" bindtap="picPreview" data-url="{{posts.bgContent}}"></image>
@@ -27,14 +27,14 @@
         </view>
       </view>
       <!-- 点赞 -->
-      <view class="p-v {{postInfo.agree==1?'p-v-is':''}}" bindtap="toAgree" style="width:{{postMain.sAnonymous==0?'20%':'25%'}}">点赞 {{postMain.agree}}</view>
+      <!-- <view class="p-v {{postInfo.agree==1?'p-v-is':''}}" bindtap="toAgree" style="width:{{postMain.sAnonymous==0?'20%':'25%'}}">点赞 {{postMain.agree}}</view> -->
       <!-- 举报 -->
-      <view class="p-v" bindtap="toReport" style="background-color:{{isReport?'#74c7f2':''}};color:{{isReport?'white':''}}">
+      <!-- <view class="p-v" bindtap="toReport" style="background-color:{{isReport?'#74c7f2':''}};color:{{isReport?'white':''}}">
         <view class="p-v-item">
           <view class="p-v-item-img imgb"></view>
           <view> 举报</view>
         </view>
-      </view>
+      </view> -->
       <!-- 评论人数 -->
       <view class="p-v" wx:if="{{isNormal==true}}">
         <view class="p-v-item">
@@ -43,12 +43,12 @@
         </view>
       </view>
       <!-- 收藏 -->
-      <view class="p-v {{postInfo.collect==1?'p-v-is':''}}" bindtap="toCollect" wx:if="{{posts.isAnonymous==0}}">
+      <!-- <view class="p-v {{postInfo.collect==1?'p-v-is':''}}" bindtap="toCollect" wx:if="{{posts.isAnonymous==0}}">
         <view class="p-v-item">
           <view class="p-v-item-img imgd"></view>
           <view>{{posts.collect}} 收藏</view>
         </view>
-      </view>
+      </view> -->
     </view>
   </view>
   <!-- 举报弹窗 -->
@@ -71,7 +71,7 @@
     </view>
     <!-- 评论区 -->
     <view class="discuss-area">评论区</view>
-    <view class="p-discuss" wx:if="{{postContent.length!=0}}">
+    <view class="p-discuss" wx:if="{{postContent.length!==0}}">
       <view class="discuss-item" wx:for="{{postContent}}" wx:key="index">
         <view class="discuss-info">
           <image class="discuss-portrait" src="{{item.userAvatar}}" bindtap="previewAvatar" data-avatarurl="{{item.userAvatar}}"></image>
@@ -90,7 +90,7 @@
     </view>
       
     <!-- 如果没有评论，显示一张图片 -->
-    <view class="no-comment" wx:if="{{postComment.length==0}}">
+    <view class="no-comment" wx:if="{{postContent.length===0}}">
       <image src="https://pic4.zhimg.com/v2-405fe33df25b3d6a1c8617054f8ace5b_b.gif" mode="widthFix"></image>
       <view>快来发表第一个评论吧</view>
       <view style="height: 80rpx"></view>

@@ -19,6 +19,7 @@ Page({
       showLoading: true
     })
     this.getHot()
+    // this.getHistory()
   },
   attached() {
     this.setData({
@@ -32,7 +33,9 @@ Page({
   },
   // 获取历史搜索词
   getHistory(){
-    const words = wx.getStorageSync(this.data.q)
+    console.log(".....") 
+    const words = wx.getStorageSync(this.data.keyword)
+    console.log(".....",words) 
     if(!words){
       return []
     }
@@ -71,7 +74,9 @@ Page({
         'content-type': 'application/json'
       },
       data: {
-        keyword: that.data.q,
+        keyword: that.data.keyword,
+        pageNum: that.data.pageNum,
+        pageSize: that.data.pageSize
       },
       success: function(res) {
         console.log(',,.,,',res.data)
@@ -106,7 +111,8 @@ Page({
   onCancel: function(e) {
     console.log("e",e)
     this.setData({
-      showModal: false
+      keyword: '',
+      searching: false
     });
   },
 
@@ -119,11 +125,13 @@ Page({
       keyword: '',
       searching: false
     })
-    wx.navigateTo({
-      url: '/pages/book/book'
-    })
   },
 
+  onBook: function(e){
+    wx.navigateTo({
+      url:'book-detail/book-detail?id=' + e.currentTarget.dataset.bookId
+    })
+  },
   getKeyword: function(e) {
     this.setData({
       keyword: e.detail.value
@@ -133,10 +141,6 @@ Page({
   onConfirm() {
     var that = this
     console.log("that.data",that.data)
-    // if () {
-
-    
-    // }
     wx.request({
       url: app.globalData.baseUrl + "book/search",
       method: "GET",
