@@ -29,8 +29,6 @@ Page({
     })
   },
 
-  // show a notify window without close button and will disapear automatically
-  // an array should be given while using, array includs notifyTitle and notifyDetail
   showNotify: function(e) {
     this.setData({
       showNotify: true,
@@ -71,7 +69,6 @@ Page({
     })
   },
 
-  // click get authcode button
   toGetAuthCode: function() {
     let name = this.data.name;
     let password = this.data.password;
@@ -112,7 +109,6 @@ Page({
     var that = this
     wx.request({
       url: app.globalData.baseUrl + "auth/code/register/send/" + email,
-      // url: 'http://192.168.3.2:8080//auth/code/register/send/{email}',
       method: "GET",
       header: {
       },
@@ -193,7 +189,6 @@ Page({
       this.showNotify(e)
       return
     }
-    // show loading animation
     this.setData({
       showLoading: true,
       loadingTxt: "正在注册..."
@@ -201,7 +196,6 @@ Page({
     var that = this
     wx.request({
       url: app.globalData.baseUrl + "auth/account/register",
-      // url: 'http://192.168.3.2:8080/auth/account/register',
       header: {
         'content-type': 'application/json'
       },

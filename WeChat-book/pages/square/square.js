@@ -6,14 +6,15 @@ Page({
   data: {
     isNormal: false,
     navs: ["句子", "音乐", "电影"],
-    curItem: 0, 
-    curIndex: 0,
+    allItem: [],
+    curItem: 0, // navs[curItem] 0，1，2
+    curIndex: 0, // allItem[curIndex] 0,1,2,3
+    pushId: '',
     type: 0,
     playing: false,
     ww: wx.getSystemInfoSync().windowWidth, // 获取当前设备屏幕的宽度
     distance: 7,
     isSelect: false,
-    allItem: [],
     picH: 0.4555 * wx.getSystemInfoSync().windowWidth,
     cdate: [],
     scdate: [],
@@ -25,10 +26,9 @@ Page({
     dpostarray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
     pw: wx.getSystemInfoSync().windowWidth,
     ph: wx.getSystemInfoSync().windowHeight,
-    voteDetail: [],
     isLogin: false
   },
-  onShow() {
+  onLoad() {
     // 初始化了一些页面所需的数据变量
     this.setData({
       isLogin: app.globalData.isLogin,
@@ -48,33 +48,46 @@ Page({
       'scdate[2][1]': cdate[2][1].substr(0, cdate[2][1].length - 2),
       'scdate[3][1]': cdate[3][1].substr(0, cdate[3][1].length - 2),
     })
-    this.getAllPush(1)
+    this.getAllPush()
     this.getEnDateStr(this.data.type) // 获取当前日期
   },
 
   // 把监听用户登陆的函数放到onshow里面来，保证能够实时更新用户的登录态
-  // onShow() {
-  //   this.setData({
-  //     isLogin: app.globalData.isLogin,
-  //     isNormal: wx.getStorageSync('isNormal')
-  //   })
-  //   this.getAllPush(1)
-  //   this.getEnDateStr(this.data.type) // 获取当前日期
-  // },
+  onShow() {
+    this.setData({
+      isLogin: app.globalData.isLogin,
+      isNormal: wx.getStorageSync('isNormal')
+    })
+    this.getAllPush()
+    this.getEnDateStr(this.data.type) // 获取当前日期
+  },
   // 图片切换时触发
   changeSentence(e) {
+    console.log("e.detail.current",e.detail.current)
+    console.log("this.data",this.data)
     this.setData({
       curIndex: e.detail.current,
     })
-    if (this.data.type == 2) {
+    if (this.data.curItem + 1 == 2) {
       this._recoverStatus()
       this._monitorSwitch()
     }
   },
   //图片方法预览
-  picPreview: function(e) {
+  picPreview1: function(e) {
+    console.log("this.data,",this.data)
+    var that = this
     var picUrl = []
-    picUrl.push(e.currentTarget.dataset.url)
+    picUrl.push(that.data.allItem[that.data.curIndex].picture)
+    wx.previewImage({
+      urls: picUrl
+    })
+  },
+  picPreview2: function(e) {
+    console.log("this.data,",this.data)
+    var that = this
+    var picUrl = []
+    picUrl.push(that.data.allItem[that.data.curIndex].picture)
     wx.previewImage({
       urls: picUrl
     })
@@ -105,24 +118,18 @@ Page({
       }
     })
   },
-
   // 点击上方导航栏
   changeNav: function(e) {
     let curItem = e.currentTarget.dataset.id
-    console.log(curItem)  // 0 或 1 或 2
+    console.log("curItem",curItem)  // 0 或 1 或 2
+    console.log("this.data",this.data)
     this.setData({
       curItem: curItem,
       distance: 33*curItem + 7,
+      curIndex: 0,
       showLoading: true,
-      type: curItem + 1
     })
-    if (curItem===0) {
-      this.getAllPush(1)
-    } else if (curItem===1) {
-      this.getAllPush(2)
-    } else if (curItem===2) {
-      this.getAllPush(3)
-    }
+    this.getAllPush()
   },
 
   // 获取当前日期
@@ -226,18 +233,14 @@ Page({
       this._recoverStatus()
     })
   },
-  getAllPush(type) {
+  getAllPush() {
     let that = this
-    console.log("type",type)
+    console.log("this.data..",this.data)
     wx.request({
       url: app.globalData.baseUrl + "push",
       method: "GET",
       data: {
-        type: type,
-        titlea: that.getDateStr(0),
-        titleb: that.getDateStr(-1),
-        titlec: that.getDateStr(-2),
-        titled: that.getDateStr(-3),
+        type: this.data.curItem + 1,
       },
       header: {
         'content-type': 'application/json',
@@ -248,7 +251,6 @@ Page({
           showLoading: false
         })
         if (res.data.code==="0000") {
-          console.log(res.data)
           that.setData({
             allItem: res.data.data
           })
@@ -280,15 +282,12 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        id: e.currentTarget.dataset.centenceId,
+        id: this.data.pushId,
       },
       success(res) {
-        console.log(res.data.code==="0000")
         if (res.data.code==="0000") {
-          console.log(allItem)
           allItem[idx].isLike = res.data.data.isLike
           allItem[idx].likeCount = res.data.data.likeCount
-          console.log(allItem)
           that.setData({
             allItem: allItem
           })

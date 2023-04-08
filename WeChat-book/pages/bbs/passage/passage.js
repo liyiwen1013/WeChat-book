@@ -72,7 +72,6 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
-        console.log(res.data)
         if (res.data.code==="0000") {
           that.setData({
             posts: res.data.data
@@ -105,7 +104,6 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
-        console.log("..",res.data)
         if (res.data.code==="0000") {
           that.setData({
             postContent: res.data.data

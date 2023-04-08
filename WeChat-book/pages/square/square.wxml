@@ -8,14 +8,13 @@
 	</view>
 </view>
 <view style="height:60rpx"></view>
-
+<!-- 背景设计 -->
 <view class="bgshapea">
 	<view class="squarea"></view>
   <view wx:if="{{curItem==0}}" class="trianglea" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
   <view wx:if="{{curItem==1}}" class="trianglec" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
   <view wx:if="{{curItem==2}}" class="triangleb" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
 </view>
-
 <!-- 日期 -->
 <view class="date" wx:if="{{curItem!=1}}"><text>{{cdate[curIndex][1]}}</text> / {{cdate[curIndex][2]}} / {{cdate[curIndex][0]}}</view>
 
@@ -24,20 +23,18 @@
   <!-- 图片轮播，不自动播放 -->
 	<swiper class="outerZ" autoplay="{{false}}" duration="500" bindchange="changeSentence" style="height:{{picH}}px" indicator-dots="{{true}}">
 		<swiper-item wx:for="{{allItem}}" wx:key="index">
-			<image src="{{item.picture}}" mode="widthFix" bindtap="picPreview" data-url="{{item.picture}}"></image>
+			<image src="{{item.picture}}" mode="widthFix" bindtap="picPreview1" data-url="{{item.picture}}"></image>
     </swiper-item>
 	</swiper>
   <view data-posttype="0" data-word="{{allItem[curIndex].content}}">
     <view class="en-sentence" bindtap="copySentence">{{allItem[curIndex].content}}</view>
     <view class="moN-sentence">{{allItem[curIndex].name}}</view>
-    <!-- <view class="ch-sentence">{{allItem[curIndex].createTime}}</view> -->
   </view>
 	<view class="vote-default" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text> 人喜欢</view>
 		<view class="votebtn" data-centence-id="{{allItem[curIndex].id}}" style="background-color:{{allItem[curIndex].isLike?'#74c7f2':'transparent'}};color:{{allItem[curIndex].isLike?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">喜欢+1</view>
 	</view>
 </view>
-
 <!-- 音乐正文内容 -->
 <view wx:if="{{curItem==1}}">
 	<swiper class="outerZd" autoplay="{{false}}" duration="500" bindchange="changeSentence" indicator-dots="{{true}}">
@@ -57,27 +54,25 @@
     </view>
   </view>
 	<view class="vote-default" wx:if="{{isNormal==true}}">
-		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text>人觉得很赞</view>
+		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text>人觉得好听</view>
 		<view class="votebtn" data-centence-id="{{allItem[curIndex].id}}" style="background-color:{{allItem[curIndex].isLike?'#74c7f2':'transparent'}};color:{{allItem[curIndex].isLike?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">很赞+1</view>
 	</view>
 </view>
-
 <!-- 电影正文内容 -->
 <view wx:if="{{curItem==2}}">
 	<swiper class="outerZ" autoplay="{{false}}" duration="500" bindchange="changeSentence" style="height:{{picH}}px" indicator-dots="{{true}}">
 		<swiper-item wx:for="{{allItem}}" wx:key="index">
-			<image src="{{item.picture}}" mode="widthFix" bindtap="picPreview" data-url="{{item.picture}}"></image>
+			<image src="{{item.picture}}" mode="widthFix" bindtap="picPreview2" data-url="{{item.picture}}"></image>
     </swiper-item>
 	</swiper>
   <view class="moS-sentence" data-posttype="2" data-word="{{allItem[curIndex].remark}}" wx:if="{{allItem[curIndex].remark}}">{{allItem[curIndex].remark}}</view>
   <view class="mo-sentence" data-posttype="2" bindtap="copySentence" data-word="{{allItem[curIndex].content}}" wx:if="{{allItem[curIndex].content}}" style="margin-top:20rpx" >{{allItem[curIndex].content}}</view>
   <view class="moN-sentence" data-posttype="2" data-word="{{allItem[curIndex].name}}" wx:if="{{allItem[curIndex].name}}">{{allItem[curIndex].name}}</view>
   <view class="vote-default" wx:if="{{isNormal==true}}">
-		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text>人看过并觉得好看</view>
+		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text>人觉得好看</view>
 		<view class="votebtn" data-centence-id="{{allItem[curIndex].id}}" style="background-color:{{allItem[curIndex].isLike?'#0081ff':'transparent'}};color:{{allItem[curIndex].isLike?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">看过并觉得好看+1</view>
 	</view>
 </view>
-
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{showNotify?'show-notify-model':''}}">
 	<view class="notify-model-inner">
@@ -85,10 +80,8 @@
 		<view class="notify-model-inner-detail">{{notifyDetail}}</view>
 	</view>
 </view>
-
 <!-- 加载动画 -->
-<!-- <view class="loading-model {{showLoading?'show-loading-model':''}}"> -->
-<view class="loading-model {{showLoading?'':''}}">
+<view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
     <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>

@@ -71,7 +71,8 @@ Page({
       url: app.globalData.baseUrl + "book",
       method: "GET",
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
         bookCategoryId: that.data.bookCategoryId,

@@ -112,7 +112,6 @@ Page({
     var that = this
     var name = this.data.name;
     var password = this.data.password;
-    // var type = 0; //0代表默认的通过用户昵称进行验证，1代表通过邮箱进行验证
     /* 登陆前验证 */
     if (name==="" || password==="") {
       var e = ["提示", "用户名或密码空空如也"]
@@ -123,14 +122,9 @@ Page({
     this.setData({
       isLoading: true
     })
-    /**判断用户名是邮箱还是昵称 */
-    // if (/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(name)) {
-    //   type = 1;
-    // }
     /* 发起请求验证密码 */
     wx.request({
       url: app.globalData.baseUrl + "auth/account/login",
-      // url: 'http://192.168.3.2:8080/auth/account/login',
       data: {
         username: name,
         password: password
