@@ -16,7 +16,9 @@
   <view wx:if="{{curItem==2}}" class="triangleb" style="border-width:300rpx {{0.5*ww}}px 300rpx {{0.5*ww}}px"></view>
 </view>
 <!-- 日期 -->
-<view class="date" wx:if="{{curItem!=1}}"><text>{{cdate[curIndex][1]}}</text> / {{cdate[curIndex][2]}} / {{cdate[curIndex][0]}}</view>
+<view class="date" wx:if="{{curItem!=1}}">
+  <text>{{cdate[curIndex][1]}}</text> / {{cdate[curIndex][2]}} / {{cdate[curIndex][0]}}
+</view>
 
 <!-- 句子正文内容 -->
 <view wx:if="{{curItem==0}}">

@@ -52,7 +52,7 @@ Page({
     this.getEnDateStr(this.data.type) // 获取当前日期
   },
 
-  // 把监听用户登陆的函数放到onshow里面来，保证能够实时更新用户的登录态
+  // 把监听函数放到onshow里面来，保证能够实时更新
   onShow() {
     this.setData({
       isLogin: app.globalData.isLogin,
@@ -60,6 +60,13 @@ Page({
     })
     this.getAllPush()
     this.getEnDateStr(this.data.type) // 获取当前日期
+    innerAudioContext.play()
+  },
+  onHide: function() {
+    innerAudioContext.pause()
+  },
+  onUnload: function() {
+    innerAudioContext.pause()
   },
   // 图片切换时触发
   changeSentence(e) {
@@ -131,7 +138,6 @@ Page({
     })
     this.getAllPush()
   },
-
   // 获取当前日期
   getDateStr(addDayCount) {
     let dd = new Date();
@@ -181,19 +187,10 @@ Page({
     if (!this.data.playing) {
       innerAudioContext.src = this.data.allItem[this.data.curIndex].content;
       innerAudioContext.play() // 播放
-      // // 监听音频播放进度事件
-      // audioContext.onTimeUpdate(() => {
-      //   this.setData({
-      //     duration: audioContext.duration,
-      //     currentTime: audioContext.currentTime.toFixed(2)
-      //   });
-      // });
       this.setData({
         playing: true
       })
     } else {
-      // 停止播放
-      // innerAudioContext.stop() // 停止
       this.setData({
         playing: false,
       });
@@ -232,6 +229,9 @@ Page({
     innerAudioContext.onEnded(() => {
       this._recoverStatus()
     })
+  },
+  onUnload: function() {
+    innerAudioContext.stop() // 停止
   },
   getAllPush() {
     let that = this
