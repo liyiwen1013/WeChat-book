@@ -62,12 +62,12 @@ Page({
     this.getEnDateStr(this.data.type) // 获取当前日期
     innerAudioContext.play()
   },
-  onHide: function() {
-    innerAudioContext.pause()
-  },
-  onUnload: function() {
-    innerAudioContext.pause()
-  },
+  // onHide: function() {
+  //   innerAudioContext.pause()
+  // },
+  // onUnload: function() {
+  //   innerAudioContext.pause()
+  // },
   // 图片切换时触发
   changeSentence(e) {
     console.log("e.detail.current",e.detail.current)
@@ -230,9 +230,7 @@ Page({
       this._recoverStatus()
     })
   },
-  onUnload: function() {
-    innerAudioContext.stop() // 停止
-  },
+
   getAllPush() {
     let that = this
     console.log("this.data..",this.data)
@@ -271,6 +269,8 @@ Page({
 
   // 点击点赞按钮
   changeVoteState(e) {
+    console.log(this.data)
+    console.log(e)
     let that = this
     let idx = this.data.curIndex
     let allItem = this.data.allItem
@@ -282,7 +282,7 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        id: this.data.pushId,
+        id: e.currentTarget.dataset.centenceId,
       },
       success(res) {
         if (res.data.code==="0000") {

@@ -1,51 +1,75 @@
 <view class="container">
-    <view class="header">
-        <view class="search-container">
-            <image class="icon" src="images/search.png" />
-            <input value="{{keyword}}" bindinput="getKeyword" bindconfirm="onConfirm" maxlength="10" placeholder-class='in-bar' placeholder='书籍名' class='bar' focus="true" />
-            <image bindtap="onDelete" class="cancel-img" src="images/cancel.png" />
-        </view>
-        <view bindtap="onCancel" class='cancel'>取消</view>
+  <view class="header">
+    <!-- 搜索框 -->
+    <view class="search-container">
+      <image class="icon" src="images/search.png" />
+      <!-- <input class='bar' value="{{keyword}}" bindinput="getKeyword" bindconfirm="onConfirm" maxlength="10" placeholder-class='in-bar' placeholder='书籍名' focus="true" /> -->
+      <input class="bar" type="text" placeholder="书籍名" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="onConfirm" />
+      <image class="cancel-img" bindtap="onDelete" src="images/cancel.png" />
     </view>
-    <view wx:if="{{!searching}}">
-        <view class="history">
-            <view class="title">
-                <view class="chunk"></view>
-                <text>历史搜索</text>
-            </view>
-            <view class="tags">
-                <block wx:key="historyWords" wx:for="{{ historyWords }}">
-                    <v-tag bind:tapping="onConfirm" text="{{ item }}" />
-                </block>
-            </view>
-        </view>
-        <view class="history hot-search">
-            <view class="title">
-                <view class="chunk"></view>
-                <text>热门搜索</text>
-            </view>
-            <view class="tags">
-                <block wx:key="hotWords" wx:for="{{ hotWords }}">
-                    <v-tag bind:tapping="onConfirm" text="{{ item }}" />
-                </block>
-            </view>
-        </view>
+    <view bindtap="onCancel" class='cancel'>取消</view>
+  </view>
+
+  <view wx:if="{{!searching}}">
+    <!-- 历史搜索列表 -->
+    <view class="history">
+      <view class="title">
+        <view class="chunk"></view>
+        <text>历史搜索</text>
+      </view>
+      <view wx:for="{{historySearch}}" wx:key="keyword" class="item">
+        <button class="btn" bindtap="onSearchItemTap" data-keyword="{{item.keyword}}">{{item.keyword}}</button>
+      </view>
     </view>
-    <view wx:if="{{searching}}" class="books-container">
-        <block wx:if="{{!noneResult}}" wx:for="{{ books }}" wx:key="book">
-			  	<view class="book-item" bindtap="onBook" data-book-id="{{ item.id }}">
-			  		<image src="{{ item.image }}" mode="aspectFit" />
-			  		<view class="book-item-mess">
-			  			<view class="name">{{item.name}}</view>
-			  			<view class="author">{{item.author}}</view>
-              <view class='item-foot'>
+    <!-- <view class="history">
+      <view class="title">
+        <view class="chunk"></view>
+        <text>历史搜索</text>
+      </view>
+      <view class="item">
+        <block wx:key="historyWords" wx:for="{{ historyWords }}">
+            <v-tag bind:tapping="onConfirm" text="{{ item }}" />
+        </block>
+      </view>
+    </view> -->
+    <!-- 热门搜索列表 -->
+    <view class="history hot-search">
+      <view class="title">
+        <view class="chunk"></view>
+        <text>热门搜索</text>
+      </view>
+      <view wx:for="{{hotSearch}}" wx:key="keyword" class="item">
+        <view class="btn" bindtap="onSearchItemTap" data-keyword="{{item.keyword}}">{{item.keyword}}</view>
+      </view>
+    </view>
+
+    <view class="history hot-search">
+      <view class="title">
+        <view class="chunk"></view>
+        <text>热门搜索</text>
+      </view>
+      <view class="item">
+        <block wx:key="hotWords" wx:for="{{ hotWords }}">
+            <v-tag bind:tapping="onSearchItemTap" text="{{ item }}" data-keyword="{{item.keyword}}"/>
+        </block>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{searching}}" class="books-container">
+      <block wx:if="{{!noneResult}}" wx:for="{{ books }}" wx:key="book">
+		  	<view class="book-item" bindtap="onBook" data-book-id="{{ item.id }}">
+		  		<image src="{{ item.image }}" mode="aspectFit" />
+		  		<view class="book-item-mess">
+		  			<view class="name">{{item.name}}</view>
+		  			<view class="author">{{item.author}}</view>
+            <view class='item-foot'>
                 <view class="collectCount">{{item.collectCount}} 收藏</view>
-              </view>
-			  		</view>
-			  	</view>
-			  </block>
-        <text wx:if="{{noneResult}}" class="empty-tip">没有搜索到书籍</text>
-    </view>
+            </view>
+		  		</view>
+		  	</view>
+		  </block>
+      <text wx:if="{{noneResult}}" class="empty-tip">没有搜索到书籍</text>
+  </view>
 </view>
 
 <!-- 加载动画 -->

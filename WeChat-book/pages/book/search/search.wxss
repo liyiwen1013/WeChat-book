@@ -121,7 +121,7 @@
     margin-right: 20rpx;
 }
 
-.tags {
+.item {
     /* padding-left:15px; */
     display: flex;
     flex-direction: row;
@@ -131,7 +131,7 @@
     width: 630rpx;
 }
 
-.tags v-tag {
+.item v-tag {
     margin-right: 20rpx;
     margin-bottom: 20rpx;
 }
