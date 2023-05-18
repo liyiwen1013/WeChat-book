@@ -79,6 +79,7 @@ Page({
       },
       method: "GET",
       success(res) {
+        console.log(res.data)
         if (res.data.code==="0000") {
           that.setData({
             basicInfo: res.data.data,
@@ -262,10 +263,24 @@ Page({
     })
   },
   toClearCache() {
-    let that = this
+    wx.removeStorage({
+      key: 'basicInfo',
+      success (res) {
+        if (res.confirm) {
+          wx.reLaunch({
+            url: '/pages/my/my',
+          })
+          wx.showToast({
+            title: '操作成功!',
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    }),
     wx.clearStorage({
       success: (res) => {
-        that.setData({
+        this.setData({
           showClear: false,
           basicInfo: ''
         })

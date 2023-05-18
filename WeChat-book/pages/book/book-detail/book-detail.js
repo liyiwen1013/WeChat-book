@@ -9,8 +9,8 @@ Page({
     content: [],
     book: null,
     bookId: 0,
-    likeStatus: false,
-    likeCount: 0,
+    isCollect: false,
+    collectCount: 0,
     posting: false,
     isLoading: false,
     isShowLogin: false,
@@ -27,6 +27,13 @@ Page({
       bookId: e.id,
       showLoading: true,
       loadingTxt: "玩命加载中"
+    })
+    this.getBookDetail()
+    this.getBookComment()
+  },
+  onShow() {
+    this.setData({
+      isLogin: app.globalData.isLogin
     })
     this.getBookDetail()
     this.getBookComment()
@@ -57,6 +64,7 @@ Page({
         if (res.data.data.summary.includes("展开全部")) {
           res.data.data.summary=res.data.data.summary.substring(0, res.data.data.summary.length - 6)
         }
+        console.log("all.res.data",res.data)
         if (res.data.code==="0000") {
           that.setData({
             book: res.data.data
@@ -114,6 +122,7 @@ Page({
       return
     }
     let that = this
+    let book = this.data.book
     wx.request({
       url: app.globalData.baseUrl + "book/collect",
       header: {
@@ -125,10 +134,16 @@ Page({
         id: e.currentTarget.dataset.bookId
       },
       success(res) {
+        console.log("res.data",res.data)
         if (res.data.code==="0000") {
+          // that.setData({
+          //   'book.collectCount': res.data.data.collectCount,
+          //   'book.isCollect': res.data.data.isCollect
+          // })
+          book.isCollect = res.data.data.isCollect
+          book.collectCount = res.data.data.collectCount
           that.setData({
-            'book.collectCount': res.data.data.collectCount,
-            'book.isCollect': res.data.data.isCollect
+            book: book
           })
         }
       }

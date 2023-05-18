@@ -1,14 +1,15 @@
 const app = getApp()
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     mycollect: [],
     showNotify: false,
     notifyTitle: "",
     notifyDetail: ""
-
   },
   onLoad: function (options) {
+    this.getMyCollects()
+  },
+  onShow: function (options) {
     this.getMyCollects()
   },
 
@@ -29,13 +30,15 @@ Page({
   getMyCollects() {
     let that = this
     wx.request({
-      url: app.globalData.baseUrl + "getMyCollects",
-      method: "POST",
+      url: app.globalData.baseUrl + "book/collect/list",
+      method: "GET",
       header: {
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success(res) {
-        if (res.data.code===0) {
+        if (res.data.code==="0000") {
+          console.log("dha c",res.data)
           that.setData({
             mycollect: res.data.data
           })
@@ -52,10 +55,9 @@ Page({
   },
 
   toCollect(e) {
-    let title = e.currentTarget.dataset.title
-    let postid = e.currentTarget.dataset.postid
+    console.log(e)
     wx.navigateTo({
-      url: '/pages/bbs/passage/passage?title=' + title + "&postid=" + postid,
+      url: '/pages/book/book-detail/book-detail?id=' + e.currentTarget.dataset.bookId,
     })
   }
 })

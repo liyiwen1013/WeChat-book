@@ -9,7 +9,7 @@
     </view>
     <!-- 正文内容，包括图片和文本 -->
     <view class="p-content">
-      <view class="p-main-title" style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.title}}</view>
+      <!-- <view class="p-main-title" style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.title}}</view> -->
       <view class="p-main-dp" style="{{posts.bgType == 3 ? ('background-color:#' + posts.bgContent) : ''}}"></view>
       <view style="color:{{posts.bgType != 3 ? 'black' : 'white'}}; text-indent: 2em;">{{posts.content}}</view>
     </view>

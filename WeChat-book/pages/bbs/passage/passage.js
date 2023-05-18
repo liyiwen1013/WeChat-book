@@ -20,9 +20,9 @@ Page({
   },
   onLoad: function(e) {
     // 页面标题
-    // wx.setNavigationBarTitle({
-    //   title: e.title
-    // })
+    wx.setNavigationBarTitle({
+      title: e.title
+    })
     console.log(e)
     this.setData({
       postsId: e.id,

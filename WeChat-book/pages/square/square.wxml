@@ -26,7 +26,7 @@
 	<swiper class="outerZ" autoplay="{{false}}" duration="500" bindchange="changeSentence" style="height:{{picH}}px" indicator-dots="{{true}}">
 		<swiper-item wx:for="{{allItem}}" wx:key="index">
 			<image src="{{item.picture}}" mode="widthFix" bindtap="picPreview1" data-url="{{item.picture}}"></image>
-    </swiper-item>
+    </swiper-item> 
 	</swiper>
   <view data-posttype="0" data-word="{{allItem[curIndex].content}}">
     <view class="en-sentence" bindtap="copySentence">{{allItem[curIndex].content}}</view>

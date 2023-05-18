@@ -1,45 +1,58 @@
 page {
   width: 90%;
   margin: 0 auto;
-  color: #999;
-  font-size: 28rpx
-}
-.item {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
+  /* color: #999; */
+  font-size: 28rpx;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 40rpx;
 }
-.date {
-  font-size: 24rpx;
-  margin-bottom: 10rpx;
-  background-color: rgba(0, 0, 0, 0.08);
-  color: white;
-  padding: 0 10rpx;
-  border-radius: 8rpx;
-}
-.innerbox {
+.item {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 20rpx 0rpx;
+  border-radius: 25rpx;
   background-color: white;
-  border-radius: 10rpx;
-  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.04);
-  padding: 30rpx 20rpx;
-  box-sizing: border-box;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.15);
+  /* align-items: center; */
 }
-.title {
-  color: #333;
-  font-size: 30rpx;
-  margin-bottom: 10rpx;
+.item image {
+  width: 25%;
+  height: 190rpx;
+  margin: 20rpx;
 }
-.detail {
-  display: -webkit-box;
+.item-description {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10rpx;
+  /* background-color: rgb(110, 34, 34); */
+}
+
+.item-name {
+  font-size: 35rpx;
+  font-weight: bold;
+  padding: 10rpx;
   overflow: hidden;
-  word-break: break-all;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* background-color: rgb(78, 55, 55); */
+}
+
+.item-author {
+  font-size: 28rpx;
+  font-weight: 200;
+  padding: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-collectCount {
+  font-size: 26rpx;
+  bottom: 30rpx;
+  padding: 10rpx 10rpx 10rpx 360rpx;
+  font-weight: 200;
 }
 
 .null-data {

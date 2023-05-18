@@ -104,7 +104,7 @@ page {
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
-  background-color: #0081ff;
+  background-color: #74c7f2;
   color: white;
 }
 .del {
@@ -190,7 +190,7 @@ page {
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
-  background-color: #0081ff;
+  background-color: #74c7f2;
   color: white;
 }
 .notify-model-inner-detail {

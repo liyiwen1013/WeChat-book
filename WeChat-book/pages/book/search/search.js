@@ -30,48 +30,48 @@ Page({
       showLoading: true
     });
     // 更新热门搜索列表
-    this.updateHotSearch();
+    this.updateHistorySearch()
+    this.updateHotSearch()
     this.getHot()
   },
 
   // 搜索框输入事件处理
-  onKeywordInput(event) {
-    console.log("event",event)
+  onKeywordInput(e) {
+    console.log("e",e)
     console.log("this.data ",this.data)
-
     this.setData({
-      keyword: event.detail.value.trim()
-    });
+      keyword: e.detail.value.trim()
+    })
   },
 
-  // 点击搜索按钮时触发的事件
-  onSearch() {
-    const keyword = this.data.keyword;
-    if (!keyword) {
-      wx.showToast({
-        title: '请输入关键词',
-        icon: 'none'
-      });
-      return;
-    }
-    // 将用户搜索的关键词保存到本地缓存中
-    let historySearch = wx.getStorageSync('historySearch') || [];
-    if (!historySearch.find(item => item.keyword === keyword)) {
-      historySearch.unshift({
-        keyword: keyword,
-        time: new Date().getTime()
-      });
-      // 更新历史搜索列表
-      this.updateHistorySearch();
-    }
-    wx.navigateTo({
-      url: `/pages/searchResult/searchResult?keyword=${encodeURIComponent(keyword)}`
-    });
-  },
+  // // 点击搜索按钮时触发的事件
+  // onSearch() {
+  //   const keyword = this.data.keyword;
+  //   if (!keyword) {
+  //     wx.showToast({
+  //       title: '请输入关键词',
+  //       icon: 'none'
+  //     });
+  //     return;
+  //   }
+  //   // 将用户搜索的关键词保存到本地缓存中
+  //   let historySearch = wx.getStorageSync('historySearch') || [];
+  //   if (!historySearch.find(item => item.keyword === keyword)) {
+  //     historySearch.unshift({
+  //       keyword: keyword,
+  //       time: new Date().getTime()
+  //     });
+  //     // 更新历史搜索列表
+  //     this.updateHistorySearch();
+  //   }
+  //   wx.navigateTo({
+  //     url: `/pages/searchResult/searchResult?keyword=${encodeURIComponent(keyword)}`
+  //   });
+  // },
 
   // 点击历史搜索或热门搜索时触发的搜索事件
-  onSearchItemTap(event) {
-    const keyword = event.detail.text;
+  onSearchItemTap(e) {
+    const keyword = e.detail.text;
     this.setData({
       keyword: keyword
     });
@@ -116,17 +116,6 @@ Page({
     });
   },
 
-
-  // attached() {
-  //   this.setData({
-  //     historyWords: getHistory()
-  //   })
-  //   getHot().then(res => {
-  //     this.setData({
-  //       hotWords: res.data
-  //     })
-  //   })
-  // },
   // 获取历史搜索词
   // getHistory(){
   //   console.log(".....") 
@@ -163,11 +152,14 @@ Page({
 
   // 点击取消
   onCancel: function(e) {
-    console.log("e",e)
-    this.setData({
-      keyword: '',
-      searching: false
-    });
+    console.log("e,,,,,",e)
+    // this.setData({
+    //   keyword: '',
+    //   searching: false
+    // })
+    wx.switchTab({
+      url: '/pages/book/book'
+    })
   },
 
   // 点击清除搜索内容
@@ -183,12 +175,32 @@ Page({
 
   onBook: function(e){
     wx.navigateTo({
-      url:'book-detail/book-detail?id=' + e.currentTarget.dataset.bookId
+      url:'../book-detail/book-detail?id=' + e.currentTarget.dataset.bookId
     })
   },
 
-  // 搜索
+  // 点击搜索按钮时触发的事件
   onConfirm() {
+    console.log("ssssssssss",this.data)
+    const keyword = this.data.keyword;
+    if (!keyword) {
+      wx.showToast({
+        title: '请输入书籍名',
+        icon: 'none'
+      });
+      return;
+    }
+    // 将用户搜索的关键词保存到本地缓存中
+    let historySearch = wx.getStorageSync('historySearch') || [];
+    console.log("historySearch",historySearch)
+    if (!historySearch.find(item => item.keyword === keyword)) {
+      historySearch.unshift({
+        keyword: keyword,
+        time: new Date().getTime()
+      });
+      // 更新历史搜索列表
+      this.updateHistorySearch();
+    }
     var that = this
     console.log("that.data",that.data)
     wx.request({

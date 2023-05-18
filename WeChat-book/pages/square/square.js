@@ -5,7 +5,7 @@ const innerAudioContext = wx.createInnerAudioContext({
 Page({
   data: {
     isNormal: false,
-    navs: ["句子", "音乐", "电影"],
+    navs: ["摘录", "音乐", "电影"],
     allItem: [],
     curItem: 0, // navs[curItem] 0，1，2
     curIndex: 0, // allItem[curIndex] 0,1,2,3
@@ -55,8 +55,7 @@ Page({
   // 把监听函数放到onshow里面来，保证能够实时更新
   onShow() {
     this.setData({
-      isLogin: app.globalData.isLogin,
-      isNormal: wx.getStorageSync('isNormal')
+      isLogin: app.globalData.isLogin
     })
     this.getAllPush()
     this.getEnDateStr(this.data.type) // 获取当前日期
@@ -70,8 +69,8 @@ Page({
   // },
   // 图片切换时触发
   changeSentence(e) {
-    console.log("e.detail.current",e.detail.current)
-    console.log("this.data",this.data)
+    // console.log("e.detail.current",e.detail.current)
+    // console.log("this.data",this.data)
     this.setData({
       curIndex: e.detail.current,
     })
@@ -183,7 +182,7 @@ Page({
     return res
   },
   onPlay: function () {
-    console.log("this.data",this.data)  
+    // console.log("this.data",this.data)
     if (!this.data.playing) {
       innerAudioContext.src = this.data.allItem[this.data.curIndex].content;
       innerAudioContext.play() // 播放
@@ -198,8 +197,8 @@ Page({
     }
   },
   _recoverStatus: function () {
-    console.log("ddddd",innerAudioContext.src)
-    console.log("aaaaa",this.data.allItem[this.data.curIndex].content)
+    // console.log("ddddd",innerAudioContext.src)
+    // console.log("aaaaa",this.data.allItem[this.data.curIndex].content)
     if (innerAudioContext.paused) {
       this.setData({
         playing: false
@@ -233,16 +232,15 @@ Page({
 
   getAllPush() {
     let that = this
-    console.log("this.data..",this.data)
+    console.log("ss",this.data)
     wx.request({
       url: app.globalData.baseUrl + "push",
       method: "GET",
       data: {
-        type: this.data.curItem + 1,
+        type: this.data.curItem + 1
       },
       header: {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer ' + app.globalData.token
+        'content-type': 'application/json'
       },
       success: function(res) {
         that.setData({
@@ -269,11 +267,11 @@ Page({
 
   // 点击点赞按钮
   changeVoteState(e) {
-    console.log(this.data)
-    console.log(e)
-    let that = this
+    console.log("this.data",this.data)
+    console.log("e",e)
     let idx = this.data.curIndex
     let allItem = this.data.allItem
+    let that = this
     wx.request({
       url: app.globalData.baseUrl + "push/like",
       method: "POST",

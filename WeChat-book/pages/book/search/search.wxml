@@ -5,9 +5,11 @@
       <image class="icon" src="images/search.png" />
       <!-- <input class='bar' value="{{keyword}}" bindinput="getKeyword" bindconfirm="onConfirm" maxlength="10" placeholder-class='in-bar' placeholder='书籍名' focus="true" /> -->
       <input class="bar" type="text" placeholder="书籍名" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="onConfirm" />
-      <image class="cancel-img" bindtap="onDelete" src="images/cancel.png" />
+      <view  class="delete" bindtap="onDelete">
+        <image class="cancel-img" bindtap="onDelete" src="images/cancel.png" />
+      </view>
     </view>
-    <view bindtap="onCancel" class='cancel'>取消</view>
+    <view class='cancel' bindtap="onCancel">取消</view>
   </view>
 
   <view wx:if="{{!searching}}">
@@ -21,17 +23,6 @@
         <button class="btn" bindtap="onSearchItemTap" data-keyword="{{item.keyword}}">{{item.keyword}}</button>
       </view>
     </view>
-    <!-- <view class="history">
-      <view class="title">
-        <view class="chunk"></view>
-        <text>历史搜索</text>
-      </view>
-      <view class="item">
-        <block wx:key="historyWords" wx:for="{{ historyWords }}">
-            <v-tag bind:tapping="onConfirm" text="{{ item }}" />
-        </block>
-      </view>
-    </view> -->
     <!-- 热门搜索列表 -->
     <view class="history hot-search">
       <view class="title">

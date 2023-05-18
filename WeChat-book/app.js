@@ -30,7 +30,7 @@ App({
   },
   globalData: {
     token: "",
-    baseUrl: "http://8.142.189.153:8080/",
+    baseUrl: "https://momo.linzeliang.cn/",
     name: wx.getStorageSync('name'),
     password: wx.getStorageSync('password'),
     isLogin: false

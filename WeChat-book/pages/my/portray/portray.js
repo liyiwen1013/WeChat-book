@@ -21,9 +21,9 @@ Page({
     ecTime: {
       lazyLoad: true
     },
-    preferencePercent: [],
-    behaviorPercent: [],
-    timePercent: [],
+    preferencePercent: [], // 偏好
+    behaviorPercent: [],  // 行为
+    timePercent: [],  // 时间
     isNormal: false
   },
   onShow: function() {
@@ -148,7 +148,7 @@ Page({
   },
   getPreferencePercent() {
     wx.request({
-      url: app.globalData.baseUrl + "getPreferencePercent",
+      url: app.globalData.baseUrl + "/user/analysis",
       header: {
         'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
       },
