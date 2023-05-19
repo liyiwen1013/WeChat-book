@@ -114,6 +114,89 @@
   display: inline;
 }
 
+/* 没有登陆的时候的弹窗 */
+.outModel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1110;
+  opacity: 0;
+  outline: 0;
+  text-align: center;
+  -ms-transform: scale(1.185);
+  transform: scale(1.185);
+  backface-visibility: hidden;
+  perspective: 2000rpx;
+  background: rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease-in-out 0s;
+  pointer-events: none;
+}
+.outModel::before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.innerModel {
+  position: relative;
+  vertical-align: middle;
+  width: 400rpx;
+  max-width: 100%;
+  overflow: hidden;
+  height: auto;
+  background-color: #f8f8f8;
+  display: inline-block;
+  color: #333;
+  border-radius: 10rpx;
+}
+.title {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background-color: #74c7f2;
+  color: white;
+}
+.closebtn {
+  position: absolute;
+  width: 60rpx;
+  height: 60rpx;
+  right: 30rpx;
+  top: 10rpx;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAB80lEQVRIS83Wy2oUQRTG8f/3OvoS7l25UFFRFEVFRBQV8Y5XQgyBEELQQBQNBrNypVu3PoC+zicVqqCmprq7emZg7FVfauo3p/qc0yWWdGhJLv8HbPskcBQ4kPR3Eath+whwCvgt6WeacyJi2x+Bi8CfMHhePKIHMZgfko53we+Ae/HhXHiBhik3Jd2qwuGm7a/AmXnwCrov6Wz+6qrJZfszcH4WvIJ+kXShzJfOrLa9C1wag1fQXUmXa0naW0623wNXW/AK+kHSta7KGKxj21vAjT68gm5JutlXjoNwTLgNIGXkRLZX0A1Jt4d6QBMc8TXgbh55PE91Gi7XJN0fQsPzZjjiK8CDDA+nodOFY0XSwxZ0NBzxV8CTAngt6WkrOiscem++vDN1uLFLXaIpyNF4M1zJ3m9RPd1S582dKx9YQfckHbZU23vAubH4YMQV9JOk1EoPvexzGi6bln2oZZbvdEdSaqETq2d7B7jSGnnfR6JEtyWl1lmtHNvbwPUWvOuzWKITH/G+erW9CaQ+3bnsU3Dlna5LSq2yqUfYXgfu9EVe7rnKSFclpRbZhKZBtleB1LenIu/a7IXfv5X0eJRWDLb9BngUb3+XdCINKeG02Xsp6fk8aBb5C+BZy2bvmKRfi0AzfGrOwQayyD+Qz7U0+B/YlfAfrHFqQwAAAABJRU5ErkJggg==");
+  background-size: 30rpx 30rpx;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.notify {
+  width: 100%;
+  color: #333;
+  z-index: 2;
+  text-align: center;
+  vertical-align: text-top;
+  box-sizing: border-box;
+  padding: 20rpx 0;
+}
+.go-login {
+  height: 80rpx;
+  width: 100%;
+  line-height: 80rpx;
+  border-radius: 0 0 10rpx 10rpx;
+  background-color: rgba(29, 15, 15, 0.06);
+}
+.show {
+  opacity: 1;
+  transition-duration: 0.3s;
+  -ms-transform: scale(1);
+  transform: scale(1);
+  overflow-x: hidden;
+  overflow-y: auto;
+  pointer-events: auto;
+  -webkit-overflow-scrolling: touch
+}
+
 /* 弹出一些处理结果 */
 .msg-model {
   position: fixed;

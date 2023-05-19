@@ -27,12 +27,24 @@
 		<!-- <view wx:else class="empty-tip">暂无数据</view> -->
 	</view>
 </view>
+
 <view class="logotxt" wx:if="{{ isLoading && pageNum < pages+1 }}">
 	<view class="txt">玩命加载中</view>
 </view>
 <view class="logotxt" wx:if="{{ pageNum >= pages+1 }}">
 	<view class="txt">到底啦</view>
 </view>
+
+<!-- 弹出层，弹出需要登陆的信息提示 -->
+<view class="outModel {{isShowLogin?'show':''}}">
+	<view class="innerModel">
+		<view class="closebtn" bindtap="closeWindow" data-modelid="isShowLogin"></view>
+		<view class="title">登录</view>
+		<view class="notify">登陆后方可使用本功能</view>
+    <view class="go-login" bindtap="goLogin">立即登录</view>
+	</view>
+</view>
+
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{ showNotify?'show-notify-model':'' }}">
 	<view class="notify-model-inner">
@@ -40,6 +52,7 @@
 		<view class="notify-model-inner-detail">{{notifyDetail}}</view>
 	</view>
 </view>
+
 <!-- 加载动画 -->
 <view class="loading-model {{ showLoading?'show-loading-model':'' }}">
 	<view class="loading-model-inner">
