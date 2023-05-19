@@ -12,6 +12,7 @@ Page({
     searching: false,
     keyword: '', //搜索内容,比如你想搜索python相关书籍,则输入python
     noneResult: false,
+    isShowLogin: false,
     loading: false,
     loadingCenter: false,
     pages: 0,
@@ -37,14 +38,12 @@ Page({
 
   // 搜索框输入事件处理
   onKeywordInput(e) {
-    console.log("e",e)
-    console.log("this.data ",this.data)
     this.setData({
       keyword: e.detail.value.trim()
     })
   },
 
-  // // 点击搜索按钮时触发的事件
+  // 点击搜索按钮时触发的事件
   // onSearch() {
   //   const keyword = this.data.keyword;
   //   if (!keyword) {
@@ -126,6 +125,7 @@ Page({
   //   }
   //   return words
   // },
+
   // 获取热门关键字
   getHot(){
     var that = this
@@ -136,7 +136,6 @@ Page({
         'content-type': 'application/json'
       },
       success: function(res) {
-        console.log(',,.,,',res.data)
         if (res.data.code==="0000") {
           that.setData({
             hotWords: res.data.data
@@ -151,22 +150,14 @@ Page({
   },
 
   // 点击取消
-  onCancel: function(e) {
-    console.log("e,,,,,",e)
-    // this.setData({
-    //   keyword: '',
-    //   searching: false
-    // })
+  onCancel: function() {
     wx.switchTab({
       url: '/pages/book/book'
     })
   },
 
   // 点击清除搜索内容
-  onDelete(e) {
-    console.log("e",e)
-    console.log("...........")
-    console.log("this.data",this.data)
+  onDelete() {
     this.setData({
       keyword: '',
       searching: false
@@ -174,14 +165,34 @@ Page({
   },
 
   onBook: function(e){
+    if (!app.globalData.isLogin) {
+      this.setData({
+        isShowLogin: true
+      })
+      return
+    }
     wx.navigateTo({
       url:'../book-detail/book-detail?id=' + e.currentTarget.dataset.bookId
+    })
+  },
+  // 根据响应窗口类型关闭窗口
+  closeWindow: function(e) {
+    var modelid = e.currentTarget.dataset.modelid
+    this.setData({
+      [modelid]: false
+    })
+  },
+  goLogin: function() {
+    this.setData({
+      isShowLogin: false
+    })
+    wx.navigateTo({
+      url: '../../login/login',
     })
   },
 
   // 点击搜索按钮时触发的事件
   onConfirm() {
-    console.log("ssssssssss",this.data)
     const keyword = this.data.keyword;
     if (!keyword) {
       wx.showToast({
@@ -225,7 +236,6 @@ Page({
               noneResult: false
             })
           } else {
-            console.log("........")
             that.setData({
               noneResult: true,
               searching: true

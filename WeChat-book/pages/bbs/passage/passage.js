@@ -1,7 +1,6 @@
 const app = getApp()
 Page({
   data: {
-    picHeight: 0.63*wx.getSystemInfoSync().windowWidth,
     isInput: false,
     floor: -1,
     inputBoxTxt: "留言",
@@ -16,14 +15,12 @@ Page({
     referenceContent: "",
     isReport: false,
     report: "",
-    isNormal: false,
   },
   onLoad: function(e) {
     // 页面标题
     wx.setNavigationBarTitle({
       title: e.title
     })
-    console.log(e)
     this.setData({
       postsId: e.id,
       showLoading: true,
@@ -31,12 +28,6 @@ Page({
     })
     this.getPosts()
     this.getPostsComment()
-  },
-
-  onShow: function() {
-    this.setData({
-      isNormal: wx.getStorageSync('isNormal')
-    })
   },
 
   // 预览头像
@@ -65,7 +56,7 @@ Page({
   getPosts: function() {
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "posts/" + this.data.postsId,
+      url: app.globalData.baseUrl + "posts/" + that.data.postsId,
       method: "GET",
       header: {
         'content-type': 'application/json',
@@ -97,7 +88,7 @@ Page({
     var that = this
     console.log("xxx",that.data)
     wx.request({
-      url: app.globalData.baseUrl + "posts/comment/" + this.data.postsId,
+      url: app.globalData.baseUrl + "posts/comment/" + that.data.postsId,
       method: "GET",
       header: {
         'content-type': 'application/json',
@@ -133,7 +124,6 @@ Page({
 
   //点击引用评论
   toQuote: function(e) {
-    console.log("e.f",e)
     var floorr = e.currentTarget.dataset.floor
     var parentId = e.currentTarget.dataset.id
     this.setData({
@@ -152,7 +142,7 @@ Page({
   cancelQuote: function() {
     this.setData({
       isInput: false,
-      inputBoxTxt: "点击发表回复(字数在200字以内)",
+      inputBoxTxt: "点击发表留言(字数在200字以内)",
       parentId: 0,
       content: "",
       floor: -1
@@ -206,133 +196,5 @@ Page({
         that.showNotify(e)
       }
     })
-  },
-
-  // 点赞
-  toAgree: function() {
-    var that = this
-    wx.request({
-      url: app.globalData.baseUrl + 'changeAgreeStatus',
-      method: "POST",
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
-      },
-      data: {
-        postid: that.data.postid
-      },
-      success: function(res) {
-        if (res.data.code===0) {
-          that.setData({
-            'postMain.agree': res.data.data===0?that.data.postMain.agree-1:that.data.postMain.agree+1,
-            'postInfo.agree': res.data.data
-          })
-        } else {
-          var e = ['点赞失败', res.data.msg]
-          that.showNotify(e)
-        }
-      },
-      error: function() {
-        var e = ['提示', '出了点儿错，稍后再试吧']
-        that.showNotify(e)
-      }
-    })
-  },
-
-  // 收藏
-  toCollect: function() {
-    var that = this
-    wx.request({
-      url: app.globalData.baseUrl + 'changeCollectStatus',
-      method: "POST",
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
-      },
-      data: {
-        postid: that.data.postid
-      },
-      success: function(res) {
-        if (res.data.code===0) {
-          that.setData({
-            'postMain.collect': res.data.data===0?that.data.postMain.collect-1:that.data.postMain.collect+1,
-            'postInfo.collect': res.data.data
-          })
-        } else {
-          var e = ['收藏失败', res.data.msg]
-          that.showNotify(e)
-        }
-      },
-      error: function() {
-        var e = ['提示', '出了点儿错，稍后再试吧']
-        that.showNotify(e)
-      }
-    })
-  },
-
-  // 举报按钮
-  toReport: function() {
-    this.setData({
-      isReport: this.data.isReport?false:true
-    })
-  },
-
-  cancelbtn() {
-    this.setData({
-      isReport: false
-    })
-  },
-
-  // 发送举报
-  reportbtn: function() {
-    if (this.data.report==="" || this.data.report.replace(/\s+/g, '').length===0) {
-      let e = ['提示', '举报信息空空如也']
-      this.showNotify(e)
-      return
-    }
-    this.setData({
-      showLoading: true
-    })
-    var that = this
-    wx.request({
-      url: app.globalData.baseUrl + "toReport",
-      method: "POST",
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'cookie': 'JSESSIONID=' + app.globalData.SESSIONID
-      },
-      data: {
-        postid: that.data.postid,
-        report: that.data.report
-      },
-      success: function(res) {
-        if (res.data.code===0) {
-          that.setData({
-            report: "",
-            isReport: false
-          })
-          var e = ['提示', '举报信息已收到，我们将尽快核实并通知与您。感谢您为健康网络环境做出的贡献']
-          that.showNotify(e)
-        } else {
-          var e = ['提示', res.data.msg]
-          that.showNotify(e)
-        }
-      },
-      error: function() {
-        var e = ['提示', '出了点儿错，稍后再试吧']
-        that.showNotify(e)
-      },
-      complete: function() {
-        that.setData({
-          showLoading: false
-        })
-      },
-      fail: () => {
-        that.setData({
-          showLoading: false
-        })
-      }
-    })
   }
-
 })

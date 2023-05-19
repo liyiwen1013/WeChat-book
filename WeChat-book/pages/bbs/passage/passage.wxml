@@ -1,107 +1,74 @@
-<view wx:if="{{isNormal==true}}">
-  <view class="p-main">
-    <!-- 基本信息 -->
-    <view class="p-detail">
-      <view class="p-prtrait">
-        <image class="p-avatar" src="{{posts.userAvatar}}" bindtap="previewAvatar" data-avatar="{{posts.userAvatar}}"></image>
-      </view>
-      <view class="p-mark">{{posts.userUsername}}</view>
+<view class="p-main">
+  <!-- 基本信息 -->
+  <view class="p-detail">
+    <view class="p-prtrait">
+      <image class="p-avatar" src="{{posts.userAvatar}}" bindtap="previewAvatar" data-avatar="{{posts.userAvatar}}"></image>
     </view>
-    <!-- 正文内容，包括图片和文本 -->
-    <view class="p-content">
-      <!-- <view class="p-main-title" style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.title}}</view> -->
-      <view class="p-main-dp" style="{{posts.bgType == 3 ? ('background-color:#' + posts.bgContent) : ''}}"></view>
-      <view style="color:{{posts.bgType != 3 ? 'black' : 'white'}}; text-indent: 2em;">{{posts.content}}</view>
-    </view>
-    <view class="p-pircture">
-      <image  wx:if="{{posts.bgType != 3}}" class="p-picture" src="{{posts.bgContent}}" mode="widthFix" bindtap="picPreview" data-url="{{posts.bgContent}}"></image>
-    </view>
-    <view style="font-size: 21rpx; text-align: left; margin:10rpx 0rpx 20rpx 40rpx;">{{posts.createTime}}</view>
-    <!-- 点赞等数据 -->
-    <view class="p-info">
-      <!-- 浏览 -->
-      <view class="p-v">
-        <view class="p-v-item">
-          <view class="p-v-item-img imga"></view>
-          <view>{{posts.browseCount}} 浏览</view>
-        </view>
-      </view>
-      <!-- 点赞 -->
-      <!-- <view class="p-v {{postInfo.agree==1?'p-v-is':''}}" bindtap="toAgree" style="width:{{postMain.sAnonymous==0?'20%':'25%'}}">点赞 {{postMain.agree}}</view> -->
-      <!-- 举报 -->
-      <!-- <view class="p-v" bindtap="toReport" style="background-color:{{isReport?'#74c7f2':''}};color:{{isReport?'white':''}}">
-        <view class="p-v-item">
-          <view class="p-v-item-img imgb"></view>
-          <view> 举报</view>
-        </view>
-      </view> -->
-      <!-- 评论人数 -->
-      <view class="p-v" wx:if="{{isNormal==true}}">
-        <view class="p-v-item">
-          <view class="p-v-item-img imgc"></view>
-          <view>{{posts.commentCount}} 评论</view>
-        </view>
-      </view>
-      <!-- 收藏 -->
-      <!-- <view class="p-v {{postInfo.collect==1?'p-v-is':''}}" bindtap="toCollect" wx:if="{{posts.isAnonymous==0}}">
-        <view class="p-v-item">
-          <view class="p-v-item-img imgd"></view>
-          <view>{{posts.collect}} 收藏</view>
-        </view>
-      </view> -->
-    </view>
+    <view class="p-mark">{{posts.userUsername}}</view>
+    <view class="p-time">{{posts.createTime}}</view>
   </view>
-  <!-- 举报弹窗 -->
-  <view class="reportbox" style="display:{{isReport?'block':'none'}}">
-    <view class="report-input">
-      <textarea placeholder="简要描述违规原因(100字以内)" maxlength="100" bindinput="getInput" data-inputid="report" focus="{{isReport}}" value="{{report}}"></textarea>
-    </view>
-    <view class="report-btn">
-      <view class="reportbtn" bindtap="reportbtn">举报</view>
-    </view>
+  <!-- 正文内容，包括图片和文本 -->
+  <view class="p-content">
+    <!-- <view class="p-main-title" style="color:{{posts.bgType != 3 ? 'black' : 'white'}}">{{posts.title}}</view> -->
+    <view class="p-main-dp" style="{{posts.bgType == 3 ? ('background-color:#' + posts.bgContent) : ''}}"></view>
+    <view style="color:{{posts.bgType != 3 ? 'black' : 'white'}}; text-indent: 2em;">{{posts.content}}</view>
   </view>
-  <!-- 评论框 -->
-  <view wx:if="{{isNormal==true}}">
-    <view class="p-comment" id="inputBox">
-      <textarea maxlength="200" placeholder="{{inputBoxTxt}}" focus="{{isInput}}" bindinput="getInput" data-inputid="content" value="{{content}}"></textarea>
-      <view class="todiscuss">
-        <view class="cancelquotebtn" style="display:{{isInput?'block':'none'}}" bindtap="cancelQuote">取消</view>
-        <view class="postcommentbtn" bindtap="toComment">评论</view>
+  <view class="p-pircture">
+    <image  wx:if="{{posts.bgType != 3}}" class="p-picture" src="{{posts.bgContent}}" mode="widthFix" bindtap="picPreview" data-url="{{posts.bgContent}}"></image>
+  </view>
+  <!-- 点赞等数据 -->
+  <view class="p-info">
+    <!-- 浏览 -->
+    <view class="p-v">
+      <view class="p-v-item">
+        <view class="p-v-item-img imga"></view>
+        <view>{{posts.browseCount}} 浏览</view>
       </view>
     </view>
-    <!-- 评论区 -->
-    <view class="discuss-area">评论区</view>
-    <view class="p-discuss" wx:if="{{postContent.length!==0}}">
-      <view class="discuss-item" wx:for="{{postContent}}" wx:key="index">
-        <view class="discuss-info">
-          <image class="discuss-portrait" src="{{item.userAvatar}}" bindtap="previewAvatar" data-avatarurl="{{item.userAvatar}}"></image>
-          <view class="discuss-nickname">{{item.userUsername}}</view>
-          <view class="discuss-date">{{item.createTime}}</view>
-        </view>
-        <view class="discuss-content">
-          <view class="main-content">{{item.parentId==0?item.content:('回复 ' + item.referenceUsername + '：'+item.content)}}</view>
-          <view class="quote-content" wx:if="{{item.parentId!=0}}">{{item.referenceUsername+'：'+item.referenceContent}}</view>
-          <view class="p-floor">{{index+1}}楼</view>
-        </view>
-        <view class="p-func">
-          <view class="p-quote" data-floor="{{index}}" bindtap="toQuote" data-id="{{item.id}}"></view>
-        </view>
-      </view>  
+    <!-- 评论人数 -->
+    <view class="p-v">
+      <view class="p-v-item">
+        <view class="p-v-item-img imgc"></view>
+        <view>{{posts.commentCount}} 评论</view>
+      </view>
     </view>
-      
-    <!-- 如果没有评论，显示一张图片 -->
-    <view class="no-comment" wx:if="{{postContent.length===0}}">
-      <image src="https://pic4.zhimg.com/v2-405fe33df25b3d6a1c8617054f8ace5b_b.gif" mode="widthFix"></image>
-      <view>快来发表第一个评论吧</view>
-      <view style="height: 80rpx"></view>
-    </view>
-
-    <view class="bottomline" wx:if="{{postComment.length!=0}}"><text>我的底线</text></view>
   </view>
 </view>
+<!-- 评论、留言框 -->
+<view class="p-comment" id="inputBox">
+  <textarea maxlength="200" placeholder="{{inputBoxTxt}}" focus="{{isInput}}" bindinput="getInput" data-inputid="content" value="{{content}}"></textarea>
+  <view class="todiscuss">
+    <view class="cancelquotebtn" style="display:{{isInput?'block':'none'}}" bindtap="cancelQuote">取消</view>
+    <view class="postcommentbtn" bindtap="toComment">评论</view>
+  </view>
+</view>
+  <!-- 评论区 -->
+<view class="discuss-area">评论区</view>
+<view class="p-discuss" wx:if="{{postContent.length!==0}}">
+  <view class="discuss-item" wx:for="{{postContent}}" wx:key="index">
+    <view class="discuss-info">
+      <image class="discuss-portrait" src="{{item.userAvatar}}" bindtap="previewAvatar" data-avatarurl="{{item.userAvatar}}"></image>
+      <view class="discuss-nickname">{{item.userUsername}}</view>
+      <view class="discuss-date">{{item.createTime}}</view>
+    </view>
+    <view class="discuss-content">
+      <view class="main-content">{{item.parentId==0?item.content:('回复 ' + item.referenceUsername + '：'+item.content)}}</view>
+      <view class="quote-content" wx:if="{{item.parentId!=0}}">{{item.referenceUsername+'：'+item.referenceContent}}</view>
+      <view class="p-floor">{{index+1}}楼</view>
+    </view>
+    <view class="p-func">
+      <view class="p-quote" data-floor="{{index}}" bindtap="toQuote" data-id="{{item.id}}"></view>
+    </view>
+  </view>  
+</view>   
+<!-- 如果没有评论，显示一张图片 -->
+<view class="no-comment" wx:if="{{postContent.length===0}}">
+  <image src="https://pic4.zhimg.com/v2-405fe33df25b3d6a1c8617054f8ace5b_b.gif" mode="widthFix"></image>
+  <view>快来发表第一个评论吧</view>
+  <view style="height: 80rpx"></view>
+</view>
+<view class="bottomline" wx:if="{{postComment.length!=0}}"><text>我的底线</text></view>
 
-
-<!-- <view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../pics/space.jpg" /></view> -->
 
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{showNotify?'show-notify-model':''}}">
@@ -114,7 +81,6 @@
 <!-- 加载动画 -->
 <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>
   </view>
 </view>
