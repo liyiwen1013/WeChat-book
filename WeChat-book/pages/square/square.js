@@ -7,6 +7,7 @@ Page({
     isNormal: false,
     navs: ["摘录", "音乐", "电影"],
     allItem: [],
+    isLike: false,
     curItem: 0, // navs[curItem] 0，1，2
     curIndex: 0, // allItem[curIndex] 0,1,2,3
     pushId: '',
@@ -53,7 +54,8 @@ Page({
   },
 
   // 把监听函数放到onshow里面来，保证能够实时更新
-  onShow() {
+  onShow(e) {
+    console.log("e",e)
     this.setData({
       isLogin: app.globalData.isLogin
     })
@@ -79,7 +81,7 @@ Page({
       this._monitorSwitch()
     }
   },
-  //图片方法预览
+  // 摘录图片方法预览
   picPreview1: function(e) {
     console.log("this.data,",this.data)
     var that = this
@@ -89,6 +91,7 @@ Page({
       urls: picUrl
     })
   },
+   // 电影图片方法预览
   picPreview2: function(e) {
     console.log("this.data,",this.data)
     var that = this
@@ -181,6 +184,7 @@ Page({
     }
     return res
   },
+  // 音乐组件
   onPlay: function () {
     // console.log("this.data",this.data)
     if (!this.data.playing) {
@@ -266,9 +270,8 @@ Page({
   },
 
   // 点击点赞按钮
-  changeVoteState(e) {
+  changeVoteState() {
     console.log("this.data",this.data)
-    console.log("e",e)
     let idx = this.data.curIndex
     let allItem = this.data.allItem
     let that = this
@@ -280,10 +283,11 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        id: e.currentTarget.dataset.centenceId,
+        id: allItem[idx].id,
       },
       success(res) {
         if (res.data.code==="0000") {
+          console.log(",,,,",res.data)
           allItem[idx].isLike = res.data.data.isLike
           allItem[idx].likeCount = res.data.data.likeCount
           that.setData({

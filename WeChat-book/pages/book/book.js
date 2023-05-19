@@ -1,5 +1,4 @@
 // pages/book/book.js
-// import { random } from '../../utils/common.js'
 const app = getApp()
 Page({
   /**
@@ -7,7 +6,6 @@ Page({
    */
   data: {
     books: [],
-    searching: false,
     isLoading: false,
     isShowLogin: false,
     showLoading: false,
@@ -61,6 +59,7 @@ Page({
       this.getHotList(1)
     }
   },
+  // 获取精选书籍数据
   getHotList: function(e) {
     var that = this
     let action = e
@@ -71,8 +70,7 @@ Page({
       url: app.globalData.baseUrl + "book",
       method: "GET",
       header: {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer ' + app.globalData.token
+        'content-type': 'application/json'
       },
       data: {
         bookCategoryId: that.data.bookCategoryId,
@@ -88,7 +86,7 @@ Page({
               pageNum: res.data.data.current + 1,
               pages: res.data.data.pages
             })
-          } else if (action === 1){
+          } else if (action === 1){ // 上滑加载
             if (that.data.pageNum <= that.data.pages + 1 && res.data.data.list.length != 0) {
               that.setData({
                 books: that.data.books.concat(res.data.data.list),
@@ -103,7 +101,7 @@ Page({
         }
       },
       error: function() {
-        // 隐藏刷新动画
+        // 停止当前页面下拉刷新
         wx.stopPullDownRefresh()
         var e = ["提示", "出了点儿错，稍后再试吧"]
         this.showNotify(e)
@@ -113,30 +111,49 @@ Page({
           showLoading: false,
           isLoading: false
         })
-        // 隐藏刷新动画
+        // 停止当前页面下拉刷新
         wx.stopPullDownRefresh()
       }
     })
   },
+
   onSearching: function(){
     wx.navigateTo({
       url: 'search/search',
     })
   },
+
   toLibrary: function() {
     wx.navigateTo({
       url: 'book-library/library',
     })
   },
+  // 书籍详情页
   onTap: function(e){
+    if (!app.globalData.isLogin) {
+      this.setData({
+        isShowLogin: true
+      })
+      return
+    }
     wx.navigateTo({
       url:'book-detail/book-detail?id=' + e.currentTarget.dataset.bookId
     })
   },
-
-  onCancel: function(){
+  // 根据响应窗口类型关闭窗口
+  closeWindow: function(e) {
+    var modelid = e.currentTarget.dataset.modelid
     this.setData({
-      searching: false
-    }) 
+      [modelid]: false
+    })
+  },
+
+  goLogin: function() {
+    this.setData({
+      isShowLogin: false
+    })
+    wx.navigateTo({
+      url: '../login/login',
+    })
   }
 })

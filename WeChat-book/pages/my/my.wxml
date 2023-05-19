@@ -33,13 +33,13 @@
   </view>
 </view>
 
-<view class="conf" style="margin-bottom:0">
+<!-- <view class="conf" style="margin-bottom:0">
   <view bindtap="toNext" data-id="portray" wx:if="{{isLogin}}">
     <image src="../../pics/portray.png"></image>
     <view class="txt">统计</view>
     <text class="more"></text>
   </view>
-</view>
+</view> -->
 
 <view class="conf">
   <view bindtap="toNext" data-id="instruc" wx:if="{{isNormal==true}}">

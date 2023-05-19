@@ -263,26 +263,27 @@ Page({
     })
   },
   toClearCache() {
-    wx.removeStorage({
-      key: 'basicInfo',
-      success (res) {
-        if (res.confirm) {
-          wx.reLaunch({
-            url: '/pages/my/my',
-          })
-          wx.showToast({
-            title: '操作成功!',
-          })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    }),
+    // wx.removeStorage({
+    //   key: 'basicInfo',
+    //   success (res) {
+    //     if (res.confirm) {
+    //       wx.reLaunch({
+    //         url: '/pages/my/my',
+    //       })
+    //       wx.showToast({
+    //         title: '操作成功!',
+    //       })
+    //     } else if (res.cancel) {
+    //       console.log('用户点击取消')
+    //     }
+    //   }
+    // }),
     wx.clearStorage({
       success: (res) => {
         this.setData({
           showClear: false,
-          basicInfo: ''
+          basicInfo: '',
+          isLogin: false
         })
         wx.showToast({
           title: '操作成功!',

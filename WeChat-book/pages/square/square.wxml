@@ -20,7 +20,7 @@
   <text>{{cdate[curIndex][1]}}</text> / {{cdate[curIndex][2]}} / {{cdate[curIndex][0]}}
 </view>
 
-<!-- 句子正文内容 -->
+<!-- 摘录正文内容 -->
 <view wx:if="{{curItem==0}}">
   <!-- 图片轮播，不自动播放 -->
 	<swiper class="outerZ" autoplay="{{false}}" duration="500" bindchange="changeSentence" style="height:{{picH}}px" indicator-dots="{{true}}">
@@ -72,7 +72,7 @@
   <view class="moN-sentence" data-posttype="2" data-word="{{allItem[curIndex].name}}" wx:if="{{allItem[curIndex].name}}">{{allItem[curIndex].name}}</view>
   <view class="vote-default" wx:if="{{isNormal==true}}">
 		<view class="vote-num"><text>{{allItem[curIndex].likeCount}}</text>人觉得好看</view>
-		<view class="votebtn" data-centence-id="{{allItem[curIndex].id}}" style="background-color:{{allItem[curIndex].isLike?'#0081ff':'transparent'}};color:{{allItem[curIndex].isLike?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">看过并觉得好看+1</view>
+		<view class="votebtn" data-centence-id="{{allItem[curIndex].id}}" style="background-color:{{allItem[curIndex].isLike?'#74c7f2':'transparent'}};color:{{allItem[curIndex].isLike?'#ffffff':'#0081ff'}}" bindtap="changeVoteState" wx:if="{{isLogin}}">看过并觉得好看+1</view>
 	</view>
 </view>
 <!-- 信息提示层，一定时间后自动关闭 -->

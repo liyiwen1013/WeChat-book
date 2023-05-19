@@ -1,5 +1,5 @@
 <!--pages/book/book.wxml-->
-<view wx:if="{{!searching}}" class="container">
+<view class="container">
   <view class="header">
     <view class='search' bindtap="onSearching">
       <image src="/images/icon/search.png" />
@@ -32,8 +32,6 @@
 </view>
 
 <view style="height:50rpx"></view>
-
-<v-search wx:if="{{searching}}" more="{{more}}" bind:cancel="onCancel" />
 
 <view class="logotxt" wx:if="{{isLoading && pageNum < pages+1}}">
   <view class="txt">玩命加载中</view>
