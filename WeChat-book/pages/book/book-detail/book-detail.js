@@ -55,10 +55,11 @@ Page({
   getBookDetail: function() {
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + "book/" + this.data.bookId,
+      url: app.globalData.baseUrl + "book/" + that.data.bookId,
       method: "GET",
       header: {
         'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
         if (res.data.data.summary.includes("展开全部")) {
@@ -90,6 +91,7 @@ Page({
       method: "GET",
       header: {
         'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
         bookId: that.data.bookId,
@@ -115,19 +117,13 @@ Page({
 
   // 点击收藏
   onLike: function(e) {
-    if (!app.globalData.isLogin) {
-      this.setData({
-        isShowLogin: true
-      })
-      return
-    }
     let that = this
     let book = this.data.book
     wx.request({
       url: app.globalData.baseUrl + "book/collect",
       header: {
         'content-type': "application/json",
-        'Authorization': 'Bearer ' + app.globalData.token // 涉及到登录
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       method: 'POST',
       data: {
@@ -136,10 +132,6 @@ Page({
       success(res) {
         console.log("res.data",res.data)
         if (res.data.code==="0000") {
-          // that.setData({
-          //   'book.collectCount': res.data.data.collectCount,
-          //   'book.isCollect': res.data.data.isCollect
-          // })
           book.isCollect = res.data.data.isCollect
           book.collectCount = res.data.data.collectCount
           that.setData({
@@ -152,18 +144,12 @@ Page({
 
   // 点击输入短评
   onFakePost: function(e) {
-    if (!app.globalData.isLogin) {
-      this.setData({
-        isShowLogin: true
-      })
-      return
-    }
     this.setData({
       posting: true
     })
   },
 
-  // 标题输入
+  // 键盘输入
   getInput: function(e) {
     var inputid = e.currentTarget.dataset.inputid
     this.setData({
@@ -172,7 +158,7 @@ Page({
   },
 
   // 取消输入短评
-  onCancel: function(e) {
+  onCancel: function() {
     this.setData({
       posting: false
     })
@@ -181,6 +167,7 @@ Page({
   // 提交短评
   onPost: function(e) {
     const content = this.data.content
+    console.log("d", content)
     if (content=="" || content == null || content.replace( / (^\s*)l(\s*$)/g,"") == "") {
       var e = ["提示", '内容为空,请输入短评']
       this.showNotify(e)
@@ -222,31 +209,10 @@ Page({
     })
   },
   
-  goLogin: function() {
-    this.setData({
-      isShowLogin: false
-    })
-    wx.navigateTo({
-      url: '/pages/login/login',
-    })
-  },
-  // 根据响应窗口类型关闭窗口
-  closeWindow: function(e) {
-    var modelid = e.currentTarget.dataset.modelid
-    this.setData({
-      [modelid]: false
-    })
-  },
   /**
    * 用户点击右上角分享
    */
-  onShareImageTap: function(res) {
-    // if (!app.globalData.isLogin) {
-    //   this.setData({
-    //     isShowLogin: true
-    //   })
-    //   return
-    // }
+  onShareImageTap: function() {
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']

@@ -48,37 +48,36 @@
     </view>
   </view>
 </view>
+
 <view style="height: 120rpx;"></view>
+
 <view class="post-container" hidden="{{posting}}">
   <view bindtap="onFakePost" class="post-fake">
     <text>输入短评</text>
   </view>
-    <view class="collect-container">
-      <view bindtap="onLike" class="collect-img" data-book-id="{{book.id}}">
-        <image src="{{book.isCollect?'/images/收藏hover.png':'/images/收藏.png'}}"/>
-        <text>{{book.collectCount}}</text>
-      </view>
-      <view class="share-btn">
-        <button class="share-btn-btn" open-type="share" size="mini" bindtap="onShareImageTap">
-          <image src='/images/分享2.png' mode='aspectFit'></image>
-        </button>
-      </view>
+  <view class="collect-container">
+    <!-- 点赞 -->
+    <view bindtap="onLike" class="collect-img" data-book-id="{{book.id}}">
+      <image src="{{book.isCollect?'/images/收藏hover.png':'/images/收藏.png'}}"/>
+      <text>{{book.collectCount}}</text>
     </view>
+    <!-- 分享 -->
+    <view class="share-btn">
+      <button class="share-btn-btn" open-type="share" size="mini" bindtap="onShareImageTap">
+        <image src='/images/share.png' mode='aspectFit'></image>
+      </button>
+    </view>
+  </view>
 </view>
 <view class="posting-container" wx:if="{{posting}}">
     <view class="post-header">
-        <text>{{comments.length > 0 ? '仅可点击标签+1' : '暂无短评'}}</text>
+      <text>{{comments.length > 0 ? '仅可点击标签+1' : '暂无短评'}}</text>
     </view>
     <view class="comment-container">
       <block wx:for="{{util.limit(comments, 3)}}" wx:key="content">
-        <v-tag bind:tapping="onPost" tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
-            <text class="num" slot="after">{{'+'+item.count}}</text>
+        <v-tag bindtap="onPost" tag-class="{{tool.highlight(index)}}" text="{{item.content}}">
+          <text class="num" slot="after">{{'+'+item.count}}</text>
         </v-tag>
-        <!-- <view bindtap="onTap" class="container tag-class ">
-          <slot name="before"></slot>
-          <text >{{text}}</text>
-          <slot name="after"></slot>
-        </view> -->
       </block>
     </view>
     <input bindconfirm="onPost" bindinput="getInput" class="post" placeholder="短评最多10个字" data-inputid="content"></input>
@@ -90,29 +89,19 @@
 <v-mask wx:if="{{posting}}"/>
 
 <wxs module="tool">
-    var highlight = function(index){
-        if(index==0){
-          return 'ex-tag1'
-        }
-        if(index==1){
-          return 'ex-tag2'
-        }
-        return ''
+  var highlight = function(index){
+    if(index==0){
+      return 'ex-tag1'
     }
-    module.exports = {
-      highlight: highlight
+    if(index==1){
+      return 'ex-tag2'
     }
+    return ''
+  }
+  module.exports = {
+    highlight: highlight
+  }
 </wxs>
-
-<!-- 弹出层，弹出需要登陆的信息提示 -->
-<view class="outModel {{isShowLogin?'show':''}}">
-	<view class="innerModel">
-		<view class="closebtn" bindtap="closeWindow" data-modelid="isShowLogin"></view>
-		<view class="title">登录</view>
-		<view class="notify">登陆后方可使用本功能</view>
-    <view class="go-login" bindtap="goLogin">立即登录</view>
-	</view>
-</view>
 
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{showNotify?'show-notify-model':''}}">
@@ -125,7 +114,6 @@
 <!-- 加载动画 -->
 <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>
   </view>
 </view>

@@ -36,6 +36,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/book/book-detail/book-detail",
+          "query": "id=8",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
