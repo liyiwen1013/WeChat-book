@@ -363,16 +363,6 @@
   display: inline-block;
   border-radius: 10rpx;
 }
-.loading-model-inner-img {
-  width: 200rpx;
-  height: 200rpx;
-  overflow: hidden;
-}
-.loading-model-inner-img-gif {
-  width: 200rpx;
-  height: 200rpx;
-  display: block;
-}
 .loading-model-inner-clue {
   width: 100%;
   height: 60rpx;

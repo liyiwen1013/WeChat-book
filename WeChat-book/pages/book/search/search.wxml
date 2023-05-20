@@ -17,9 +17,14 @@
       <view class="title">
         <view class="chunk"></view>
         <text>历史搜索</text>
+        <view class="history-cancel">
+          <image class="history-cancel-img" bindtap="onClearHistory" src="../../../images/删除.png" />清除记录
+        </view>
       </view>
-      <view wx:for="{{historySearch}}" wx:key="keyword" class="item">
-        <button class="btn" bindtap="onSearchItemTap" data-keyword="{{item.keyword}}">{{item.keyword}}</button>
+      <view class="item">
+        <block wx:key="index" wx:for="{{ history }}">
+          <v-tag bindtap="onItemClick" text="{{ item }}" data-keyword="{{item}}"/>
+        </block>
       </view>
     </view>
     <!-- 热门搜索列表 -->
@@ -29,8 +34,8 @@
         <text>热门搜索</text>
       </view>
       <view class="item">
-        <block wx:key="hotWords" wx:for="{{ hotWords }}">
-          <v-tag bind:tapping="onSearchItemTap" text="{{ item }}" data-keyword="{{item.keyword}}"/>
+        <block wx:key="index" wx:for="{{ hotWords }}">
+          <v-tag bindtap="onHotSearch" text="{{ item }}" data-keyword="{{item}}"/>
         </block>
       </view>
     </view>
@@ -59,5 +64,15 @@
 		<view class="innerModel-title">登录</view>
 		<view class="notify">登陆后方可使用本功能</view>
     <view class="go-login" bindtap="goLogin">立即登录</view>
+	</view>
+</view>
+
+<!-- 删除历史记录的弹窗 -->
+<view class="del-model {{showDel?'show-del-model':''}}">
+	<view class="del-model-inner">
+		<view class="closebtn" bindtap="closeWindow"></view>
+		<view class="del-title">清除历史记录</view>
+		<view class="del">确定要清除历史记录？</view>
+    <view class="go-del" bindtap="toDeleteHistory">立即清除</view>
 	</view>
 </view>

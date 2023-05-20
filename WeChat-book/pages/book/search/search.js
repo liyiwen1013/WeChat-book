@@ -1,130 +1,47 @@
 // components/search/index.js
 const app = getApp()
-// 设置最大历史搜索记录数和过期时间（30天）
-const MAX_HISTORY_SEARCH = 10;
-const EXPIRATION_TIME = 30 * 24 * 60 * 60 * 1000;
-const MAX_HOT_SEARCH = 10;
-const MIN_HOT_SEARCH_COUNT = 2;
 Page({
   data: {
-    historyWords: [],
-    hotWords: [],
     searching: false,
-    keyword: '', //搜索内容,比如你想搜索python相关书籍,则输入python
     noneResult: false,
     isShowLogin: false,
     loading: false,
-    loadingCenter: false,
     pages: 0,
     pageNum: 1,
     pageSize: 10,
     keyword: '',
-    historySearch: [],
-    hotSearch: []
+    history: [],
+    hotWords: [],
+    showDel: false,
   },
   // 页面初始化时触发的事件
-  onLoad() {
-    // 页面初始化时从本地缓存中读取最近的历史搜索记录
-    const historySearch = wx.getStorageSync('historySearch') || [];
-    this.setData({
-      historySearch: historySearch,
+  onLoad: function() {
+    // 从本地存储中读取历史记录
+    const history = wx.getStorageSync('history') || [];
+    this.setData({ 
+      history: history,
       showLoading: true
-    });
-    // 更新热门搜索列表
-    this.updateHistorySearch()
-    this.updateHotSearch()
+    })
     this.getHot()
   },
 
   // 搜索框输入事件处理
-  onKeywordInput(e) {
+  onKeywordInput: function(e) {
+    // 更新搜索框中的关键字
     this.setData({
-      keyword: e.detail.value.trim()
+      keyword: e.detail.value
     })
   },
 
-  // 点击搜索按钮时触发的事件
-  // onSearch() {
-  //   const keyword = this.data.keyword;
-  //   if (!keyword) {
-  //     wx.showToast({
-  //       title: '请输入关键词',
-  //       icon: 'none'
-  //     });
-  //     return;
-  //   }
-  //   // 将用户搜索的关键词保存到本地缓存中
-  //   let historySearch = wx.getStorageSync('historySearch') || [];
-  //   if (!historySearch.find(item => item.keyword === keyword)) {
-  //     historySearch.unshift({
-  //       keyword: keyword,
-  //       time: new Date().getTime()
-  //     });
-  //     // 更新历史搜索列表
-  //     this.updateHistorySearch();
-  //   }
-  //   wx.navigateTo({
-  //     url: `/pages/searchResult/searchResult?keyword=${encodeURIComponent(keyword)}`
-  //   });
-  // },
-
   // 点击历史搜索或热门搜索时触发的搜索事件
-  onSearchItemTap(e) {
-    const keyword = e.detail.text;
-    this.setData({
-      keyword: keyword
-    });
-    this.onConfirm();
+  onItemClick: function(e) {
+    const keyword = e.currentTarget.dataset.keyword;
+    this.setData({ keyword }, () => this.onConfirm());
   },
-
-  // 在搜索完成后更新历史搜索列表
-  updateHistorySearch() {
-    // 获取最近的历史搜索记录
-    let historySearch = wx.getStorageSync('historySearch') || [];
-    // 过滤出过期的历史搜索记录
-    const now = new Date().getTime();
-    historySearch = historySearch.filter(item => (now - item.time < EXPIRATION_TIME));
-    // 只保留最近的历史搜索记录
-    historySearch = historySearch.slice(0, MAX_HISTORY_SEARCH);
-    wx.setStorageSync('historySearch', historySearch);
-    // 更新历史搜索列表
-    this.setData({
-      historySearch: historySearch
-    });
+  onHotSearch: function(e) {
+    const keyword = e.currentTarget.dataset.keyword;
+    this.setData({ keyword }, () => this.onConfirm());
   },
-
-  // 统计历史搜索记录中出现频率较高的关键词
-  updateHotSearch() {
-    const historySearch = wx.getStorageSync('historySearch') || [];
-    const hotSearch = {};
-    historySearch.forEach(item => {
-      if (hotSearch[item.keyword]) {
-        hotSearch[item.keyword].count++;
-      } else {
-        hotSearch[item.keyword] = {
-          keyword: item.keyword,
-          count: 1
-        };
-      }
-    });
-    let hotSearchList = Object.values(hotSearch);
-    hotSearchList = hotSearchList.filter(item => (item.count >= MIN_HOT_SEARCH_COUNT));
-    hotSearchList = hotSearchList.sort((a, b) => (b.count - a.count)).slice(0, MAX_HOT_SEARCH);
-    this.setData({
-      hotSearch: hotSearchList
-    });
-  },
-
-  // 获取历史搜索词
-  // getHistory(){
-  //   console.log(".....") 
-  //   const words = wx.getStorageSync(this.data.keyword)
-  //   console.log(".....",words) 
-  //   if(!words){
-  //     return []
-  //   }
-  //   return words
-  // },
 
   // 获取热门关键字
   getHot(){
@@ -163,6 +80,19 @@ Page({
       searching: false
     })
   },
+  // 清除搜索记录
+  onClearHistory: function () {
+    this.setData({
+      showDel: true,
+    });
+  },
+  toDeleteHistory: function () {
+    wx.removeStorageSync('history');
+    this.setData({
+      history: [],
+      showDel: false,
+    })
+  },
 
   onBook: function(e){
     if (!app.globalData.isLogin) {
@@ -179,7 +109,8 @@ Page({
   closeWindow: function(e) {
     var modelid = e.currentTarget.dataset.modelid
     this.setData({
-      [modelid]: false
+      [modelid]: false,
+      showDel: false
     })
   },
   goLogin: function() {
@@ -193,7 +124,7 @@ Page({
 
   // 点击搜索按钮时触发的事件
   onConfirm() {
-    const keyword = this.data.keyword;
+    let { keyword, history } = this.data;
     if (!keyword) {
       wx.showToast({
         title: '请输入书籍名',
@@ -201,19 +132,14 @@ Page({
       });
       return;
     }
-    // 将用户搜索的关键词保存到本地缓存中
-    let historySearch = wx.getStorageSync('historySearch') || [];
-    console.log("historySearch",historySearch)
-    if (!historySearch.find(item => item.keyword === keyword)) {
-      historySearch.unshift({
-        keyword: keyword,
-        time: new Date().getTime()
-      });
-      // 更新历史搜索列表
-      this.updateHistorySearch();
-    }
+    // 去除历史记录中的重复项
+    history = history.filter(item => item !== keyword);
+    // 将新的关键字添加到历史记录中并保存到本地存储中
+    history.unshift(keyword);
+    wx.setStorageSync('history', history);
+    console.log(history)
+    // 跳转到搜索结果页面
     var that = this
-    console.log("that.data",that.data)
     wx.request({
       url: app.globalData.baseUrl + "book/search",
       method: "GET",
@@ -226,7 +152,6 @@ Page({
         pageSize: that.data.pageSize,
       },
       success: function(res) {
-        console.log(',,.,,',res.data)
         if (res.data.code==="0000") {
           if (res.data.data.list.length !== 0) {
             console.log(".")

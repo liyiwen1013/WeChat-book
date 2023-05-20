@@ -1,14 +1,13 @@
 const app = getApp();
 Page({
   data: {
-    isNormal: false,
     postType: 1,
     isAnonymous: false,
     isMoreInfo: false,
-    customBg: ['DA4453','E9573F','8CC152','39b54a','48CFAD','37BCC9','4FC1E9','3BAFDA','4A89DC','0081ff','967ADC','6739b6','D770AD','9c26b0','a5673f','8799a3','656D78','434A54'],
+    customBg: ['ffffff','DA4453','E9573F','8CC152','39b54a','48CFAD','37BCC9','4FC1E9','3BAFDA','4A89DC','0081ff','967ADC','6739b6','D770AD','9c26b0','a5673f','8799a3','656D78','434A54'],
     title: "",
     content: "",
-    placeHolders: ["今日趣事", "优质资源"],
+    placeHolders: ["今日趣事", "优质书籍"],
     showNotify: false,
     notifyTitle: "",
     notifyDetail: "",
@@ -17,9 +16,10 @@ Page({
     bgType: 3,
     bgContent: "74c7f2"
   },
-  onShow: function() {
+
+  onLoad: function(e) {
     this.setData({
-      isNormal: wx.getStorageSync('isNormal')
+      postType: e.postType
     })
   },
 
@@ -44,22 +44,14 @@ Page({
       isMoreInfo: true
     })
   },
-
-  onLoad: function(e) {
-    this.setData({
-      postType: e.postType
-    })
-  },
-
   // 关闭了解更多
   closeSelect: function() {
     this.setData({
       isMoreInfo: false
     })
   },
-
   // 匿名发布
-  changeCheckboxStatus: function(e) {
+  changeCheckboxStatus: function() {
     this.setData({
       isAnonymous: this.data.isAnonymous?false:true
     })
@@ -119,7 +111,6 @@ Page({
   
   // 选择默认图片
   pickDefaultBg(e) {
-    // this.deletePic()
     let bgindex = e.currentTarget.dataset.bgindex
     this.setData({
       bgType: 2,

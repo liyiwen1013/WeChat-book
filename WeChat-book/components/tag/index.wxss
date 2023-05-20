@@ -1,8 +1,8 @@
 .container {
-    padding: 4rpx 12rpx;
+    padding: 11rpx 13rpx;
     background-color: #f5f5f5;
-    color: #666666;
-    border-radius: 2px;
+    color: #3d3d3d;
+    border-radius: 10px;
     display: inline-flex;
     flex-direction: row;
     align-items: center;
