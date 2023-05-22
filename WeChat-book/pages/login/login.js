@@ -6,14 +6,10 @@ Page({
     password: "",
     showNotify: false,
     isLoading: false,
-    isNormal: false,
-    userInfo: ''
+    userInfo: '',
+    showWeChatLogin: false, // 是否显示微信登录授权对话框
   },
-  onShow: function() {
-    this.setData({
-      isNormal: wx.getStorageSync('isNormal')
-    })
-  },
+
   // 显示一个没有关闭按钮并会自动消失的通知窗口
   // 在使用时应提供一个数组，该数组包括通知标题和通知详情
   showNotify: function(e) {
@@ -30,20 +26,7 @@ Page({
     }, 2000)
   },
 
-  onLoad: function(e) {
-    // 如果之前登陆过，自动登录
-    if (app.globalData.name) {
-      this.autoLogin()
-      // this.wxLogin()
-    }
-    if (app.globalData.isLogin) {
-      wx.switchTab({
-        url: '/pages/hotc/hotc',
-      })
-    }
-  },
-
-  // 用户名密码
+  // 输入用户名密码
   getInput: function(e) {
     var inputid = e.currentTarget.dataset.inputid
     this.setData({
@@ -51,63 +34,7 @@ Page({
     })
   },
 
-  autoLogin() {
-    this.setData({
-      isLoading: true
-    })
-    let type = 0
-    let name = app.globalData.name
-    let password = app.globalData.password
-    /**判断用户名是邮箱还是昵称 */
-    if (/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(name)) {
-      type = 1;
-    }
-    /* 发起请求验证密码 */
-    let that = this
-    wx.request({
-      url: app.globalData.baseUrl + "/auth/account/login",
-      data: {
-        type: type,
-        name: name,
-        password: password
-      },
-      method: "POST",
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success: function(res) {
-        if (res.data.code===0) {
-          wx.setStorageSync('name', name)
-          wx.setStorageSync('password', password)
-          app.globalData.SESSIONID = res.data.data.SESSIONID
-          app.globalData.isLogin = true
-          wx.switchTab({
-            url: '../hotc/hotc',
-          })
-        } else {
-          wx.removeStorageSync('name');
-          wx.removeStorageSync('password');
-          var e = ["登陆失败", res.data.msg]
-          that.showNotify(e)
-        }
-      },
-      error: function() {
-        var e = ["提示", "出了点儿错，稍后再试吧"]
-        that.showNotify(e)
-      },
-      complete: function() {
-        that.setData({
-          isLoading: false
-        })
-      },
-      fail: () => {
-        that.setData({
-          isLoading: false
-        })
-      }
-    })
-  },
-  // 登录
+  // 账号/邮箱登录
   checkLogin: function () {
     var that = this
     var name = this.data.name;
@@ -119,8 +46,9 @@ Page({
       return
     }
     /* 展示加载动画 */
-    this.setData({
-      isLoading: true
+    wx.showLoading({
+      title: '账号登录中',
+      mask: true
     })
     /* 发起请求验证密码 */
     wx.request({
@@ -173,12 +101,21 @@ Page({
       url: 'forgetpwd/forgetpwd',
     })
   },
+
+  onTapLogin: function() {
+    this.setData({ showWeChatLogin: true });
+  },
+  onCloseAuthDialog: function() {
+    this.setData({ showWeChatLogin: false });
+  },
+
   // 微信登陆
-  getUserInfo: function(e) {
+  onGetUserInfo: function(e) {
     var that = this;
     /* 展示加载动画 */
-    this.setData({
-      isLoading: true
+    wx.showLoading({
+      title: '微信登录中',
+      mask: true
     })
     // 如果用户拒绝授权，则给出提示
     if (!e.detail.userInfo) {

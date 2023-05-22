@@ -15,17 +15,29 @@
     <input type="password" placeholder="请输入密码" maxlength="30" bindinput="getInput" data-inputid="password"></input>
   </view>
   <view class="loginbtn">
-    <button bindtap="checkLogin" style="{{isNormal==false?'width:100%':''}}">登录</button>
-    <button bindtap="register" wx:if="{{isNormal==true}}">注册</button>
+    <button bindtap="checkLogin">登录</button>
+    <button bindtap="register">注册</button>
   </view>
 </view>
-<view class="forgetpwd" bindtap="forgetpwd" wx:if="{{isNormal==true}}">忘记密码?</view>
+<view class="forgetpwd" bindtap="forgetpwd">忘记密码?</view>
 <!-- 微信登录 -->
 <view class="wx-login">
-  <button class="userInfo-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+  <button class="userInfo-btn" bindtap="onTapLogin">
     <image src="https://img.asia-home.com.cn/uploadimg/image/20220402/16488762236247dabfac9487.08601339.jpeg" mode="widthFix"/>
   </button>
   <view style="margin: auto; font-size: 1rem; color: #74c7f2;">微信登录</view>
+</view>
+<!-- 微信登录弹窗 -->
+<view class="del-model {{showWeChatLogin?'show-del-model':''}}">
+	<view class="del-model-inner">
+		<view class="closebtn" bindtap="closeWindow"></view>
+		<view class="del-title">提示</view>
+		<view class="del">需要您的授权才可以登录哦</view>
+    <view class="button-row">
+      <button class="go-del" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">授权登录</button>
+      <button class="go-del" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">取消授权</button>
+    </view>
+	</view>
 </view>
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{showNotify?'show-notify-model':''}}">
@@ -35,9 +47,9 @@
 	</view>
 </view>
 <!-- 加载动画 -->
-<view class="loadingbox {{isLoading?'show-model':''}}">
+<!-- <view class="loadingbox {{isLoading?'show-model':''}}">
   <view class="innerloadingbox">
     <view class="loadingimg"><image class="loading" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="clue">正在登录</view>
   </view>
-</view>
+</view> -->

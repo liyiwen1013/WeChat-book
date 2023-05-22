@@ -4,10 +4,8 @@ const innerAudioContext = wx.createInnerAudioContext({
 })
 Page({
   data: {
-    isNormal: false,
     navs: ["摘录", "音乐", "电影"],
     allItem: [],
-    isLike: false,
     curItem: 0, // navs[curItem] 0，1，2
     curIndex: 0, // allItem[curIndex] 0,1,2,3
     pushId: '',
@@ -15,14 +13,12 @@ Page({
     playing: false,
     ww: wx.getSystemInfoSync().windowWidth, // 获取当前设备屏幕的宽度
     distance: 7,
-    isSelect: false,
     picH: 0.4555 * wx.getSystemInfoSync().windowWidth,
     cdate: [],
     scdate: [],
     showNotify: false,
     notifyTitle: "",
     notifyDetail: "",
-    showLoading: false,
     zpostarray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
     dpostarray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
     pw: wx.getSystemInfoSync().windowWidth,
@@ -33,8 +29,6 @@ Page({
     // 初始化了一些页面所需的数据变量
     this.setData({
       isLogin: app.globalData.isLogin,
-      isNormal: wx.getStorageSync('isNormal'),
-      showLoading: true,
       'cdate[0]': this.getEnDateStr(0),
       'cdate[1]': this.getEnDateStr(-1),
       'cdate[2]': this.getEnDateStr(-2),
@@ -49,13 +43,12 @@ Page({
       'scdate[2][1]': cdate[2][1].substr(0, cdate[2][1].length - 2),
       'scdate[3][1]': cdate[3][1].substr(0, cdate[3][1].length - 2),
     })
-    this.getAllPush()
     this.getEnDateStr(this.data.type) // 获取当前日期
+    this.getAllPush()
   },
 
   // 把监听函数放到onshow里面来，保证能够实时更新
   onShow(e) {
-    console.log("e",e)
     this.setData({
       isLogin: app.globalData.isLogin
     })
@@ -135,8 +128,7 @@ Page({
     this.setData({
       curItem: curItem,
       distance: 33*curItem + 7,
-      curIndex: 0,
-      showLoading: true,
+      curIndex: 0
     })
     this.getAllPush()
   },
@@ -236,7 +228,6 @@ Page({
 
   getAllPush() {
     let that = this
-    console.log("ss",this.data)
     wx.request({
       url: app.globalData.baseUrl + "push",
       method: "GET",
@@ -244,12 +235,10 @@ Page({
         type: this.data.curItem + 1
       },
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function(res) {
-        that.setData({
-          showLoading: false
-        })
         if (res.data.code==="0000") {
           that.setData({
             allItem: res.data.data
@@ -260,9 +249,6 @@ Page({
         }
       },
       error: function() {
-        that.setData({
-          showLoading: false,
-        })
         var e = ["提示", "出了点儿错，稍后再试吧"]
         this.showNotify(e)
       }
@@ -270,8 +256,9 @@ Page({
   },
 
   // 点击点赞按钮
-  changeVoteState() {
+  changeVoteState(e) {
     console.log("this.data",this.data)
+    console.log("e",e)
     let idx = this.data.curIndex
     let allItem = this.data.allItem
     let that = this
@@ -283,7 +270,7 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        id: allItem[idx].id,
+        id: e.currentTarget.dataset.centenceId,
       },
       success(res) {
         if (res.data.code==="0000") {

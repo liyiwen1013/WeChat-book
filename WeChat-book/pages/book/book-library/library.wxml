@@ -2,7 +2,7 @@
 <view class="container">
 	<!-- 左侧导航栏 -->
 	<view class="left-list">
-		<scroll-view scroll-y="true" style="height:calc(100vh)">
+		<scroll-view scroll-y="true" style="height:calc(100vh)" show-scrollbar="false">
 		  <block wx:for="{{ categoryList }}" wx:key="category">
 		  	<view class="item{{ index === current ? ' active' : '' }}" bindtap="onCategoryTap" data-index="{{ index }}" data-category-id="{{ item.id }}">{{item.name}}</view>
 		  </block>
@@ -11,7 +11,7 @@
 	<!-- 右侧书籍 -->
 	<view class="right-container">
 		<!-- <block wx:if="{{booksList.length}}"> -->
-		<scroll-view scroll-y="true" style="height:calc(100vh)" bindscrolltolower="onReachBottom">
+		<scroll-view scroll-y="true" style="height:calc(100vh)" bindscrolltolower="onReachBottom" show-scrollbar="false">
 			<block wx:for="{{ booksList }}" wx:key="book">
 				<view class="book-item" bindtap="onBook" data-book-id="{{ item.id }}">
 					<image src="{{ item.image }}" mode="aspectFit" />

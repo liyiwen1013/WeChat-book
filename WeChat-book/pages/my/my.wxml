@@ -32,8 +32,8 @@
     <text class="more"></text>
   </view>
 </view>
-
-<!-- <view class="conf" style="margin-bottom:0">
+<!-- 
+<view class="conf" style="margin-bottom:0">
   <view bindtap="toNext" data-id="portray" wx:if="{{isLogin}}">
     <image src="../../pics/portray.png"></image>
     <view class="txt">统计</view>
@@ -42,12 +42,12 @@
 </view> -->
 
 <view class="conf">
-  <view bindtap="toNext" data-id="instruc" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="instruc">
     <image src="../../pics/mypost.png"></image>
     <view class="txt">使用指引</view>
     <text class="more"></text>
   </view>
-  <view bindtap="toNext" data-id="about" wx:if="{{isNormal==true}}">
+  <view bindtap="toNext" data-id="about">
     <image src="../../pics/about.png"></image>
     <view class="txt">关于</view>
     <text class="more"></text>
@@ -89,12 +89,4 @@
 		<view class="notify-model-inner-title">{{notifyTitle}}</view>
 		<view class="notify-model-inner-detail">{{notifyDetail}}</view>
 	</view>
-</view>
-
-<!-- 加载动画 -->
-<view class="loading-model {{showLoading?'show-loading-model':''}}">
-  <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
-    <view class="loading-model-inner-clue">玩命加载中...</view>
-  </view>
 </view>

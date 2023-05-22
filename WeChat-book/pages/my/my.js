@@ -10,28 +10,20 @@ Page({
     showAuth: false,
     showFeedback: false,
     feedback: "",
-    showLoading: false,
     loadingTxt: "",
     showModifyName: false,
     newname: "",
-    showClear: false,
-    isNormal: false
+    showClear: false
   },
   
   onShow: function() {
     this.setData({
-      isLogin: app.globalData.isLogin,
-      isNormal: wx.getStorageSync('isNormal')
+      isLogin: app.globalData.isLogin
     })
     if (app.globalData.isLogin) {
-      this.setData({
-        showLoading: true,
-        loadingTxt: "获取资料..."
-      })
       this.getBasicInfo()
     }
   },
-
   showNotify: function(e) {
     this.setData({
       showNotify: true,
@@ -45,28 +37,12 @@ Page({
       })
     }, 2000)
   },
-
-  showAuthentication() {
-    this.setData({
-      showAuth: true
-    })
-  },
   // 关闭弹窗
   closeWindow(e) {
     var windowid = e.currentTarget.dataset.windowid
     this.setData({
       [windowid]: false,
     })
-    if (windowid==="showFeedback") {
-      this.setData({
-        feedback: ""
-      })
-    }
-    if (windowid==="showModifyName") {
-      this.setData({
-        newname: ""
-      })
-    }
   },
   // 获取用户信息
   getBasicInfo: function() {
@@ -82,9 +58,7 @@ Page({
         console.log(res.data)
         if (res.data.code==="0000") {
           that.setData({
-            basicInfo: res.data.data,
-            showLoading: false,
-            loadingTxt: ""
+            basicInfo: res.data.data
           })
         } else {
           var e = ['个人资料获取失败', res.data.msg]
@@ -97,7 +71,6 @@ Page({
       }
     })
   },
-
   toLogin: function() {
     wx.navigateTo({
       url: '/pages/login/login',
@@ -159,10 +132,6 @@ Page({
           self.showNotify(e)
           return
         }
-        that.setData({
-          showLoading: true,
-          loadingTxt: "光速修改中..."
-        })
         that.toChangeAvatar(res.tempFiles[0])
       }
     })
@@ -263,32 +232,22 @@ Page({
     })
   },
   toClearCache() {
-    // wx.removeStorage({
-    //   key: 'basicInfo',
-    //   success (res) {
-    //     if (res.confirm) {
-    //       wx.reLaunch({
-    //         url: '/pages/my/my',
-    //       })
-    //       wx.showToast({
-    //         title: '操作成功!',
-    //       })
-    //     } else if (res.cancel) {
-    //       console.log('用户点击取消')
-    //     }
-    //   }
-    // }),
-    wx.clearStorage({
-      success: (res) => {
-        this.setData({
-          showClear: false,
-          basicInfo: '',
-          isLogin: false
-        })
+    wx.clearStorageSync('token');
+    wx.logout({
+      success: function(res) {
         wx.showToast({
-          title: '操作成功!',
+          title: '退出登录成功',
+          icon: 'success',
+          duration: 2000
+        });
+        // 跳转到登录页或主页
+        wx.navigateTo({
+          url: '/pages/login/login',
         })
-      },
+      }
+    });
+    this.setData({
+      showClear: false
     })
   }
 })

@@ -6,7 +6,7 @@
   <view class="txt">换个密码，换种心情吧</view>
 </view>
 
-<view class="inputform" wx:if="{{isNormal==true}}">
+<view class="inputform">
   <view class="newpwd">
     <view>新密码</view>
     <input placeholder="输入新密码(数字大小写字母)" password maxlength="16" bindinput="getInput" data-inputid="password" disabled="{{isInfoConfirmed}}"></input>
@@ -27,9 +27,6 @@
     <image src="/pics/cardBg.png" class="mbg"></image>
   </view>
 </view>
-
-
-<view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../../pics/space.jpg" /></view>
 
 <!-- 信息提示层，一定时间后自动关闭 -->
 <view class="notify-model {{showNotify?'show-notify-model':''}}">
