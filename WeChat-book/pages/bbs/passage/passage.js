@@ -196,5 +196,21 @@ Page({
         that.showNotify(e)
       }
     })
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareImageTap: function() {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+  },
+  onShareAppMessage: function() {
+    return {
+      title: '帖子分享',
+      path: '/pages/bbs/passage/passage',
+      imageUrl: this.data.postContent.image
+    }
   }
 })

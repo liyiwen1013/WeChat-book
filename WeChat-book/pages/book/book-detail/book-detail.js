@@ -6,7 +6,7 @@ Page({
    */
   data: {
     comments: [],
-    content: [],
+    content: "",
     book: null,
     bookId: 0,
     isCollect: false,
@@ -166,13 +166,12 @@ Page({
 
   // 提交短评
   onPost: function(e) {
-    const content = this.data.content
-    console.log("d", content)
+    const content = this.data.content || e.currentTarget.dataset.text;
     if (content=="" || content == null || content.replace( / (^\s*)l(\s*$)/g,"") == "") {
       var e = ["提示", '内容为空,请输入短评']
       this.showNotify(e)
     }
-    if (content > 10) {
+    if (content.length > 10) {
       var e = ["提示", '短评最多10个字']
       this.showNotify(e)
     }
