@@ -1,44 +1,41 @@
-<view wx:if="{{isNormal==true}}">
+
+<!-- 导航栏 -->
+<view class="nav-holder">
   <!-- 导航栏 -->
-  <view class="nav-holder">
-    <!-- 导航栏 -->
-    <view class="nav">
-      <view class="nav-item nav-item0" wx:for="{{navs}}" wx:key="index" bindtap='changeNav' data-id="{{index}}">{{navs[index]}}</view>
-      <view class="ani-bar" style="left:{{distance}}\%"></view>
-    </view>
-    <!-- 搜索框 -->
-    <view class="search">
-      <input class="search-input" placeholder="搜索" maxlength="20" bindinput="getKeyword" placeholder-class="search-input-pstyle" value="{{ keyword }}"></input>
-      <view class="search-go" bindtap="getSearchPosts"></view>
-    </view>
+  <view class="nav">
+    <view class="nav-item nav-item0" wx:for="{{navs}}" wx:key="index" bindtap='changeNav' data-id="{{index}}">{{navs[index]}}</view>
+    <view class="ani-bar" style="left:{{distance}}\%"></view>
   </view>
-
-  <!-- 新增按钮 -->
-  <view class="addOne" bindtap="toSelect" hover-class="click-addOne" wx:if="{{isNormal==true}}"></view>
-
-  <!-- 项目列表 -->
-  <view class="item" bindtap="toPassage" wx:for="{{postLists}}" wx:key="index" style="background:{{item.bgType==3?'#'+item.bgContent:'#fff'}}" data-title="{{item.title}}" data-id="{{item.id}}">
-    <!-- 1表示自定义图片，2表示预设图片，3表示纯色图片 -->
-    <image wx:if="{{item.bgType==1||item.bgType==2}}" class="item-pic" src="{{item.bgContent}}" mode="aspectFill"></image>
-    <!-- 个人信息 -->
-    <view class="item-user">
-      <view class="item-avatar">
-        <image class="item-usimg" src="{{item.userAvatar}}" data-avatar="{{posts.userAvatar}}"></image>
-      </view>
-      <view class="item-nati">
-        <view style="font-size: 34rpx;">{{item.userUsername}}</view>
-        <view style="font-size: 21rpx;">{{item.createTime}} 发表了{{navs[item.type]}}</view>
-      </view>
-    </view>
-    <view class="item-title">{{item.title}}</view>
-    <view class="item-content-box">
-      <view class="item-content">{{item.content}}</view>
-    </view>
-    <view class="item-data" wx:if="{{isNormal==true}}">{{item.browseCount}}浏览 | {{item.commentCount}}评论</view>
+  <!-- 搜索框 -->
+  <view class="search">
+    <input class="search-input" placeholder="搜索" maxlength="20" bindinput="getKeyword" placeholder-class="search-input-pstyle" value="{{ keyword }}"></input>
+    <view class="search-go" bindtap="getSearchPosts"></view>
   </view>
 </view>
 
-<!-- <view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../pics/space.jpg" /></view> -->
+<!-- 新增按钮 -->
+<view class="addOne" bindtap="toSelect" hover-class="click-addOne"></view>
+
+<!-- 项目列表 -->
+<view class="item" bindtap="toPassage" wx:for="{{postLists}}" wx:key="index" style="background:{{item.bgType==3?'#'+item.bgContent:'#fff'}}" data-title="{{item.title}}" data-id="{{item.id}}">
+  <!-- 1表示自定义图片，2表示预设图片，3表示纯色图片 -->
+  <image wx:if="{{item.bgType==1||item.bgType==2}}" class="item-pic" src="{{item.bgContent}}" mode="aspectFill"></image>
+  <!-- 个人信息 -->
+  <view class="item-user">
+    <view class="item-avatar">
+      <image class="item-usimg" src="{{item.userAvatar}}" data-avatar="{{posts.userAvatar}}"></image>
+    </view>
+    <view class="item-nati">
+      <view style="font-size: 34rpx;">{{item.userUsername}}</view>
+      <view style="font-size: 21rpx;">{{item.createTime}} 发表了{{navs[item.type]}}</view>
+    </view>
+  </view>
+  <view class="item-title">{{item.title}}</view>
+  <view class="item-content-box">
+    <view class="item-content">{{item.content}}</view>
+  </view>
+  <view class="item-data">{{item.browseCount}}浏览 | {{item.commentCount}}评论</view>
+</view>
 
 <view class="logotxt" wx:if="{{isLoading && pageNum < pages+1}}">
   <view class="txt">玩命加载中</view>

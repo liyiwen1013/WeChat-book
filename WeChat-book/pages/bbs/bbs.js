@@ -16,16 +16,9 @@ Page({
     isLoading: false,
     isSearch: false,
     postLists: [],
-    isNormal: false,
     pageNum: 1,
     pageSize: 10,
     pages: 0
-  },
-
-  onShow: function() {
-    this.setData({
-      isNormal: wx.getStorageSync('isNormal')
-    })
   },
 
   showNotify: function(e) {

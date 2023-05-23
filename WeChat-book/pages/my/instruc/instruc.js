@@ -2,7 +2,6 @@ const app = getApp()
 const imgUrl= app.globalData.imgUrl;
 Page({
   data: {
-    isNormal: false,
     guides: [
       {
         title: '书籍短评',
@@ -29,10 +28,5 @@ Page({
         content: '你可以对发布、收藏的帖子，收到的消息、通知进行管理。单击发布或收藏的帖子，可以进入该贴页面。长按发布的帖子，可以对帖子执行删除操作；长按收藏的帖子，可以取消收藏该贴。未读的消息或通知在右上角有标识，单击未读消息或通知可以将其标识为已读；长按通知或消息，可以对其执行删除操作。',
       }
     ]
-  },
-  onShow: function() {
-    this.setData({
-      isNormal: wx.getStorageSync('isNormal')
-    })
   }
 })

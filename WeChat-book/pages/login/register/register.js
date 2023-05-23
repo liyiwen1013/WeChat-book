@@ -2,7 +2,6 @@ const app = getApp()
 Page({
   data: {
     imgUrl:  app.globalData.imgUrl,
-    isNormal: false,
     // avatarUrl: "",
     isAgree: false,
     isSla: false,
@@ -22,11 +21,6 @@ Page({
     showNotify: false,
     notifyTitle: "",
     notifyDetail: ""
-  },
-  onShow: function() {
-    this.setData({
-      isNormal: wx.getStorageSync('isNormal')
-    })
   },
 
   showNotify: function(e) {

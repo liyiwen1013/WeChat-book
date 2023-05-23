@@ -9,14 +9,9 @@ Page({
     showDel: false,
     delpostid: "",
     showLoading: false,
-    loadingTxt: "",
-    isNormal: false
+    loadingTxt: ""
   },
-  onShow: function() {
-    this.setData({
-      isNormal: wx.getStorageSync('isNormal')
-    })
-  },
+
   onLoad: function () {
     this.getMyPosts()
   },

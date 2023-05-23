@@ -5,13 +5,7 @@ Page({
     mycomment: [],
     showNotify: false,
     notifyTitle: "",
-    notifyDetail: "",
-    isNormal: false
-  },
-  onShow: function() {
-    this.setData({
-      isNormal: wx.getStorageSync('isNormal')
-    })
+    notifyDetail: ""
   },
   onLoad: function (options) {
     this.getMyComments()

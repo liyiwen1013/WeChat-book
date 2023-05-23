@@ -32,14 +32,6 @@
     <text class="more"></text>
   </view>
 </view>
-<!-- 
-<view class="conf" style="margin-bottom:0">
-  <view bindtap="toNext" data-id="portray" wx:if="{{isLogin}}">
-    <image src="../../pics/portray.png"></image>
-    <view class="txt">统计</view>
-    <text class="more"></text>
-  </view>
-</view> -->
 
 <view class="conf">
   <view bindtap="toNext" data-id="instruc">
@@ -78,7 +70,7 @@
 	<view class="auth-model-inner">
 		<view class="closebtn" bindtap="closeWindow" data-windowid="showClear"></view>
 		<view class="auth-title">退出登录</view>
-		<view class="auth">此操作将退出登录，包括登录信息、缓存信息等。操作成功后请重新进入小程序。</view>
+		<view class="auth">确认是否要退出登录？再考虑一下哦</view>
     <view class="go-feedback" bindtap="toClearCache">确认退出</view>
 	</view>
 </view>

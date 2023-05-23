@@ -2,7 +2,6 @@ const app = getApp()
 Page({
   data: {
     imgUrl:  app.globalData.imgUrl,
-    isNormal: false,
     hasGetCode: false,
     codeText: "获取验证码",
     restTime: 60,
@@ -14,11 +13,6 @@ Page({
     showNotify: false,
     showLoading: false,
     loadingTxt: ""
-  },
-  onShow: function() {
-    this.setData({
-      isNormal: wx.getStorageSync('isNormal')
-    })
   },
 
   // 显示一个没有关闭按钮的通知窗口，并会自动消失

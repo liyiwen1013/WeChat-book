@@ -54,7 +54,6 @@ Page({
     })
     this.getAllPush()
     this.getEnDateStr(this.data.type) // 获取当前日期
-    innerAudioContext.play()
   },
   // onHide: function() {
   //   innerAudioContext.pause()
@@ -193,8 +192,8 @@ Page({
     }
   },
   _recoverStatus: function () {
-    // console.log("ddddd",innerAudioContext.src)
-    // console.log("aaaaa",this.data.allItem[this.data.curIndex].content)
+    console.log("ddddd",innerAudioContext.src)
+    console.log("aaaaa",this.data.allItem[this.data.curIndex].content)
     if (innerAudioContext.paused) {
       this.setData({
         playing: false
@@ -257,8 +256,6 @@ Page({
 
   // 点击点赞按钮
   changeVoteState(e) {
-    console.log("this.data",this.data)
-    console.log("e",e)
     let idx = this.data.curIndex
     let allItem = this.data.allItem
     let that = this

@@ -1,27 +1,23 @@
 <!-- 发布 -->
-<view  wx:if="{{isNormal==true}}" >
-  <view class="item" wx:for="{{myposts}}" wx:key="index" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}" bindtap="toMyPost" bindlongpress="deletePost">
-    <view class="date">{{item.createTime}}</view>
-    <view class="innerbox">
-      <view class="title">
-        <text class="posttype">{{item.type==1?"趣闻":"分享"}}</text>
-        <text class="isanonumous" wx:if="{{item.isAnonymous}}">匿名</text>
-        {{item.title}}
-      </view>
-      <view class="detail">{{item.content}}</view>
+<view class="item" wx:for="{{myposts}}" wx:key="index" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}" bindtap="toMyPost" bindlongpress="deletePost">
+  <view class="date">{{item.createTime}}</view>
+  <view class="innerbox">
+    <view class="title">
+      <text class="posttype">{{item.type==1?"趣闻":"分享"}}</text>
+      <text class="isanonumous" wx:if="{{item.isAnonymous}}">匿名</text>
+      {{item.title}}
     </view>
-  </view>
-
-  <view style="height: 60rpx"></view>
-
-  <!-- 当用户当前没有任何消息的时候，显示空的信息 -->
-  <view class="null-data" wx:if="{{myposts.length==0}}">
-    <image src="https://pic4.zhimg.com/v2-405fe33df25b3d6a1c8617054f8ace5b_b.gif" mode="widthFix"></image>
-    <view>貌似还没发表帖子</view>
+    <view class="detail">{{item.content}}</view>
   </view>
 </view>
 
-<!-- <view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="../../../pics/space.jpg" /></view> -->
+<view style="height: 60rpx"></view>
+
+<!-- 当用户当前没有任何消息的时候，显示空的信息 -->
+<view class="null-data" wx:if="{{myposts.length==0}}">
+  <image src="https://pic4.zhimg.com/v2-405fe33df25b3d6a1c8617054f8ace5b_b.gif" mode="widthFix"></image>
+  <view>貌似还没发表帖子</view>
+</view>
 
 <!-- 删除帖子的弹窗 -->
 <view class="del-model {{showDel?'show-del-model':''}}">

@@ -1,5 +1,5 @@
 <!-- 关于 -->
-<view class="box" wx:if="{{isNormal==true}}">
+<view class="box">
   <!-- 背景装饰图片 -->
   <view class="box-bg"><image src="../../../pics/abouttop.png" mode="widthFix" style="width:100%"></image></view>
   <view class="box-bg-bottom"><image src="../../../pics/aboutbg.png" mode="widthFix" style="width:100%;display: block;"></image></view>
@@ -11,5 +11,3 @@
   <view class="detail">引起一个话题，也许需要一段文字，也许只需要一张图片，也许一张表情包配上一句或激励或扎心的句子就足够了。</view>
   <view class="detail" style="margin-top: 40rpx">——曾经的我把零碎的时光用来发呆，而现在，我用来思考，分享和交流。</view>
 </view>
-
-<!-- <view class="ph"  wx:else style="position:fixed;top:0;left:0;width:100%;overflow:hidden;height:auto"><image style="width:100%;" mode="widthFix" src="{{imgUrl}}/wxbg/other/space.jpg" /></view> -->
