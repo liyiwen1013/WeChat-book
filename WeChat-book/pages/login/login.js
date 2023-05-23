@@ -168,5 +168,9 @@ Page({
         })
       }
     })
-  }
+  },
+  // 根据响应窗口类型关闭窗口
+  closeWindow: function() {
+    this.setData({ showWeChatLogin: false });
+  },
 })
