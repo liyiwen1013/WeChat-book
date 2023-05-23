@@ -232,18 +232,19 @@ Page({
     })
   },
   toClearCache() {
-    wx.clearStorageSync('token');
-    wx.logout({
-      success: function(res) {
-        wx.showToast({
-          title: '退出登录成功',
-          icon: 'success',
-          duration: 2000
-        });
-        // 跳转到登录页或主页
-        wx.navigateTo({
-          url: '/pages/login/login',
-        })
+    app.globalData.token = ""
+    app.globalData.isLogin = false
+    wx.showToast({
+      title: '退出登录成功',
+      icon: 'success',
+      duration: 2000,
+      success: function () {
+        setTimeout(function () {
+          // 跳转到首页
+          wx.switchTab({
+            url: '/pages/square/square',
+          })
+        }, 1000)
       }
     });
     this.setData({
