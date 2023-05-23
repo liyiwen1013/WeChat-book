@@ -30,12 +30,11 @@
 <!-- 微信登录弹窗 -->
 <view class="del-model {{showWeChatLogin?'show-del-model':''}}">
 	<view class="del-model-inner">
-		<view class="closebtn" bindtap="closeWindow"></view>
+		<view class="closebtn" bindtap="onCloseAuthDialog"></view>
 		<view class="del-title">提示</view>
 		<view class="del">需要您的授权才可以登录哦</view>
     <view class="button-row">
       <button class="go-del" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">授权登录</button>
-      <button class="go-del" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">取消授权</button>
     </view>
 	</view>
 </view>

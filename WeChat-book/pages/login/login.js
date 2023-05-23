@@ -45,11 +45,6 @@ Page({
       this.showNotify(e)
       return
     }
-    /* 展示加载动画 */
-    wx.showLoading({
-      title: '账号登录中',
-      mask: true
-    })
     /* 发起请求验证密码 */
     wx.request({
       url: app.globalData.baseUrl + "auth/account/login",
@@ -67,6 +62,12 @@ Page({
           wx.setStorageSync('avatar', res.data.data.avatar)
           app.globalData.token = res.data.data.accessToken
           app.globalData.isLogin = true
+          /* 展示加载动画 */
+          getApp().showLoading("账号登录中")
+          // 延时 5 秒后隐藏 loading
+          setTimeout(function () {
+            getApp().hideLoading()
+          }, 2000)
           wx.navigateBack()
         } else {
           var e = ["登陆失败", res.data.msg]

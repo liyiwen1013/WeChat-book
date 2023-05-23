@@ -182,7 +182,9 @@ Page({
         if (res.data.code==="0000") {
           that.setData({
             postContent: res.data.data,
-            content: ""
+            content: "",
+            isInput: false,
+            inputBoxTxt: "点击发表留言(字数在200字以内)",
           })
           var e = ["评论成功", '去评论区看看吧~']
           that.showNotify(e)

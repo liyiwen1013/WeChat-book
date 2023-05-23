@@ -50,8 +50,6 @@
   <view class="txt">没有搜索到对应的帖子</view>
 </view>
 
-<!-- <view style="height:0rpx"></view> -->
-
 <!-- 弹出层，在新建发布的时候弹出 -->
 <view class="newSelect newSelectBottom {{isSelect?'show':''}}">
   <view class="detail">
@@ -91,7 +89,6 @@
 <!-- 加载动画 -->
 <view class="loading-model {{showLoading?'show-loading-model':''}}">
   <view class="loading-model-inner">
-    <view class="loading-model-inner-img"><image class="loading-model-inner-img" src="https://img.wxcha.com/file/202001/12/f49bcf352a.gif"></image></view>
     <view class="loading-model-inner-clue">玩命加载中...</view>
   </view>
 </view>

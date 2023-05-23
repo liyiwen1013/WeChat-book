@@ -233,19 +233,7 @@ Page({
   },
   toClearCache() {
     wx.clearStorageSync('token');
-    wx.logout({
-      success: function(res) {
-        wx.showToast({
-          title: '退出登录成功',
-          icon: 'success',
-          duration: 2000
-        });
-        // 跳转到登录页或主页
-        wx.navigateTo({
-          url: '/pages/login/login',
-        })
-      }
-    });
+    wx.clearStorageSync('login');
     this.setData({
       showClear: false
     })

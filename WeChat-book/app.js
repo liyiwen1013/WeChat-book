@@ -15,18 +15,6 @@ App({
         this.globalData.navigateBar = this.globalData.customBar - this.globalData.statusBar;
       },
     })
-    // 定时请求，保证session一直存在
-    let that = this
-    setInterval(function() {
-      if (that.globalData.isLogin) {
-        wx.request({
-          url: that.globalData.baseUrl + "refreshSession",
-          header: {
-            'Authorization': 'Bearer ' + that.globalData.token
-          }
-        })
-      }
-    }, 25 * 60 * 1000)
   },
   globalData: {
     token: "",
@@ -34,5 +22,20 @@ App({
     name: wx.getStorageSync('name'),
     password: wx.getStorageSync('password'),
     isLogin: false
+  },
+  /**
+   * 封装简单的 loading 框
+   */
+  showLoading: function (title) {
+    wx.showLoading({
+      title: title || '加载中',
+      mask: true
+    })
+  },
+  /**
+   * 隐藏 loading 框
+   */
+  hideLoading: function () {
+    wx.hideLoading()
   }
 })
