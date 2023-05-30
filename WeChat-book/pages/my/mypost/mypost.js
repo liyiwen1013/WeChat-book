@@ -1,7 +1,6 @@
 const app = getApp()
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     myposts: [],
     showNotify: false,
     notifyTitle: "",
@@ -64,7 +63,6 @@ Page({
   },
 
   deletePost(e) {
-    console.log(e)
     let delid = e.currentTarget.dataset.id
     this.setData({
       showDel: true,

@@ -1,7 +1,6 @@
 const app = getApp()
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     hasGetCode: false,
     codeText: "获取验证码",
     restTime: 60,

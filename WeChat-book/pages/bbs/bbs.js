@@ -65,8 +65,6 @@ Page({
 
   // 获取页面帖子列表
   getPosts: function(e) {
-    console.log("dddd",e)
-    console.log("dddd,,,,,,,,,",this.data)
     var that = this
     var pageNum = this.data.pageNum
     var action = e;
@@ -85,8 +83,6 @@ Page({
         'content-type': 'application/json',
       },
       success: function(res) {
-        console.log(res.data.data.list)
-        console.log(res.data.data)
         if (res.data.code === "0000") {
           if (action === 0) {
             that.setData({

@@ -45,7 +45,7 @@
 	<view class="innerModel">
 		<view class="closebtn" bindtap="closeWindow" data-modelid="isShowLogin"></view>
 		<view class="title">登录</view>
-		<view class="notify">登陆后方可使用本功能</view>
+		<view class="notify">登录后方可使用本功能</view>
     <view class="go-login" bindtap="goLogin">立即登录</view>
 	</view>
 </view>

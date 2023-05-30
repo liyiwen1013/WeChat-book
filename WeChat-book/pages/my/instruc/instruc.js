@@ -1,5 +1,4 @@
 const app = getApp()
-const imgUrl= app.globalData.imgUrl;
 Page({
   data: {
     guides: [

@@ -1,7 +1,6 @@
 const app = getApp()
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     // avatarUrl: "",
     isAgree: false,
     isSla: false,

@@ -220,7 +220,7 @@ Page({
   onShareAppMessage: function() {
     return {
       title: '好书分享',
-      path: '/pages/book/book-detail/book-detail',
+      path:'/pages/book/book-detail/book-detail?id=' + e.currentTarget.dataset.bookId,
       imageUrl: this.data.book.image
     }
   },

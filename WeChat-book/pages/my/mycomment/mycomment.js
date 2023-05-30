@@ -1,7 +1,6 @@
 const app = getApp()
 Page({
   data: {
-    imgUrl:  app.globalData.imgUrl,
     mycomment: [],
     showNotify: false,
     notifyTitle: "",
